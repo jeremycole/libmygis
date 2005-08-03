@@ -37,17 +37,39 @@
 #define DBF_HDR_LENRECORD(x)       MYGIS_READ_UINT16_LE((x)+10)
 #define DBF_HDR_RESERVED12(x)      MYGIS_READ_BYTE((x)+12)
 #define DBF_HDR_RESERVED13(x)      MYGIS_READ_BYTE((x)+13)
-#define DBF_HDR_IN_TRX(x)          MYGIS_READ_BYTE((x)+14)
+#define DBF_HDR_INCOMPLETE_TRX(x)  MYGIS_READ_BYTE((x)+14)
 #define DBF_HDR_ENCRYPTED(x)       MYGIS_READ_BYTE((x)+15)
 
 #define DBF_FLD_NAME(x)            ((char *)(x))
 #define DBF_FLD_TYPE(x)            ((char)*((char *)(x)+11))
+#define DBF_FLD_ADDR(x)            MYGIS_READ_UINT32_LE((x)+12)
 #define DBF_FLD_LEN(x)             MYGIS_READ_BYTE((x)+16)
+#define DBF_FLD_DECIMALS(x)        MYGIS_READ_BYTE((x)+17)
+#define DBF_FLD_RESERVED18(x)      MYGIS_READ_BYTE((x)+18)
+#define DBF_FLD_RESERVED19(x)      MYGIS_READ_BYTE((x)+19)
+#define DBF_FLD_WORKAREA(x)        MYGIS_READ_BYTE((x)+20)
+#define DBF_FLD_RESERVED21(x)      MYGIS_READ_BYTE((x)+21)
+#define DBF_FLD_RESERVED22(x)      MYGIS_READ_BYTE((x)+22)
+#define DBF_FLD_SETFIELDS(x)       MYGIS_READ_BYTE((x)+23)
+#define DBF_FLD_RESERVED24(x)      MYGIS_READ_BYTE((x)+24)
+#define DBF_FLD_RESERVED25(x)      MYGIS_READ_BYTE((x)+25)
+#define DBF_FLD_RESERVED26(x)      MYGIS_READ_BYTE((x)+26)
+#define DBF_FLD_RESERVED27(x)      MYGIS_READ_BYTE((x)+27)
+#define DBF_FLD_RESERVED28(x)      MYGIS_READ_BYTE((x)+28)
+#define DBF_FLD_RESERVED29(x)      MYGIS_READ_BYTE((x)+29)
+#define DBF_FLD_RESERVED30(x)      MYGIS_READ_BYTE((x)+30)
+#define DBF_FLD_INDEXFIELD(x)      MYGIS_READ_BYTE((x)+31)
 
 #define DBF_POS_DATA(x)            DBF_HDR_LENHEADER(x)
 
-#define DBF_FLD_STATUS_NORMAL      0x20
-#define DBF_FLD_STATUS_DELETED     0x2a
+#define DBF_EOF                    0x1a  /* end of file */
+
+#define DBF_FLD_STATUS_NORMAL      0x20  /* space   ' ' */
+#define DBF_FLD_STATUS_DELETED     0x2a  /* asterix '*' */
+
+#define DBF_HAS_INCOMPLETE_TRX     0x01
+#define DBF_HAS_ENCRYPTED          0x01
+#define DBF_FLD_HAS_INDEX          0x01
 
 #define FOREACH_DBF_FIELD(dbf, field, i) \
   for(field=dbf->fields, i=0; \
@@ -60,11 +82,11 @@
       field++, cell++, i++)
 
  /* Possible field types
-    C = Character <254, check DBF_FLD_LEN for length
-    N = Number (float), 10 or 19 bytes long, text
+    C = Character (char *) <254 bytes, check DBF_FLD_LEN for length
+    N = Number (double), 10 or 19 bytes long, text
     L = Logical (char), ?, Y, y, N, n, T, t, F, f
-    D = Date, 8 bytes long, YYYYMMDD
-    F = Floating, 19 bytes long, text
+    D = Date (char *), 8 bytes long, YYYYMMDD
+    F = Floating (double), 19 bytes long, text
     G = General, unsupported
     M = Memo, unsupported
     P = Picture, unsupported
@@ -82,18 +104,20 @@ typedef enum dbf_field_type_en {
 } DBF_FIELD_TYPE;
 
 typedef struct dbf_field_st {
-  char            name[11];
-  DBF_FIELD_TYPE  type;
-  byte            length;
-  byte            size;
+  char            name[11];   /* name of field, max 10 characters plus null */
+  DBF_FIELD_TYPE  type;       /* type of field, as above */
+  byte            length;     /* digits before decimal point */
+  byte            decimals;   /* digits after decimal point */
+  byte            size;       /* total size to read from disk */
+  char            format[10]; /* printf-compatible format string */
 } DBF_FIELD;
 
 typedef union dbf_cell_data_un {
   char            *character;
-  long int        number;
+  double          number;
   char            logical;
   char            *date;
-  float           floating;
+  double          floating;
 } DBF_CELL_DATA;
 
 typedef struct dbf_cell_st {
@@ -148,7 +172,7 @@ void                dbf_close(DBF *dbf);
 void                dbf_free(DBF *dbf);
 
 DBF_SCAN            *dbf_scan_init(DBF *dbf, COMPARE *compare,
-				   char *key, char *value);
+                                   char *key, char *value);
 int                 dbf_scan_next(DBF_SCAN *scan);
 DBF_RECORD          *dbf_scan_read_next(DBF_SCAN *scan);
 void                dbf_scan_free(DBF_SCAN *scan);

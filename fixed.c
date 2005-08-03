@@ -307,7 +307,7 @@ void fixed_record_dump(FIXED_RECORD *record)
         printf("%s", cell->data.character);
       break;
     case NUMBER:
-      printf("%li", cell->data.number);
+      printf("%f", cell->data.number);
       break;
     case FLOAT1MM:
     case FLOATING:
@@ -373,7 +373,7 @@ FIXED_RECORD *fixed_parse(FIXED *fixed, char *line)
     case NUMBER:
       if(!(tmp = (char *)strndup(cur, field->length)))
         goto oom;
-      cell->data.number = atoi(tmp);
+      cell->data.number = atof(tmp);
       free(tmp);
       break;
     case FLOAT1MM:

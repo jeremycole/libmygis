@@ -121,8 +121,9 @@ void dbf_dump(DBF *dbf)
   printf("    position:       %i\n", dbf->position);
   printf("  Fields:\n");
   for(field = dbf->fields, i=0; i<dbf->numfields; field++, i++) {
-    printf("    Field %3i:  Name %-10s  Type %c  Length %i\n",
-	   i, field->name, field->type, field->length);
+    printf("    Field %3i:  Name %-10s  Type %c  Length %3i  Decimals %2i  Format %s\n",
+	   i, field->name, field->type, field->length, field->decimals,
+	   field->format);
   }
   printf("\n\n");
 
@@ -141,21 +142,22 @@ void dbf_record_dump(DBF_RECORD *record)
     printf("  %10s: ", field->name);
     switch(field->type) {
     case CHARACTER:
-      printf("%s\n", cell->data.character);
+      printf(cell->field->format, cell->data.character);
       break;
     case DATE:
-      printf("%s\n", cell->data.date);
+      printf(cell->field->format, cell->data.date);
       break;
     case NUMBER:
-      printf("%li\n", cell->data.number);
+      printf(cell->field->format, cell->data.number);
       break;
     case FLOATING:
-      printf("%f\n", cell->data.floating);
+      printf(cell->field->format, cell->data.floating);
       break;
     case LOGICAL:
-      printf("%c\n", cell->data.logical);
+      printf(cell->field->format, cell->data.logical);
       break;
     }
+    printf("\n");
   }
 
   DBUG_VOID_RETURN;

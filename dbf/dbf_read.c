@@ -68,21 +68,29 @@ int _dbf_read_header(DBF *dbf) {
 
     strncpy(field->name, DBF_FLD_NAME(temp), 10);
     field->name[10] = '\0';
-    field->type   = DBF_FLD_TYPE(temp);
-    field->length = DBF_FLD_LEN(temp);
+    field->type     = DBF_FLD_TYPE(temp);
+    field->length   = DBF_FLD_LEN(temp);
+    field->decimals = DBF_FLD_DECIMALS(temp);
+    field->format[0]= '\0';
     switch(field->type) {
     case CHARACTER:
+      dbf->record_length += field->size = field->length;
+      strcpy(field->format, "%s");
+      break;
     case NUMBER:
     case FLOATING:
       dbf->record_length += field->size = field->length;
+      sprintf(field->format, "%%.%if", field->decimals);
       break;
 
     case LOGICAL:
       dbf->record_length += field->size = 1;
+      strcpy(field->format, "%c");
       break;
       
     case DATE:
-      dbf->record_length += field->size = 8; 
+      dbf->record_length += field->size = 8;
+      strcpy(field->format, "%8s");
       break;
 
     case GENERAL:
@@ -121,7 +129,7 @@ DBF_RECORD *dbf_read_next(DBF *dbf)
   buf = cur = memset(dbf->record_buffer, 0, dbf->record_length+1);
 
   if((count=read(dbf->fd, buf, dbf->record_length+1)) < dbf->record_length+1) {
-    if(count == 1 && buf[0] == 0x1a) {
+    if(count == 1 && buf[0] == DBF_EOF) {
       goto endoffile;
     }
     fprintf(stderr, "DBF: Error reading record: read only %i bytes, expected %i bytes\n", count, dbf->record_length+1);
@@ -146,12 +154,7 @@ DBF_RECORD *dbf_read_next(DBF *dbf)
       if(!(cell->data.date = (char *)strndup(cur, field->size)))
         goto oom;
       break;
-    case NUMBER:
-      if(!(tmp = (char *)strndup(cur, field->size)))
-        goto oom;
-      cell->data.number = atoi(tmp);
-      free(tmp);
-      break;
+    case NUMBER: /* "NUMBER" is a floating point number too! */
     case FLOATING:
       if(!(tmp = (char *)strndup(cur, field->size)))
         goto oom;
