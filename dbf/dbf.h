@@ -16,8 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/* http://www.cs.cornell.edu/Courses/cs212/2001fa/Project/Part1/dbf.htm */
-
 #ifndef DBF_H
 #define DBF_H
 
