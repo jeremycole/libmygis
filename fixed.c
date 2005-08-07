@@ -122,8 +122,8 @@ int fixed_open(FIXED *fixed, char *fixedfile, char mode)
   fixed->filename = strdup(fixedfile);
 
   if((fixed->fd = open(fixedfile, O_RDONLY)) < 0) {
-    fprintf(stderr, "Error opening FIXED file: %i: %s\n",
-            errno, strerror(errno));
+    DBUG_PRINT("error", ("Error opening FIXED file: %i: %s\n",
+                         errno, strerror(errno)));
     DBUG_RETURN(-1);
   }
   DBUG_RETURN(fixed->fd);
@@ -140,10 +140,15 @@ void fixed_dump(FIXED *fixed)
   printf("FIXED: Dump: 0x%08x\n", (unsigned int)fixed);
   for(i=0; node; node=node->next, i++) {
     field = node->field;
-    printf("  Field %2i: %-10s: Pad %c, Type %c, Nulls %c, Len %3d, Start %3d, End %3d\n",
-	   i, field->name, field->padding, field->type, field->nulls, field->length,
-           field->start, field->end);
-
+    printf("  Field %2i: %-10s: ", i, field->name);
+    if(field->type != DISCARD) {
+      printf("Type %c, Pad %c, Nulls %c, ",
+	           field->type, field->padding, field->nulls);
+    } else {
+      printf("(values discarded),     ");
+    }
+    printf("Len %3d, Start %3d, End %3d\n",
+	         field->length, field->start, field->end);
   }
   if(i==0)
     printf("  No fields.\n");
@@ -313,6 +318,9 @@ void fixed_record_dump(FIXED_RECORD *record)
     case FLOATING:
       printf("%f", cell->data.floating);
       break;
+    case DISCARD:
+      printf("(value discarded)");
+      break;
     default:
       printf("(unknown)");
     }
@@ -387,6 +395,9 @@ FIXED_RECORD *fixed_parse(FIXED *fixed, char *line)
       break;
     case LOGICAL:
       cell->data.logical = cur[0];
+      break;
+    case DISCARD:
+      /* discard values */
       break;
     }
     fixed_record_append(record, cell);

@@ -44,7 +44,8 @@ typedef enum fixed_type_en {
   LOGICAL          = 'L',
   DATE             = 'D',
   FLOATING         = 'F',
-  FLOAT1MM         = '1'
+  FLOAT1MM         = '1',
+  DISCARD          = '*'
 } FIXED_TYPE;
 
 typedef enum fixed_nulls_en {
