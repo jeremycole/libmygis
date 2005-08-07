@@ -1,4 +1,4 @@
-dnl System libraries
+# System libraries
 
 AC_DEFUN(AC_LIB_Z, [
     AC_CHECK_LIB(z, compress)
@@ -9,7 +9,7 @@ AC_DEFUN(AC_FUNC_CRYPT, [
     AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [], [the `crypt' library]))
 ])
 
-dnl MySQL Libraries and Headers
+# MySQL Libraries and Headers
 
 AC_DEFUN(AC_LIB_MYSQL, [
     AC_ARG_WITH(mysql-lib,
