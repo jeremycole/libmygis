@@ -37,9 +37,8 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  tiger_dump(tiger);
-
   tiger_open(tiger, argv[1], 'r');
+  tiger_dump(tiger);
 
   for(x=0; x<5 && (record = tiger_read_next(tiger, RT6)); x++) {
     tiger_record_dump(record);
