@@ -145,7 +145,7 @@ TIGER_FILE_DEF tiger_file_def_rt7[] = {
   {"LANAME",    LEFT,  CHARACTER, MAYBENULL, 30},
   {"LALONG",    RIGHT, FLOAT1MM,  MAYBENULL, 10},
   {"LALAT",     RIGHT, FLOAT1MM,  MAYBENULL,  9},
-  {"FILLER",    LEFT,  CHARACTER, MAYBENULL,  1}
+  {"FILLER",    LEFT,  DISCARD,   MAYBENULL,  1}
 };
 
 TIGER_FILE_DEF tiger_file_def_rt8[] = {
@@ -154,7 +154,7 @@ TIGER_FILE_DEF tiger_file_def_rt8[] = {
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
   {"POLYID",    RIGHT, NUMBER,    NOTNULL,   10},
   {"LAND",      RIGHT, NUMBER,    NOTNULL,   10},
-  {"FILLER",    LEFT,  CHARACTER, MAYBENULL,  1}
+  {"FILLER",    LEFT,  DISCARD,   MAYBENULL,  1}
 };
 
 
@@ -255,7 +255,20 @@ TIGER_FILE_DEF tiger_file_def_rtc[] = {
 };
 
 TIGER_FILE_DEF tiger_file_def_rte[] = {
-  TIGER_FILE_RECORD_HEADER
+  TIGER_FILE_RECORD_HEADER,
+  {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
+  {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
+  {"POLYID",    RIGHT, NUMBER,    NOTNULL,   10},
+  {"STATEEC",   LEFT,  NUMBER,    NOTNULL,    2},
+  {"COUNTYEC",  LEFT,  NUMBER,    NOTNULL,    3},
+  {"RS-E1",     LEFT,  NUMBER,    MAYBENULL,  5},
+  {"RS-E2",     LEFT,  NUMBER,    MAYBENULL,  5},
+  {"PLACEEC",   LEFT,  NUMBER,    MAYBENULL,  5},
+  {"RS-E3",     LEFT,  NUMBER,    MAYBENULL,  5},
+  {"RS-E4",     LEFT,  NUMBER,    MAYBENULL,  4},
+  {"RS-E5",     LEFT,  CHARACTER, MAYBENULL,  1},
+  {"COMMREGEC", LEFT,  NUMBER,    MAYBENULL,  1},
+  {"RS-E6",     LEFT,  CHARACTER, MAYBENULL, 17}
 };
 
 TIGER_FILE_DEF tiger_file_def_rth[] = {
@@ -310,7 +323,16 @@ TIGER_FILE_DEF tiger_file_def_rtp[] = {
 };
 
 TIGER_FILE_DEF tiger_file_def_rtr[] = {
-  TIGER_FILE_RECORD_HEADER
+  TIGER_FILE_RECORD_HEADER,
+  {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
+  {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
+  {"TLMAXID",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TLMINID",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TLHIGHID",  RIGHT, NUMBER,    NOTNULL,   10},
+  {"TZMAXID",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TZMINID",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TZHIGHID",  RIGHT, NUMBER,    NOTNULL,   10},
+  {"FILLER",    LEFT,  DISCARD,   MAYBENULL,  1}
 };
 
 TIGER_FILE_DEF tiger_file_def_rts[] = {
@@ -326,7 +348,16 @@ TIGER_FILE_DEF tiger_file_def_rtt[] = {
 };
 
 TIGER_FILE_DEF tiger_file_def_rtu[] = {
-  TIGER_FILE_RECORD_HEADER
+  TIGER_FILE_RECORD_HEADER,
+  {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
+  {"TZID",      RIGHT, NUMBER,    NOTNULL,   10},
+  {"RTSQ",      RIGHT, NUMBER,    NOTNULL,    1},
+  {"TLIDOV1",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TLIDOV2",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TLIDUN1",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"TLIDUN2",   RIGHT, NUMBER,    NOTNULL,   10},
+  {"FRLONG",    RIGHT, FLOAT1MM,  NOTNULL,   10},
+  {"FRLAT",     RIGHT, FLOAT1MM,  NOTNULL,    9}
 };
 
 TIGER_FILE_DEF tiger_file_def_rtz[] = {
@@ -371,7 +402,7 @@ TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE] = {
    21, tiger_file_def_rtc
   },
   {RTE, "E", "Polygon Geographic Entity Codes: Economic Census", {".RTE",".rte"},
-    2, tiger_file_def_rte
+   15, tiger_file_def_rte
   },
   {RTH, "H", "TIGER/Line ID History", {".RTH",".rth"},
    10, tiger_file_def_rth
@@ -386,7 +417,7 @@ TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE] = {
     8, tiger_file_def_rtp
   },
   {RTR, "R", "TIGER/Line ID Record Number Range", {".RTR",".rtr"},
-    2, tiger_file_def_rtr
+   11, tiger_file_def_rtr
   },
   {RTS, "S", "Polygon Geographic Entity Codes: Census 2000", {".RTS",".rts"},
     2, tiger_file_def_rts
@@ -395,7 +426,7 @@ TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE] = {
     6, tiger_file_def_rtt
   },
   {RTU, "U", "TIGER/Line ID Overpass/Underpass Identification", {".RTU",".rtu"},
-    2, tiger_file_def_rtu
+   11, tiger_file_def_rtu
   },
   {RTZ, "Z", "ZIP+4 Codes", {".RTZ",".rtz"},
     6, tiger_file_def_rtz
@@ -461,7 +492,11 @@ int tiger_open(TIGER *tiger, char *basename, char mode)
     strcat(filename, file_type->file_ext[0]);
 
     DBUG_PRINT("info", ("Attempting to open file %s", filename));
-    fixed_open(file->fixed, filename, mode);
+    if(fixed_open(file->fixed, filename, mode) != -1) {
+      file->is_available= 1;
+    } else {
+      file->is_available= 0;
+    }
   }
 
   free(filename); 
@@ -475,11 +510,21 @@ void tiger_dump(TIGER *tiger)
       
   DBUG_ENTER("tiger_dump");
 
+  printf("TIGER Record Types Available: ");
   for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
     file = &tiger->files[type];
+    if(file->is_available)
+      printf("%s", tiger_file_types[type].record_type);
+  }
+  printf("\n\n");
+
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+    file = &tiger->files[type];
+    printf("Record Type %s, %s\n", tiger_file_types[type].record_type,
+           tiger_file_types[type].name);
     fixed_dump(file->fixed);
   }
-		        
+  	        
   DBUG_VOID_RETURN;
 }
 

@@ -58,6 +58,7 @@ typedef struct tiger_file_st {
   char            *filename;
   int             flags;
   char            mode;
+  unsigned char   is_available;
 } TIGER_FILE;
 
 typedef struct tiger_file_node_st {
