@@ -7,6 +7,8 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_RANLIB
 
+AC_LIB_Z
+
 AC_C_CONST
 AC_C_INLINE
 
@@ -14,11 +16,26 @@ AC_FUNC_CHOWN
 #AC_FUNC_MALLOC
 #AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
+AC_FUNC_CRYPT
 
 AC_STRUCT_TM
 AC_TYPE_SIZE_T
 
+# MySQL
+want_mysql="no"
+AC_ARG_WITH(mysql,
+[  --with-mysql            Build with MySQL support],
+[
+  AC_DEFINE([HAVE_MYSQL], [], [MySQL Support])
+  want_mysql="yes"
+])
+
+# MySQL Libraries and Headers
+AC_LIB_MYSQL
+AC_HEADER_MYSQL
+
 AC_CHECK_HEADERS([stdio.h stdlib.h string.h errno.h sys/types.h sys/stat.h fcntl.h sys/param.h])
+
 
 AC_ARG_WITH(debug,
   [  --with-debug            build with debugging support enabled],
