@@ -391,7 +391,7 @@ FIXED_RECORD *fixed_parse(FIXED *fixed, char *line)
       cell->data.floating = (float) atof(tmp);
       free(tmp);
       if(field->type == FLOAT1MM)
-        cell->data.floating /= 1000000;
+        cell->data.floating /= 1000000.0;
       break;
     case LOGICAL:
       cell->data.logical = cur[0];
