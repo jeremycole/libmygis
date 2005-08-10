@@ -112,7 +112,7 @@ typedef struct dbf_field_st {
 
 typedef union dbf_cell_data_un {
   char            *character;
-  double          number;
+  long long       number;
   char            logical;
   char            *date;
   double          floating;

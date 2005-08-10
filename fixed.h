@@ -90,10 +90,10 @@ typedef struct fixed_scan_st {
 
 typedef union fixed_cell_data_un {
   char            *character;
-  double        number;
+  long long       number;
   char            logical;
   char            *date;
-  double           floating;
+  double          floating;
 } FIXED_CELL_DATA;
 
 typedef struct fixed_cell_st {

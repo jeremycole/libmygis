@@ -41,7 +41,7 @@ int _dbf_read_header(DBF *dbf) {
   dbf_seek(dbf, DBF_POS_FILE_HEADER);
 
   if((count=read(dbf->fd, dbf->header, DBF_LEN_FILE_HEADER)) < DBF_LEN_FILE_HEADER) {
-    fprintf(stderr, "DBF: Error reading header: read only %i bytes, expected %i bytes\n", count, DBF_LEN_FILE_HEADER);
+    fprintf(stderr, "DBF: Error reading header: read only %d bytes, expected %i bytes\n", count, DBF_LEN_FILE_HEADER);
     close(dbf->fd);
     DBUG_RETURN(-2);
   }
@@ -77,7 +77,15 @@ int _dbf_read_header(DBF *dbf) {
       dbf->record_length += field->size = field->length;
       strcpy(field->format, "%s");
       break;
+
     case NUMBER:
+      /* if field->decimals >0, fall through to FLOATING */
+      if(field->decimals == 0) {
+        dbf->record_length += field->size = field->length;
+        strcpy(field->format, "%lld");
+        break;
+      }
+    
     case FLOATING:
       dbf->record_length += field->size = field->length;
       sprintf(field->format, "%%.%if", field->decimals);
@@ -150,20 +158,33 @@ DBF_RECORD *dbf_read_next(DBF *dbf)
         goto oom;
       mygis_trim(cell->data.character, field->size);
       break;
+
     case DATE:
       if(!(cell->data.date = (char *)strndup(cur, field->size)))
         goto oom;
       break;
-    case NUMBER: /* "NUMBER" is a floating point number too! */
+      
+    case NUMBER: 
+      /* if field->decimals > 0, fall through to FLOATING */
+      if(field->decimals == 0) {
+        if(!(tmp = (char *)strndup(cur, field->size)))
+          goto oom;
+        cell->data.number = atoll(tmp);
+        free(tmp);
+        break;
+      }
+      
     case FLOATING:
       if(!(tmp = (char *)strndup(cur, field->size)))
         goto oom;
       cell->data.floating = atof(tmp);
       free(tmp);
       break;
+
     case LOGICAL:
       cell->data.logical = cur[0];
       break;
+
     case GENERAL:
     case MEMO:
     case PICTURE:
