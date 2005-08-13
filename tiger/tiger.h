@@ -35,21 +35,13 @@ typedef enum tiger_file_type_en {
   RTP, RTR, RTS, RTT, RTU, RTZ
 } TIGER_FILE_TYPE;
 
-typedef struct tiger_file_def_st {
-  char            *name;
-  FIXED_PADDING   padding;
-  FIXED_TYPE      type;
-  FIXED_NULLS     nulls;
-  uint            length;
-} TIGER_FILE_DEF;
-
 typedef struct tiger_file_types_st {
   TIGER_FILE_TYPE type;
   char            *record_type;
   char            *name;
   char            *file_ext[5];
   uint            num_fields;
-  TIGER_FILE_DEF  *file_def;
+  FIXED_FILE_DEF  *file_def;
 } TIGER_FILE_TYPES;
 
 typedef struct tiger_file_st {

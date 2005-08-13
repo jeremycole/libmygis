@@ -35,6 +35,8 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Couldn't allocate FIXED\n");
     exit(1);
   }
+  
+  fixed_options(fixed)->gap = 1;
 
   fixed_append(fixed, fixed_field_new("name",   RIGHT, CHARACTER, NOTNULL, 20));
   fixed_append(fixed, fixed_field_new("age",    LEFT,  NUMBER,    NOTNULL,  3));

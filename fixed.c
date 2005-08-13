@@ -102,15 +102,22 @@ FIXED *fixed_init(int flags)
   if(!(fixed = FIXED_INIT))
     DBUG_RETURN(NULL);
 
-  fixed->flags = flags;
-  fixed->head = NULL;
-  fixed->tail = NULL;
-  fixed->fields = 0;
+  fixed->flags         = flags;
+  fixed->head          = NULL;
+  fixed->tail          = NULL;
+  fixed->fields        = 0;
   fixed->record_length = 0;
   fixed->record_buffer = NULL;
-  fixed->filename = NULL;
+  fixed->filename      = NULL;
+  
+  fixed->options.gap   = 0;
 
   DBUG_RETURN(fixed);
+}
+
+FIXED_OPTIONS *fixed_options(FIXED *fixed)
+{
+  return &fixed->options;
 }
 
 int fixed_open(FIXED *fixed, char *fixedfile, char mode)
@@ -127,6 +134,23 @@ int fixed_open(FIXED *fixed, char *fixedfile, char mode)
     DBUG_RETURN(-1);
   }
   DBUG_RETURN(fixed->fd);
+}
+
+int fixed_file_def(FIXED *fixed, FIXED_FILE_DEF *file_def, uint length)
+{
+  uint field;
+  FIXED_FILE_DEF *field_def;
+  
+  DBUG_ENTER("fixed_file_def");
+  
+  for(field=0; field<length; field++) {
+    field_def = &file_def[field];
+    fixed_append(fixed, 
+                 fixed_field_new(field_def->name, field_def->padding,
+                   field_def->type, field_def->nulls,
+          			   field_def->length));
+  }
+  DBUG_RETURN(1);
 }
 
 void fixed_dump(FIXED *fixed)
@@ -161,7 +185,8 @@ void fixed_dump(FIXED *fixed)
 void fixed_recalculate(FIXED *fixed)
 {
   FIXED_FIELD_NODE *node = NULL;
-  uint cur=0;
+  FIXED_OPTIONS *options = &fixed->options;
+  uint cur=0, gap=0;
 
   DBUG_ENTER("fixed_recalculate");
 
@@ -170,9 +195,9 @@ void fixed_recalculate(FIXED *fixed)
   node = fixed->head;
 
   for(; node; node = node->next) {
-    node->field->start = cur;
-    node->field->end = cur+node->field->length-1;
-    cur += node->field->length;
+    node->field->start = cur + (gap=(cur==0?0:options->gap));
+    node->field->end   = node->field->start + node->field->length-1;
+    cur += gap + node->field->length;
   }
 
   DBUG_VOID_RETURN;

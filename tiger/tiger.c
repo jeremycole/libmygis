@@ -27,7 +27,7 @@
   {"VERSION",   LEFT,  CHARACTER, NOTNULL,    4}
   
 
-TIGER_FILE_DEF tiger_file_def_rt1[] = {
+FIXED_FILE_DEF tiger_file_def_rt1[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
   {"SIDE1",     RIGHT, NUMBER,    MAYBENULL,  1},
@@ -73,7 +73,7 @@ TIGER_FILE_DEF tiger_file_def_rt1[] = {
   {"TOLAT",     RIGHT, FLOAT1MM,  NOTNULL,    9}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt2[] = {
+FIXED_FILE_DEF tiger_file_def_rt2[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,   NOTNULL,    10},
   {"RTSQ",      RIGHT, NUMBER,   NOTNULL,     3},
@@ -99,7 +99,7 @@ TIGER_FILE_DEF tiger_file_def_rt2[] = {
   {"LAT10",     RIGHT, FLOAT1MM, MAYBENULL,   9}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt4[] = {
+FIXED_FILE_DEF tiger_file_def_rt4[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,   NOTNULL,    10},
   {"RTSQ",      RIGHT, NUMBER,   NOTNULL,     3},
@@ -110,7 +110,7 @@ TIGER_FILE_DEF tiger_file_def_rt4[] = {
   {"FEAT5",     RIGHT, NUMBER,   MAYBENULL,   8}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt5[] = {
+FIXED_FILE_DEF tiger_file_def_rt5[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  CHARACTER, NOTNULL,    5},
   {"FEAT",      RIGHT, NUMBER,    NOTNULL,    8},
@@ -120,7 +120,7 @@ TIGER_FILE_DEF tiger_file_def_rt5[] = {
   {"FEDIRS",    LEFT,  CHARACTER, MAYBENULL,  2}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt6[] = {
+FIXED_FILE_DEF tiger_file_def_rt6[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
   {"RTSQ",      RIGHT, NUMBER,    NOTNULL,    3},
@@ -136,7 +136,7 @@ TIGER_FILE_DEF tiger_file_def_rt6[] = {
   {"ZIPR",      LEFT,  CHARACTER, MAYBENULL,  5}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt7[] = {
+FIXED_FILE_DEF tiger_file_def_rt7[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"LAND",      RIGHT, NUMBER,    NOTNULL,   10},
@@ -148,7 +148,7 @@ TIGER_FILE_DEF tiger_file_def_rt7[] = {
   {"FILLER",    LEFT,  DISCARD,   MAYBENULL,  1}
 };
 
-TIGER_FILE_DEF tiger_file_def_rt8[] = {
+FIXED_FILE_DEF tiger_file_def_rt8[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -158,7 +158,7 @@ TIGER_FILE_DEF tiger_file_def_rt8[] = {
 };
 
 
-TIGER_FILE_DEF tiger_file_def_rta[] = {
+FIXED_FILE_DEF tiger_file_def_rta[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -207,7 +207,7 @@ TIGER_FILE_DEF tiger_file_def_rta[] = {
   {"RS-A19",    LEFT,  CHARACTER, MAYBENULL, 11},
 };
 
-TIGER_FILE_DEF tiger_file_def_rtb[] = {
+FIXED_FILE_DEF tiger_file_def_rtb[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -231,7 +231,7 @@ TIGER_FILE_DEF tiger_file_def_rtb[] = {
   {"RS-B1",     LEFT,  CHARACTER, MAYBENULL,  8}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtc[] = {
+FIXED_FILE_DEF tiger_file_def_rtc[] = {
   TIGER_FILE_RECORD_HEADER,
   {"STATE",     LEFT,  NUMBER,    MAYBENULL,  2},
   {"COUNTY",    LEFT,  NUMBER,    MAYBENULL,  3},
@@ -254,7 +254,7 @@ TIGER_FILE_DEF tiger_file_def_rtc[] = {
   {"NAME",      LEFT,  NUMBER,    MAYBENULL, 60}
 };
 
-TIGER_FILE_DEF tiger_file_def_rte[] = {
+FIXED_FILE_DEF tiger_file_def_rte[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -271,7 +271,7 @@ TIGER_FILE_DEF tiger_file_def_rte[] = {
   {"RS-E6",     LEFT,  CHARACTER, MAYBENULL, 17}
 };
 
-TIGER_FILE_DEF tiger_file_def_rth[] = {
+FIXED_FILE_DEF tiger_file_def_rth[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
@@ -283,7 +283,7 @@ TIGER_FILE_DEF tiger_file_def_rth[] = {
   {"TLIDTO2",   RIGHT, NUMBER,    MAYBENULL, 10}
 };
 
-TIGER_FILE_DEF tiger_file_def_rti[] = {
+FIXED_FILE_DEF tiger_file_def_rti[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
@@ -300,7 +300,7 @@ TIGER_FILE_DEF tiger_file_def_rti[] = {
   {"RS-I3",     LEFT,  CHARACTER, MAYBENULL, 10}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtm[] = {
+FIXED_FILE_DEF tiger_file_def_rtm[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
   {"RTSQ",      RIGHT, NUMBER,    NOTNULL,    3},
@@ -312,7 +312,7 @@ TIGER_FILE_DEF tiger_file_def_rtm[] = {
   {"RS-M3",     LEFT,  NUMBER,    MAYBENULL, 23}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtp[] = {
+FIXED_FILE_DEF tiger_file_def_rtp[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -322,7 +322,7 @@ TIGER_FILE_DEF tiger_file_def_rtp[] = {
   {"WATER",     LEFT,  NUMBER,    MAYBENULL,  1}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtr[] = {
+FIXED_FILE_DEF tiger_file_def_rtr[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"CENID",     LEFT,  CHARACTER, NOTNULL,    5},
@@ -335,11 +335,11 @@ TIGER_FILE_DEF tiger_file_def_rtr[] = {
   {"FILLER",    LEFT,  DISCARD,   MAYBENULL,  1}
 };
 
-TIGER_FILE_DEF tiger_file_def_rts[] = {
+FIXED_FILE_DEF tiger_file_def_rts[] = {
   TIGER_FILE_RECORD_HEADER
 };
 
-TIGER_FILE_DEF tiger_file_def_rtt[] = {
+FIXED_FILE_DEF tiger_file_def_rtt[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"TZID",      RIGHT, NUMBER,    NOTNULL,   10},
@@ -347,7 +347,7 @@ TIGER_FILE_DEF tiger_file_def_rtt[] = {
   {"FTRP",      LEFT,  CHARACTER, MAYBENULL, 17}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtu[] = {
+FIXED_FILE_DEF tiger_file_def_rtu[] = {
   TIGER_FILE_RECORD_HEADER,
   {"FILE",      LEFT,  NUMBER,    NOTNULL,    5},
   {"TZID",      RIGHT, NUMBER,    NOTNULL,   10},
@@ -360,7 +360,7 @@ TIGER_FILE_DEF tiger_file_def_rtu[] = {
   {"FRLAT",     RIGHT, FLOAT1MM,  NOTNULL,    9}
 };
 
-TIGER_FILE_DEF tiger_file_def_rtz[] = {
+FIXED_FILE_DEF tiger_file_def_rtz[] = {
   TIGER_FILE_RECORD_HEADER,
   {"TLID",      RIGHT, NUMBER,    NOTNULL,   10},
   {"RTSQ",      RIGHT, NUMBER,    NOTNULL,    3},
@@ -438,7 +438,7 @@ TIGER *tiger_init(int flags)
   TIGER            *tiger = NULL;
   TIGER_FILE       *file      = NULL;
   TIGER_FILE_TYPES *file_type = NULL;
-  TIGER_FILE_DEF   *file_def  = NULL;
+  FIXED_FILE_DEF   *file_def  = NULL;
   uint type, field;
 
   DBUG_ENTER("tiger_init");
@@ -456,13 +456,7 @@ TIGER *tiger_init(int flags)
       printf("Couldn't allocate fixed for file %i\n", type);
       goto err2;
     }
-    for(field=0; field<file_type->num_fields; field++) {
-      file_def = &file_type->file_def[field];
-      fixed_append(file->fixed, 
-                   fixed_field_new(file_def->name, file_def->padding,
-		                   file_def->type, file_def->nulls,
-				   file_def->length));
-    }
+    fixed_file_def(file->fixed, file_type->file_def, file_type->num_fields);
   }
 
   DBUG_RETURN(tiger);

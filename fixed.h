@@ -68,8 +68,13 @@ typedef struct fixed_field_node_st {
   struct fixed_field_node_st *prev, *next;
 } FIXED_FIELD_NODE;
 
+typedef struct fixed_options_st {
+  uint          gap;
+} FIXED_OPTIONS;
+
 typedef struct fixed_st {
   FIXED_FIELD_NODE *head, *tail;
+  FIXED_OPTIONS    options;
   uint fields;
   uint record_length;
   char *record_buffer;
@@ -113,14 +118,25 @@ typedef struct fixed_record_st {
   uint cells;
 } FIXED_RECORD;
 
+typedef struct fixed_file_def_st {
+  char            *name;
+  FIXED_PADDING   padding;
+  FIXED_TYPE      type;
+  FIXED_NULLS     nulls;
+  uint            length;
+} FIXED_FILE_DEF;
+
 FIXED_FIELD       *fixed_field_init();
 FIXED_FIELD       *fixed_field_new(char *name, FIXED_PADDING padding,
                                    FIXED_TYPE type, FIXED_NULLS nulls,
-				   uint32 length);
+				                           uint32 length);
 void              fixed_field_free(FIXED_FIELD *field);
 
 
 FIXED             *fixed_init(int flags);
+FIXED_OPTIONS     *fixed_options(FIXED *fixed);
+int               fixed_file_def(FIXED *fixed, FIXED_FILE_DEF *file_def,
+                                 uint length);
 int               fixed_open(FIXED *fixed, char *fixedfile, char mode);
 void              fixed_dump(FIXED *fixed);
 void              fixed_close(FIXED *fixed);

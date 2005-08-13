@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
   tiger_open(tiger, argv[1], 'r');
   tiger_dump(tiger);
 
-  for(x=0; x<5 && (record = tiger_read_next(tiger, RT6)); x++) {
+  for(x=0; x<5 && (record = tiger_read_next(tiger, RT2)); x++) {
     tiger_record_dump(record);
     tiger_record_free(record);
   }
