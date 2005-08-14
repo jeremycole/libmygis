@@ -5,7 +5,7 @@ MAINTAINERCLEANFILES = \
   config.h.in Makefile.in *~
 
 include_HEADERS = \
-  mygis.h portability.h dbug.h compare.h pairlist.h fixed.h geometry.h shapefile.h \
+  mygis.h portability.h dbug.h compare.h pairlist.h record.h fixed.h geometry.h shapefile.h \
   wkb/wkb.h \
   wkt/wkt.h \
   e00/e00.h \
@@ -23,6 +23,7 @@ ROOT_OBJECTS = \
   dbug.o \
   compare.o \
   pairlist.o \
+  record.o \
   fixed.o \
   geometry.o \
   shapefile.o
