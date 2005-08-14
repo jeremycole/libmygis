@@ -106,7 +106,7 @@ void record_dump(RECORD *record)
 
 void record_free(RECORD *record)
 {
-  DBUG_ENTER("fixed_record_free");
+  DBUG_ENTER("record_free");
   CELL_NODE *node = NULL;
 
   if(!record) DBUG_VOID_RETURN;

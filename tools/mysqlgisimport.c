@@ -224,16 +224,15 @@ void print_delimited_string(FILE *f, char *str)
 
 
 
-void print_sql_field_value(FILE *f, DBF_FIELD *field, CELL *cell,
-                           int opt_delimited)
+void print_sql_cell(FILE *f, CELL *cell, int opt_delimited)
 {
-  DBUG_ENTER("print_sql_field_value");
+  DBUG_ENTER("print_sql_cell");
 
   /* TODO: Need to escape the data for SQL. */
 
-  assert(field && cell);
+  assert(cell);
 
-  switch(field->type) {
+  switch(cell->metadata->data_type) {
   case CHARACTER:
     if (opt_delimited)
       print_delimited_string(f, cell->data.character);
@@ -356,7 +355,7 @@ void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
       if (auto_increment_key || i != 0)
         fprintf(f, "%s", separator);
 
-      print_sql_field_value(f, field, cell, opt_delimited);
+      print_sql_cell(f, cell, opt_delimited);
     }
   }
 

@@ -31,7 +31,6 @@
 
 char *dbf_record_field(RECORD *record, char *key)
 {
-  DBF *dbf = (DBF *)record->source;
   DBF_FIELD *field;
   CELL *cell = NULL;
   CELL_NODE *cell_node = record->head;

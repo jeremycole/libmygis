@@ -160,7 +160,7 @@ RECORD *dbf_read_next(DBF *dbf)
   /* status = cur[0] */
   cur++;
 
-  for(field=dbf->fields; i<dbf->numfields; field++) {
+  for(field=dbf->fields, i=0; i<dbf->numfields; field++, i++) {
     cell = cell_init(field, &field->metadata);
     switch(field->type) {
     case DBF_CHARACTER:
