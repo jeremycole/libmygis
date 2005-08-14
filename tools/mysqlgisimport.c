@@ -141,13 +141,13 @@ char *sql_field_type(DBF_FIELD *field)
   if(!field) DBUG_RETURN(NULL);
 
   switch(field->type) {
-  case CHARACTER:
+  case DBF_CHARACTER:
     sprintf(sql, "CHAR(%i) NOT NULL", field->length);
     break;
-  case DATE:
+  case DBF_DATE:
     sprintf(sql, "DATE NOT NULL");
     break;
-  case NUMBER:
+  case DBF_NUMBER:
     if (field->decimals)
       sprintf(sql, "DOUBLE(%i,%i) NOT NULL", field->length, field->decimals);
     else
@@ -156,10 +156,10 @@ char *sql_field_type(DBF_FIELD *field)
       else
         sprintf(sql, "BIGINT(%i) NOT NULL", field->length);
     break;
-  case FLOATING:
+  case DBF_FLOATING:
     sprintf(sql, "DOUBLE(%i,%i) NOT NULL", field->length, field->decimals);
     break;
-  case LOGICAL:
+  case DBF_LOGICAL:
     sprintf(sql, "CHAR(1) NOT NULL");
     break;
   }
@@ -224,7 +224,7 @@ void print_delimited_string(FILE *f, char *str)
 
 
 
-void print_sql_field_value(FILE *f, DBF_FIELD *field, DBF_CELL *cell,
+void print_sql_field_value(FILE *f, DBF_FIELD *field, CELL *cell,
                            int opt_delimited)
 {
   DBUG_ENTER("print_sql_field_value");
@@ -249,11 +249,11 @@ void print_sql_field_value(FILE *f, DBF_FIELD *field, DBF_CELL *cell,
     break;
 
   case NUMBER:
-    fprintf(f, cell->field->format, cell->data.number);
+    fprintf(f, cell->metadata->format, cell->data.number);
     break;
 
   case FLOATING:
-    fprintf(f, cell->field->format, cell->data.floating);
+    fprintf(f, cell->metadata->format, cell->data.floating);
     break;
 
   case LOGICAL:
@@ -322,9 +322,10 @@ void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
                   int opt_delimited, int opt_geometry_as_text)
 {
   SHAPEFILE *sha = record->shapefile;
-  DBF_RECORD *dbf_record = record->dbf_record;
+  RECORD *dbf_record = record->dbf_record;
   DBF_FIELD *field;
-  DBF_CELL *cell;
+  CELL *cell;
+  CELL_NODE *cell_node = dbf_record->head;
   int i;
   char *separator;
 
@@ -334,8 +335,6 @@ void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
     separator = "\t";
   else
     separator = ", ";
-    
-
 
   if (!opt_delimited)
     fprintf(f, "INSERT INTO `%s` VALUES (", table_name);
@@ -349,8 +348,10 @@ void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
   }
   
   if(sha->flags & SHAPEFILE_HAS_DBF) {
-    FOREACH_DBF_RECORD_FIELD_CELL(dbf_record, field, cell, i) {
-      
+    for(; cell_node; cell_node = cell_node->next) {
+      cell = cell_node->cell;
+      field = (DBF_FIELD *)cell->field;
+
       /* don't print a separator before the first record */
       if (auto_increment_key || i != 0)
         fprintf(f, "%s", separator);

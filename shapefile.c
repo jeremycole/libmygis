@@ -198,7 +198,7 @@ void shapefile_record_dump(SHAPEFILE_RECORD *record)
 {
   DBUG_ENTER("shapefile_record_dump");
   if(record->dbf_record)
-    dbf_record_dump(record->dbf_record);  
+    record_dump(record->dbf_record);  
 
   if(record->geometry)
     geometry_dump(record->geometry, 3);
@@ -212,7 +212,7 @@ void shapefile_record_free(SHAPEFILE_RECORD *record)
     geometry_free(record->geometry);
 
   if(record->dbf_record)
-    dbf_record_free(record->dbf_record);
+    record_free(record->dbf_record);
   DBUG_VOID_RETURN;
 }
 

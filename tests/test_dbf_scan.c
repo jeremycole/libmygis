@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 {
   DBF *dbf;
   DBF_SCAN *scan;
-  DBF_RECORD *rec;
+  RECORD *rec;
   int i;
 
   //DBUG_PUSH("d:t");
@@ -51,8 +51,8 @@ int main(int argc, char **argv)
 
   for(i=0; (rec = dbf_scan_read_next(scan)); i++) {
     printf("Record %i:\n", i);
-    dbf_record_dump(rec);
-    dbf_record_free(rec);
+    record_dump(rec);
+    record_free(rec);
   }
 
   dbf_scan_free(scan);

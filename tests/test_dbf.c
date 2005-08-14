@@ -24,7 +24,7 @@
 int main(int argc, char **argv)
 {
   DBF *dbf;
-  DBF_RECORD *rec;
+  RECORD *rec;
   int i;
 
   if(argc != 2) {
@@ -46,8 +46,8 @@ int main(int argc, char **argv)
 
   for(i=0; (rec = dbf_read_next(dbf)); i++) {
     printf("Record %i:\n", i);
-    dbf_record_dump(rec);
-    dbf_record_free(rec);
+    record_dump(rec);
+    record_free(rec);
   }
 
   dbf_close(dbf);

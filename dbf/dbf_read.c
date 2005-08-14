@@ -67,43 +67,52 @@ int _dbf_read_header(DBF *dbf) {
     }
 
     strncpy(field->name, DBF_FLD_NAME(temp), 10);
-    field->name[10] = '\0';
+    field->name[10]        = '\0';
+    field->format[0]       = '\0';
+    field->metadata.name   = field->name;
+    field->metadata.format = field->format;
+
     field->type     = DBF_FLD_TYPE(temp);
     field->length   = DBF_FLD_LEN(temp);
     field->decimals = DBF_FLD_DECIMALS(temp);
-    field->format[0]= '\0';
+
     switch(field->type) {
-    case CHARACTER:
+    case DBF_CHARACTER:
       dbf->record_length += field->size = field->length;
       strcpy(field->format, "%s");
+      field->metadata.data_type = CHARACTER;
       break;
 
-    case NUMBER:
+    case DBF_NUMBER:
       /* if field->decimals >0, fall through to FLOATING */
       if(field->decimals == 0) {
         dbf->record_length += field->size = field->length;
         strcpy(field->format, "%lld");
+        field->metadata.data_type = NUMBER;
         break;
       }
     
-    case FLOATING:
+    case DBF_FLOATING:
       dbf->record_length += field->size = field->length;
       sprintf(field->format, "%%.%if", field->decimals);
+      field->metadata.data_type = FLOATING;
       break;
 
-    case LOGICAL:
+    case DBF_LOGICAL:
       dbf->record_length += field->size = 1;
       strcpy(field->format, "%c");
+      field->metadata.data_type = LOGICAL;
       break;
       
-    case DATE:
+    case DBF_DATE:
       dbf->record_length += field->size = 8;
       strcpy(field->format, "%8s");
+      field->metadata.data_type = DATE;
       break;
 
-    case GENERAL:
-    case MEMO:
-    case PICTURE:
+    case DBF_GENERAL:
+    case DBF_MEMO:
+    case DBF_PICTURE:
       fprintf(stderr, "DBF: Unsupported field type %c!  Please ask for support from the author!\n", field->type);
       DBUG_RETURN(-4);
 
@@ -122,11 +131,11 @@ int _dbf_read_header(DBF *dbf) {
   DBUG_RETURN(0);
 }
 
-DBF_RECORD *dbf_read_next(DBF *dbf)
+RECORD *dbf_read_next(DBF *dbf)
 {
-  DBF_RECORD *record = NULL;
+  RECORD *record = NULL;
+  CELL *cell = NULL;
   DBF_FIELD *field;
-  DBF_CELL *cell;
   ssize_t count;
   char *buf, *cur, *tmp;
   int i;
@@ -145,26 +154,27 @@ DBF_RECORD *dbf_read_next(DBF *dbf)
     DBUG_RETURN(NULL);
   }
 
-  record = DBF_RECORD_INIT;
-  record->dbf    = dbf;
-  record->cells = cell = DBF_CELL_INIT(dbf->numfields);
-  record->status = cur[0]; cur++;
+  if(!(record = record_init(dbf)))
+    DBUG_RETURN(NULL);
+  
+  /* status = cur[0] */
+  cur++;
 
-  for(field=dbf->fields, i=0; i<dbf->numfields; field++, cell++, i++) {
-    cell->field = field;
+  for(field=dbf->fields; i<dbf->numfields; field++) {
+    cell = cell_init(field, &field->metadata);
     switch(field->type) {
-    case CHARACTER:
+    case DBF_CHARACTER:
       if(!(cell->data.character = (char *)strndup(cur, field->size)))
         goto oom;
       mygis_trim(cell->data.character, field->size);
       break;
 
-    case DATE:
+    case DBF_DATE:
       if(!(cell->data.date = (char *)strndup(cur, field->size)))
         goto oom;
       break;
       
-    case NUMBER: 
+    case DBF_NUMBER: 
       /* if field->decimals > 0, fall through to FLOATING */
       if(field->decimals == 0) {
         if(!(tmp = (char *)strndup(cur, field->size)))
@@ -174,26 +184,27 @@ DBF_RECORD *dbf_read_next(DBF *dbf)
         break;
       }
       
-    case FLOATING:
+    case DBF_FLOATING:
       if(!(tmp = (char *)strndup(cur, field->size)))
         goto oom;
       cell->data.floating = atof(tmp);
       free(tmp);
       break;
 
-    case LOGICAL:
+    case DBF_LOGICAL:
       cell->data.logical = cur[0];
       break;
 
-    case GENERAL:
-    case MEMO:
-    case PICTURE:
+    case DBF_GENERAL:
+    case DBF_MEMO:
+    case DBF_PICTURE:
       fprintf(stderr, "Unsupported field type %c!  Please ask for support from the author!\n", field->type);
       return NULL;
     default:
       fprintf(stderr, "Unknown field type %c!\n", field->type);
       return NULL;
     }
+    record_append(record, cell);
     cur += field->size;
   }
 

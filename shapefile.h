@@ -48,7 +48,7 @@ typedef struct shapefile_st {
 typedef struct shapefile_record_st {
   SHAPEFILE       *shapefile;
   GEOMETRY        *geometry;
-  DBF_RECORD      *dbf_record;
+  RECORD          *dbf_record;
 } SHAPEFILE_RECORD;
 
 typedef struct shapefile_scan_st {

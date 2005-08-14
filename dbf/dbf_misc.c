@@ -29,15 +29,19 @@
 #include "dbf.h"
 #include "dbf_priv.h"
 
-char *dbf_record_field(DBF_RECORD *record, char *key)
+char *dbf_record_field(RECORD *record, char *key)
 {
-  DBF *dbf = record->dbf;
-  DBF_FIELD *field = dbf->fields;
-  int i;
+  DBF *dbf = (DBF *)record->source;
+  DBF_FIELD *field;
+  CELL *cell = NULL;
+  CELL_NODE *cell_node = record->head;
 
-  for(i=0; i<dbf->numfields; i++, field++) {
+  for(; cell_node; cell_node = cell_node->next) {
+    cell = cell_node->cell;
+    field = (DBF_FIELD *)cell->field;
+
     if(strcasecmp(field->name, key) == 0)
-      return record->cells[i].data.character;
+      return cell->data.character;
   }
   return NULL;
 }

@@ -60,7 +60,11 @@ typedef struct record_st {
   uint cells;
 } RECORD;
 
-RECORD            *record_init(void *source);
-void              record_dump(RECORD *record);
-void              record_free(RECORD *record);
+RECORD     *record_init(void *source);
+CELL_NODE  *record_append(RECORD *record, CELL *cell);
+CELL       *record_remove(RECORD *record, CELL_NODE *node);
+void       record_dump(RECORD *record);
+void       record_free(RECORD *record);
 
+CELL  *cell_init(void *field, METADATA *metadata);
+void  cell_free(CELL *cell);

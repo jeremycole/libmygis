@@ -130,68 +130,6 @@ void dbf_dump(DBF *dbf)
   DBUG_VOID_RETURN;
 }
 
-void dbf_record_dump(DBF_RECORD *record)
-{
-  DBF_FIELD *field;
-  DBF_CELL *cell = record->cells;
-  int i;
-
-  DBUG_ENTER("dbf_record_dump");
-
-  for(field=record->dbf->fields, i=0; i<record->dbf->numfields; field++, cell++, i++) {
-    printf("  %10s: ", field->name);
-    switch(field->type) {
-    case CHARACTER:
-      printf(cell->field->format, cell->data.character);
-      break;
-    case DATE:
-      printf(cell->field->format, cell->data.date);
-      break;
-    case NUMBER:
-      printf(cell->field->format, cell->data.number);
-      break;
-    case FLOATING:
-      printf(cell->field->format, cell->data.floating);
-      break;
-    case LOGICAL:
-      printf(cell->field->format, cell->data.logical);
-      break;
-    }
-    printf("\n");
-  }
-
-  DBUG_VOID_RETURN;
-}
-
-void dbf_record_free(DBF_RECORD *record)
-{
-  DBF_FIELD *field;
-  DBF_CELL *cell = record->cells;
-  int i;
-
-  DBUG_ENTER("dbf_record_free");
-
-  for(field=record->dbf->fields, i=0; i<record->dbf->numfields; field++, cell++, i++) {
-    switch(field->type) {
-    case CHARACTER:
-      free(cell->data.character);
-      break;
-    case DATE:
-      free(cell->data.date);
-      break;
-    case NUMBER:
-    case LOGICAL:
-    case FLOATING:
-      /* Nothing to do. */
-      break;
-    }
-  }
-  free(record->cells);
-  free(record);
-
-  DBUG_VOID_RETURN;
-}  
-
 void dbf_close(DBF *dbf)
 {
   DBUG_ENTER("dbf_close");

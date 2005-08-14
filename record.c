@@ -111,7 +111,41 @@ void record_free(RECORD *record)
 
   if(!record) DBUG_VOID_RETURN;
   while((node=record->head))
-    free(record_remove(record, node));
+    cell_free(record_remove(record, node));
   free(record);
   DBUG_VOID_RETURN;
+}
+
+CELL *cell_init(void *field, METADATA *metadata)
+{
+  CELL *cell;
+  
+  DBUG_ENTER("cell_init");
+
+  if(!(cell = CELL_INIT))
+    DBUG_RETURN(NULL);
+
+  cell->field = field;
+  cell->metadata = metadata;
+  
+  DBUG_RETURN(cell);
+}
+
+void cell_free(CELL *cell)
+{
+  switch(cell->metadata->data_type) {
+  case CHARACTER:
+    free(cell->data.character);
+    break;
+  case DATE:
+    free(cell->data.date);
+    break;
+  case NUMBER:
+  case LOGICAL:
+  case FLOATING:
+    /* Nothing to do. */
+    break;
+  }
+
+  free(cell);
 }

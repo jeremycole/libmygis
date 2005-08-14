@@ -21,6 +21,7 @@
 
 #include "mygis.h"
 #include "../compare.h"
+#include "../record.h"
 
 #define DBF_POS_FILE_HEADER         0
 #define DBF_LEN_FILE_HEADER        32
@@ -74,11 +75,6 @@
       i<dbf->numfields; \
       field++, i++)
 
-#define FOREACH_DBF_RECORD_FIELD_CELL(dbf_record, field, cell, i) \
-  for(field=dbf_record->dbf->fields, cell = dbf_record->cells, i=0; \
-      i<dbf_record->dbf->numfields; \
-      field++, cell++, i++)
-
  /* Possible field types
     C = Character (char *) <254 bytes, check DBF_FLD_LEN for length
     N = Number (double), 10 or 19 bytes long, text
@@ -91,14 +87,14 @@
 */
 
 typedef enum dbf_field_type_en {
-  CHARACTER        = 'C',
-  NUMBER           = 'N',
-  LOGICAL          = 'L',
-  DATE             = 'D',
-  FLOATING         = 'F',
-  GENERAL          = 'G',
-  MEMO             = 'M',
-  PICTURE          = 'P'
+  DBF_CHARACTER        = 'C',
+  DBF_NUMBER           = 'N',
+  DBF_LOGICAL          = 'L',
+  DBF_DATE             = 'D',
+  DBF_FLOATING         = 'F',
+  DBF_GENERAL          = 'G',
+  DBF_MEMO             = 'M',
+  DBF_PICTURE          = 'P'
 } DBF_FIELD_TYPE;
 
 typedef struct dbf_field_st {
@@ -108,28 +104,12 @@ typedef struct dbf_field_st {
   byte            decimals;   /* digits after decimal point */
   byte            size;       /* total size to read from disk */
   char            format[10]; /* printf-compatible format string */
+  METADATA        metadata;
 } DBF_FIELD;
-
-typedef union dbf_cell_data_un {
-  char            *character;
-  long long       number;
-  char            logical;
-  char            *date;
-  double          floating;
-} DBF_CELL_DATA;
-
-typedef struct dbf_cell_st {
-  DBF_FIELD       *field;
-  DBF_CELL_DATA   data;
-  char            status;
-} DBF_CELL;
 
 #define DBF_INIT                   MYGIS_MALLOC(DBF)
 #define DBF_SCAN_INIT              MYGIS_MALLOC(DBF_SCAN)
-#define DBF_RECORD_INIT            MYGIS_MALLOC(DBF_RECORD)
 #define DBF_FIELD_INIT(x)          MYGIS_MALLOC_X(DBF_FIELD, x)
-#define DBF_CELL_INIT(x)           MYGIS_MALLOC_X(DBF_CELL, x)
-
 
 typedef struct dbf_st {
   char            *header;
@@ -154,12 +134,6 @@ typedef struct dbf_scan_st {
   int             last;
 } DBF_SCAN;
 
-typedef struct dbf_record_st {
-  DBF             *dbf;
-  DBF_CELL        *cells;
-  char            status;
-} DBF_RECORD;
-
 DBF                 *dbf_init(int flags);
 int                 dbf_open(DBF *dbf, char *dbffile, char mode);
 void                dbf_seek(DBF *dbf, int pos);
@@ -172,12 +146,10 @@ void                dbf_free(DBF *dbf);
 DBF_SCAN            *dbf_scan_init(DBF *dbf, COMPARE *compare,
                                    char *key, char *value);
 int                 dbf_scan_next(DBF_SCAN *scan);
-DBF_RECORD          *dbf_scan_read_next(DBF_SCAN *scan);
+RECORD              *dbf_scan_read_next(DBF_SCAN *scan);
 void                dbf_scan_free(DBF_SCAN *scan);
 
-DBF_RECORD          *dbf_read_next(DBF *dbf);
-char                *dbf_record_field(DBF_RECORD *record, char *key);
-void                dbf_record_dump(DBF_RECORD *record);
-void                dbf_record_free(DBF_RECORD *record);
+RECORD              *dbf_read_next(DBF *dbf);
+char                *dbf_record_field(RECORD *record, char *key);
 
 #endif /* DBF_H */

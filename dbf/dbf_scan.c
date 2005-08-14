@@ -55,7 +55,7 @@ int dbf_scan_next(DBF_SCAN *scan)
 {
   DBF     *dbf     = scan->dbf;
   COMPARE *compare = scan->compare;
-  DBF_RECORD *rec;
+  RECORD *rec;
   int next_match = -1;
 
   DBUG_ENTER("dbf_scan_next");
@@ -78,13 +78,13 @@ int dbf_scan_next(DBF_SCAN *scan)
 
  match:
   next_match = dbf->position-1;
-  dbf_record_free(rec);
+  record_free(rec);
 
  no_match:
   DBUG_RETURN(scan->last = next_match);
 }
 
-DBF_RECORD *dbf_scan_read_next(DBF_SCAN *scan) {
+RECORD *dbf_scan_read_next(DBF_SCAN *scan) {
   DBF *dbf = scan->dbf;
   int match;
 
