@@ -75,4 +75,7 @@ GEOMETRY  *wkb_read_next(WKB *wkb);
 void      wkb_rewind(WKB *wkb);
 void      wkb_free(WKB *wkb);
 
+uint32    wkb_size(GEOMETRY *geometry);
+char      *wkb_write(GEOMETRY *geometry, char *wkb);
+
 #endif /* WKB_H */

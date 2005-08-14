@@ -172,12 +172,23 @@ be used in the macros below, which deal with endianness properly.
 
 */
 
-#define MYGIS_READ_BYTE(pos)         ((byte)*((byte *)(pos)))
-#define MYGIS_READ_UINT16(pos)       ((uint16)*((uint16 *)(pos)))
-#define MYGIS_READ_UINT32(pos)       ((uint32)*((uint32 *)(pos)))
-#define MYGIS_READ_UINT64(pos)       ((uint64)*((uint64 *)(pos)))
-#define MYGIS_READ_FLOAT(pos)        ((float)*((float *)(pos)))
-#define MYGIS_READ_DOUBLE(pos)       ((double)*((double *)(pos)))
+#define MYGIS_READ(p, t)             ((t)*((t *)(p)))
+#define MYGIS_WRITE(p, v, t)         (*((t *)p) = (t)(v))
+
+#define MYGIS_READ_BYTE(p)           MYGIS_READ(p, byte)
+#define MYGIS_READ_UINT16(p)         MYGIS_READ(p, uint16)
+#define MYGIS_READ_UINT32(p)         MYGIS_READ(p, uint32)
+#define MYGIS_READ_UINT64(p)         MYGIS_READ(p, uint64)
+#define MYGIS_READ_FLOAT(p)          MYGIS_READ(p, float)
+#define MYGIS_READ_DOUBLE(p)         MYGIS_READ(p, double)
+
+#define MYGIS_WRITE_BYTE(p, v)       MYGIS_WRITE(p, v, byte)
+#define MYGIS_WRITE_UINT16(p, v)     MYGIS_WRITE(p, v, uint16)
+#define MYGIS_WRITE_UINT32(p, v)     MYGIS_WRITE(p, v, uint32)
+#define MYGIS_WRITE_UINT64(p, v)     MYGIS_WRITE(p, v, uint64)
+#define MYGIS_WRITE_FLOAT(p, v)      MYGIS_WRITE(p, v, float)
+#define MYGIS_WRITE_DOUBLE(p, v)     MYGIS_WRITE(p, v, double)
+
 
 /*
 
@@ -193,27 +204,51 @@ swapping the bytes will incur a function call.
 */
 
 #ifndef BIGENDIAN
-#define MYGIS_READ_UINT16_LE(pos)    MYGIS_READ_UINT16(pos) 
-#define MYGIS_READ_UINT32_LE(pos)    MYGIS_READ_UINT32(pos)
-#define MYGIS_READ_UINT64_LE(pos)    MYGIS_READ_UINT64(pos)
-#define MYGIS_READ_FLOAT_LE(pos)     MYGIS_READ_FLOAT(pos)
-#define MYGIS_READ_DOUBLE_LE(pos)    MYGIS_READ_DOUBLE(pos)
-#define MYGIS_READ_UINT16_BE(pos)    mygis_swap_uint16(MYGIS_READ_UINT16(pos))
-#define MYGIS_READ_UINT32_BE(pos)    mygis_swap_uint32(MYGIS_READ_UINT32(pos))
-#define MYGIS_READ_UINT64_BE(pos)    mygis_swap_uint64(MYGIS_READ_UINT64(pos))
-#define MYGIS_READ_FLOAT_BE(pos)     mygis_swap_float(MYGIS_READ_FLOAT(pos))
-#define MYGIS_READ_DOUBLE_BE(pos)    mygis_swap_double(MYGIS_READ_DOUBLE(pos))
+#define MYGIS_READ_UINT16_LE(p)      MYGIS_READ_UINT16(p) 
+#define MYGIS_READ_UINT32_LE(p)      MYGIS_READ_UINT32(p)
+#define MYGIS_READ_UINT64_LE(p)      MYGIS_READ_UINT64(p)
+#define MYGIS_READ_FLOAT_LE(p)       MYGIS_READ_FLOAT(p)
+#define MYGIS_READ_DOUBLE_LE(p)      MYGIS_READ_DOUBLE(p)
+#define MYGIS_READ_UINT16_BE(p)      mygis_swap_uint16(MYGIS_READ_UINT16(p))
+#define MYGIS_READ_UINT32_BE(p)      mygis_swap_uint32(MYGIS_READ_UINT32(p))
+#define MYGIS_READ_UINT64_BE(p)      mygis_swap_uint64(MYGIS_READ_UINT64(p))
+#define MYGIS_READ_FLOAT_BE(p)       mygis_swap_float(MYGIS_READ_FLOAT(p))
+#define MYGIS_READ_DOUBLE_BE(p)      mygis_swap_double(MYGIS_READ_DOUBLE(p))
+
+#define MYGIS_WRITE_UINT16_LE(p, v)  MYGIS_WRITE_UINT16(p, v) 
+#define MYGIS_WRITE_UINT32_LE(p, v)  MYGIS_WRITE_UINT32(p, v)
+#define MYGIS_WRITE_UINT64_LE(p v)   MYGIS_WRITE_UINT64(p, v)
+#define MYGIS_WRITE_FLOAT_LE(p, v)   MYGIS_WRITE_FLOAT(p, v)
+#define MYGIS_WRITE_DOUBLE_LE(p, v)  MYGIS_WRITE_DOUBLE(p, v)
+#define MYGIS_WRITE_UINT16_BE(p, v)  MYGIS_WRITE_UINT16(p, mygis_swap_uint16(v))
+#define MYGIS_WRITE_UINT32_BE(p, v)  MYGIS_WRITE_UINT32(p, mygis_swap_uint32(v))
+#define MYGIS_WRITE_UINT64_BE(p, v)  MYGIS_WRITE_UINT64(p, mygis_swap_uint64(v))
+#define MYGIS_WRITE_FLOAT_BE(p, v)   MYGIS_WRITE_FLOAT(p, mygis_swap_float(v))
+#define MYGIS_WRITE_DOUBLE_BE(p, v)  MYGIS_WRITE_DOUBLE(p, mygis_swap_double(v))
+
 #else
-#define MYGIS_READ_UINT16_BE(pos)    MYGIS_READ_UINT16(pos)
-#define MYGIS_READ_UINT32_BE(pos)    MYGIS_READ_UINT32(pos)
-#define MYGIS_READ_UINT64_BE(pos)    MYGIS_READ_UINT64(pos)
-#define MYGIS_READ_FLOAT_BE(pos)     MYGIS_READ_FLOAT(pos)
-#define MYGIS_READ_DOUBLE_BE(pos)    MYGIS_READ_DOUBLE(pos)
-#define MYGIS_READ_UINT16_LE(pos)    mygis_swap_uint16(MYGIS_READ_UINT16(pos))
-#define MYGIS_READ_UINT32_LE(pos)    mygis_swap_uint32(MYGIS_READ_UINT32(pos))
-#define MYGIS_READ_UINT64_LE(pos)    mygis_swap_uint64(MYGIS_READ_UINT64(pos))
-#define MYGIS_READ_FLOAT_LE(pos)     mygis_swap_float(MYGIS_READ_FLOAT(pos))
-#define MYGIS_READ_DOUBLE_LE(pos)    mygis_swap_double(MYGIS_READ_DOUBLE(pos))
+#define MYGIS_READ_UINT16_BE(p)      MYGIS_READ_UINT16(p)
+#define MYGIS_READ_UINT32_BE(p)      MYGIS_READ_UINT32(p)
+#define MYGIS_READ_UINT64_BE(p)      MYGIS_READ_UINT64(p)
+#define MYGIS_READ_FLOAT_BE(p)       MYGIS_READ_FLOAT(p)
+#define MYGIS_READ_DOUBLE_BE(p)      MYGIS_READ_DOUBLE(p)
+#define MYGIS_READ_UINT16_LE(p)      mygis_swap_uint16(MYGIS_READ_UINT16(p))
+#define MYGIS_READ_UINT32_LE(p)      mygis_swap_uint32(MYGIS_READ_UINT32(p))
+#define MYGIS_READ_UINT64_LE(p)      mygis_swap_uint64(MYGIS_READ_UINT64(p))
+#define MYGIS_READ_FLOAT_LE(p)       mygis_swap_float(MYGIS_READ_FLOAT(p))
+#define MYGIS_READ_DOUBLE_LE(p)      mygis_swap_double(MYGIS_READ_DOUBLE(p))
+
+#define MYGIS_WRITE_UINT16_BE(p, v)  MYGIS_WRITE_UINT16(p, v) 
+#define MYGIS_WRITE_UINT32_BE(p, v)  MYGIS_WRITE_UINT32(p, v)
+#define MYGIS_WRITE_UINT64_BE(p, v)  MYGIS_WRITE_UINT64(p, v)
+#define MYGIS_WRITE_FLOAT_BE(p, v)   MYGIS_WRITE_FLOAT(p, v)
+#define MYGIS_WRITE_DOUBLE_BE(p, v)  MYGIS_WRITE_DOUBLE(p, v)
+#define MYGIS_WRITE_UINT16_LE(p, v)  MYGIS_WRITE_UINT16(p, mygis_swap_uint16(v))
+#define MYGIS_WRITE_UINT32_LE(p, v)  MYGIS_WRITE_UINT32(p, mygis_swap_uint32(v))
+#define MYGIS_WRITE_UINT64_LE(p, v)  MYGIS_WRITE_UINT64(p, mygis_swap_uint64(v))
+#define MYGIS_WRITE_FLOAT_LE(p, v)   MYGIS_WRITE_FLOAT(p, mygis_swap_float(v))
+#define MYGIS_WRITE_DOUBLE_LE(p, v)  MYGIS_WRITE_DOUBLE(p, mygis_swap_double(v))
+
 #endif /* BIGENDIAN */
 
 

@@ -30,7 +30,7 @@ ROOT_OBJECTS = \
   
 libmygis_a_LIBADD = \
   $(ROOT_OBJECTS) \
-  wkb/wkb.o wkb/wkb_read.o \
+  wkb/wkb.o wkb/wkb_read.o wkb/wkb_write.o wkb/wkb_misc.o \
   wkt/wkt.o wkt/wkt_write.o \
   e00/e00.o e00/e00_read.o e00/e00_write.o \
   dbf/dbf.o dbf/dbf_read.o dbf/dbf_scan.o dbf/dbf_misc.o \

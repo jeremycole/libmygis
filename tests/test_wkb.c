@@ -105,10 +105,13 @@ static char combo[155] = {
 int main(int argc, char **argv) {
   WKB *wkb;
   GEOMETRY *geo;
-  char *test[6] = { point_1, point_2, linestring_1, polygon_1, combo, NULL };
-  int size[6] = { 21, 21, 41, 93, 155, 0 };  
+  char *test[6] = { point_1, point_2, linestring_1, polygon_1, NULL };
+  int size[6] = { 21, 21, 41, 93, 0 };  
   char **p;
   int *s;
+  char *w;
+  char *i, *j;
+  int x;
 
   DBUG_ENTER("main");
   DBUG_PROCESS(argv[0]);
@@ -121,6 +124,17 @@ int main(int argc, char **argv) {
       exit(1);
     }
     while( (geo = wkb_read_next(wkb)) ) {
+      printf("wkb size = %i\n", wkb_size(geo));
+      w = wkb_write(geo, NULL);
+      if(!memcmp(*p, w, *s)) {
+        printf("match!\n");
+      } else {
+        printf("no match!\n");
+        for(i = *p, j = w, x=0; x < *s; i++, j++, x++) {
+          printf("  %02i: p = %02x, w = %02x\n", x, *((char *)i), *((char *)j));
+        }
+      }
+      free(w);
       geometry_dump(geo, 5);
       geometry_free(geo);
     };
