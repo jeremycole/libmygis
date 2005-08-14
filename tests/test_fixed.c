@@ -25,7 +25,7 @@
 
 int main(int argc, char **argv) {
   FIXED *fixed;
-  FIXED_RECORD *record;
+  RECORD *record;
 
   DBUG_ENTER("main");
   DBUG_PROCESS(argv[0]);
@@ -46,8 +46,8 @@ int main(int argc, char **argv) {
 
   fixed_open(fixed, argv[1], 'r');
   while(record = fixed_read_next(fixed)) {
-    fixed_record_dump(record);
-    fixed_record_free(record);
+    record_dump(record);
+    record_free(record);
   }
 
   fixed_close(fixed);

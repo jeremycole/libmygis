@@ -68,7 +68,7 @@ typedef struct tiger_st {
 typedef struct tiger_record_st {
   TIGER           *tiger;
   TIGER_FILE_TYPE type;
-  FIXED_RECORD    *fixed_record;
+  RECORD          *record;
 } TIGER_RECORD;
 
 typedef struct tiger_scan_st {

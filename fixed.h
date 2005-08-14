@@ -21,14 +21,12 @@
 
 #include "mygis.h"
 #include "compare.h"
+#include "record.h"
 #include "fixed.h"
 
 #define FIXED_INIT                     MYGIS_MALLOC(FIXED)
 #define FIXED_FIELD_INIT               MYGIS_MALLOC(FIXED_FIELD)
 #define FIXED_FIELD_NODE_INIT          MYGIS_MALLOC(FIXED_FIELD_NODE)
-#define FIXED_RECORD_INIT              MYGIS_MALLOC(FIXED_RECORD)
-#define FIXED_CELL_INIT                MYGIS_MALLOC(FIXED_CELL)
-#define FIXED_CELL_NODE_INIT           MYGIS_MALLOC(FIXED_CELL_NODE)
 
 #define FIXED_F_CRLF                   0x0001
 #define FIXED_F_NULLS                  0x1000
@@ -39,13 +37,13 @@ typedef enum fixed_padding_en {
 } FIXED_PADDING;
 
 typedef enum fixed_type_en {
-  CHARACTER        = 'C',
-  NUMBER           = 'N',
-  LOGICAL          = 'L',
-  DATE             = 'D',
-  FLOATING         = 'F',
-  FLOAT1MM         = '1',
-  DISCARD          = '*'
+  FIXED_CHARACTER        = 'C',
+  FIXED_NUMBER           = 'N',
+  FIXED_LOGICAL          = 'L',
+  FIXED_DATE             = 'D',
+  FIXED_FLOATING         = 'F',
+  FIXED_FLOAT1MM         = '1',
+  FIXED_DISCARD          = '*'
 } FIXED_TYPE;
 
 typedef enum fixed_nulls_en {
@@ -55,12 +53,14 @@ typedef enum fixed_nulls_en {
 
 typedef struct fixed_field_st {
   char          *name;
+  char          format[10];
   FIXED_PADDING padding;
   FIXED_TYPE    type;
   FIXED_NULLS   nulls;
   uint          start;
   uint          end;
   uint          length;
+  METADATA      metadata;
 } FIXED_FIELD;
 
 typedef struct fixed_field_node_st {
@@ -93,31 +93,6 @@ typedef struct fixed_scan_st {
   int             last;
 } FIXED_SCAN;
 
-typedef union fixed_cell_data_un {
-  char            *character;
-  long long       number;
-  char            logical;
-  char            *date;
-  double          floating;
-} FIXED_CELL_DATA;
-
-typedef struct fixed_cell_st {
-  FIXED_FIELD     *field;
-  FIXED_CELL_DATA data;
-  int             is_null;
-} FIXED_CELL;
-
-typedef struct fixed_cell_node_st {
-  FIXED_CELL      *cell;
-  struct fixed_cell_node_st *prev, *next;
-} FIXED_CELL_NODE;
-
-typedef struct fixed_record_st {
-  FIXED *fixed;
-  FIXED_CELL_NODE *head, *tail;
-  uint cells;
-} FIXED_RECORD;
-
 typedef struct fixed_file_def_st {
   char            *name;
   FIXED_PADDING   padding;
@@ -145,18 +120,14 @@ void              fixed_free(FIXED *fixed);
 FIXED_FIELD_NODE  *fixed_append(FIXED *fixed, FIXED_FIELD *field);
 FIXED_FIELD       *fixed_remove(FIXED *fixed, FIXED_FIELD_NODE *node);
 
-FIXED_RECORD      *fixed_read_next(FIXED *fixed);
+RECORD            *fixed_read_next(FIXED *fixed);
 
-FIXED_RECORD      *fixed_record_init(FIXED *fixed);
-void              fixed_record_dump(FIXED_RECORD *record);
-void              fixed_record_free(FIXED_RECORD *record);
-
-FIXED_RECORD      *fixed_parse(FIXED *fixed, char *line);
+RECORD            *fixed_parse(FIXED *fixed, char *line);
 
 FIXED_SCAN        *fixed_scan_init(FIXED *fixed, COMPARE *compare,
                                    char *key, char *value);
 int               fixed_scan_next(FIXED_SCAN *scan);
-FIXED_RECORD      *fixed_scan_read_next(FIXED_SCAN *scan);
+RECORD            *fixed_scan_read_next(FIXED_SCAN *scan);
 void              fixed_scan_free(FIXED_SCAN *scan);
 
 #endif /* FIXED_H */

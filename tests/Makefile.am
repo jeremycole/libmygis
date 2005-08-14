@@ -3,7 +3,7 @@ MAINTAINERCLEANFILES = Makefile.in *~
 bin_PROGRAMS = \
 	test_swap \
 	test_pairlist \
-	test_fixed \
+	test_fixed test_fixed_usps \
 	test_wkb \
 	test_e00 \
 	test_shp test_shx \
@@ -18,6 +18,9 @@ test_pairlist_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_fixed_SOURCES = test_fixed.c
 test_fixed_LDADD = $(LIBOBJS) ../libmygis.a
+
+test_fixed_usps_SOURCES = test_fixed_usps.c
+test_fixed_usps_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_wkb_SOURCES = test_wkb.c
 test_wkb_LDADD = $(LIBOBJS) ../libmygis.a

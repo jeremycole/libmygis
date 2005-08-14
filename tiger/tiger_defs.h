@@ -16,34 +16,27 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
 #include "tiger.h"
 
-#include <stdlib.h>
+FIXED_FILE_DEF tiger_file_def_rt1[];
+FIXED_FILE_DEF tiger_file_def_rt2[];
+FIXED_FILE_DEF tiger_file_def_rt4[];
+FIXED_FILE_DEF tiger_file_def_rt5[];
+FIXED_FILE_DEF tiger_file_def_rt6[];
+FIXED_FILE_DEF tiger_file_def_rt7[];
+FIXED_FILE_DEF tiger_file_def_rt8[];
+FIXED_FILE_DEF tiger_file_def_rta[];
+FIXED_FILE_DEF tiger_file_def_rtb[];
+FIXED_FILE_DEF tiger_file_def_rtc[];
+FIXED_FILE_DEF tiger_file_def_rte[];
+FIXED_FILE_DEF tiger_file_def_rth[];
+FIXED_FILE_DEF tiger_file_def_rti[];
+FIXED_FILE_DEF tiger_file_def_rtm[];
+FIXED_FILE_DEF tiger_file_def_rtp[];
+FIXED_FILE_DEF tiger_file_def_rtr[];
+FIXED_FILE_DEF tiger_file_def_rts[];
+FIXED_FILE_DEF tiger_file_def_rtt[];
+FIXED_FILE_DEF tiger_file_def_rtu[];
+FIXED_FILE_DEF tiger_file_def_rtz[];
 
-TIGER_RECORD *tiger_read_next(TIGER *tiger, TIGER_FILE_TYPE type)
-{
-  TIGER_RECORD     *record = NULL;
-  TIGER_FILE       *file   = NULL;
-  TIGER_FILE_TYPES *file_type = NULL;
-
-  DBUG_ENTER("tiger_read_next");
-
-  if(!tiger) goto err1;
-
-  if(!(record = tiger_record_init(tiger, type)))
-    goto err1;
-
-  file        = &tiger->files[type];
-  file_type   = &tiger_file_types[type];
-
-  if(!(record->record = fixed_read_next(file->fixed)))
-    goto endoffile;
-
-  DBUG_RETURN(record);
-
- endoffile:
-  free(record);
- err1:
-  DBUG_RETURN(NULL);
-}
+TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE];
