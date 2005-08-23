@@ -106,9 +106,9 @@ void record_dump(RECORD *record)
 
 void record_free(RECORD *record)
 {
-  DBUG_ENTER("record_free");
   CELL_NODE *node = NULL;
 
+  DBUG_ENTER("record_free");
   if(!record) DBUG_VOID_RETURN;
   while((node=record->head))
     cell_free(record_remove(record, node));
