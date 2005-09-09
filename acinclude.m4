@@ -22,6 +22,7 @@ AC_DEFUN(AC_LIB_MYSQL, [
     AC_MSG_RESULT([])
 
     mysql_ok=no
+    mysql_found=no
 
     SAVE_LIBS=$LIBS
     
@@ -30,9 +31,9 @@ AC_DEFUN(AC_LIB_MYSQL, [
                 /usr/local/mysql/lib"
     
     for dir in $mysql_lib; do
-      AC_MSG_CHECKING([for libmysqlclient in $dir])
       if test "x$mysql_found" != "xyes"
       then
+        AC_MSG_CHECKING([for libmysqlclient in $dir])
         if test -f "$dir/libmysqlclient.a" ;
         then
           AC_MSG_RESULT([yes])
@@ -40,7 +41,7 @@ AC_DEFUN(AC_LIB_MYSQL, [
           MYSQL_LIB="-L$dir -lmysqlclient $LIBZ_LIB"
           AC_SUBST(MYSQL_LIB)
           AC_CHECK_LIB(mysqlclient, mysql_real_connect,
-                       mysql_ok=yes, mysql_ok=no)
+                       [mysql_ok=yes; mysql_found=yes], mysql_ok=no)
         else
           AC_MSG_RESULT([no])
         fi
@@ -73,9 +74,9 @@ AC_DEFUN(AC_HEADER_MYSQL, [
                     /usr/local/mysql/include"
     
     for dir in $mysql_include; do
-      AC_MSG_CHECKING([for mysql.h in $dir])
       if test "x$mysql_found" != "xyes"
       then
+        AC_MSG_CHECKING([for mysql.h in $dir])
         if test -f "$dir/mysql.h" 
         then
           MYSQL_INCLUDE="-I$dir"
