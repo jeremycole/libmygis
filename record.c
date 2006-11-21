@@ -31,6 +31,7 @@ RECORD *record_init(void *source)
   if(!(record = RECORD_INIT))
     DBUG_RETURN(NULL);
 
+  record->head = record->tail = NULL;
   record->source = source;
 
   DBUG_RETURN(record);
@@ -127,6 +128,7 @@ CELL *cell_init(void *field, METADATA *metadata)
 
   cell->field = field;
   cell->metadata = metadata;
+  cell->is_null = 0;
   
   DBUG_RETURN(cell);
 }
