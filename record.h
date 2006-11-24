@@ -16,6 +16,9 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#ifndef RECORD_H
+#define RECORD_H
+
 #define RECORD_INIT                    MYGIS_MALLOC(RECORD)
 #define CELL_INIT                      MYGIS_MALLOC(CELL)
 #define CELL_NODE_INIT                 MYGIS_MALLOC(CELL_NODE)
@@ -68,3 +71,5 @@ void       record_free(RECORD *record);
 
 CELL  *cell_init(void *field, METADATA *metadata);
 void  cell_free(CELL *cell);
+
+#endif /* RECORD_H */
