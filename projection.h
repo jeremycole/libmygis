@@ -16,21 +16,31 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef WKT_H
-#define WKT_H
+#ifndef PROJECTION_H
+#define PROJECTION_H
 
+#include <proj_api.h>
 #include "mygis.h"
+#include "pairlist.h"
 #include "geometry.h"
-#include "projection.h"
 
-extern const char WKT_TYPES[8][20];
+typedef struct projection_st {
+  int is_set;
+  char *from_name;
+  char *from;
+  char *to_name;
+  char *to;
+  projPJ proj4_pj_from;
+  projPJ proj4_pj_to;
+} PROJECTION;
 
-/*
+#define PROJECTION_INIT                      MYGIS_MALLOC(PROJECTION)
 
-THE PUBLIC API
+PROJECTION *projection_init();
+int projection_set(PROJECTION *proj, char *from, char *to);
+void projection_unset(PROJECTION *proj);
+POINT *projection_transform(PROJECTION *proj, POINT *point);
+void projection_dump(PROJECTION *proj);
+void projection_free(PROJECTION *proj);
 
-*/
-
-void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f);
-
-#endif /* WKT_H */
+#endif /* PAIRLIST_H */

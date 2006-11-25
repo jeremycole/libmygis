@@ -16,21 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef WKT_H
-#define WKT_H
+#ifndef PRJ_PRIV_H
+#define PRJ_PRIV_H
 
-#include "mygis.h"
-#include "geometry.h"
-#include "projection.h"
-
-extern const char WKT_TYPES[8][20];
-
-/*
-
-THE PUBLIC API
-
-*/
-
-void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f);
-
-#endif /* WKT_H */
+#endif /* PRJ_PRIV_H */

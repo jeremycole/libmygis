@@ -4,7 +4,7 @@ bin_PROGRAMS = \
 	mysqlgisimport
 
 mysqlgisimport_SOURCES = mysqlgisimport.c
-mysqlgisimport_LDADD = $(LIBOBJS) ../libmygis.a
+mysqlgisimport_LDADD = $(LIBOBJS) ../libmygis.a -L/usr/local/lib -lproj
 
 INCLUDES = -I$(srcdir) -I..
 

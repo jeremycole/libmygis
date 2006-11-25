@@ -22,24 +22,30 @@
 #include "shp/shp.h"
 #include "shp/shx.h"
 #include "dbf/dbf.h"
+#include "prj/prj.h"
 #include "compare.h"
+#include "projection.h"
 
 #define SHAPEFILE_NO_SHP                0x0001
 #define SHAPEFILE_NO_SHX                0x0002
 #define SHAPEFILE_NO_DBF                0x0004
+#define SHAPEFILE_NO_PRJ                0x0008
 
 #define SHAPEFILE_HAS_SHP               0x1000
 #define SHAPEFILE_HAS_SHX               0x2000
 #define SHAPEFILE_HAS_DBF               0x4000
+#define SHAPEFILE_HAS_PRJ               0x8000
 
 #define SHAPEFILE_INIT                  MYGIS_MALLOC(SHAPEFILE)
 #define SHAPEFILE_SCAN_INIT             MYGIS_MALLOC(SHAPEFILE_SCAN)
 #define SHAPEFILE_RECORD_INIT           MYGIS_MALLOC(SHAPEFILE_RECORD)
 
 typedef struct shapefile_st {
+  PROJECTION      *projection;
   SHP             *shp;
   SHX             *shx;
   DBF             *dbf;
+  PRJ             *prj;
   char            *basename;
   int             flags;
   char            mode;
@@ -66,6 +72,8 @@ PUBLIC API
 
 SHAPEFILE           *shapefile_init(int flags);
 int                 shapefile_open(SHAPEFILE *shapefile, char *basename, char mode);
+void                shapefile_set_projection(SHAPEFILE *shapefile,
+                                             PROJECTION *projection);
 void                shapefile_record_seek(SHAPEFILE *shapefile, uint32 record);
 SHAPEFILE_RECORD    *shapefile_read_next(SHAPEFILE *shapefile);
 void                shapefile_record_dump(SHAPEFILE_RECORD *record);

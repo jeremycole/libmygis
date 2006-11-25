@@ -42,8 +42,9 @@ static struct option long_options[] = {
   {"debug",               optional_argument, NULL, 'd'},
 #endif
   {"no-dbf",              no_argument,       NULL, 'D'},
-  {"no-shx",              no_argument,       NULL, 'X'},
   {"no-shp",              no_argument,       NULL, 'S'},
+  {"no-shx",              no_argument,       NULL, 'X'},
+  {"no-prj",              no_argument,       NULL, 'P'},
   {"no-schema",           no_argument,       NULL, 's'},
   {"no-data",             no_argument,       NULL, 'n'},
   {"table",               required_argument, NULL, 't'},
@@ -78,6 +79,7 @@ void usage(FILE *f)
   fprintf(f, "  -D, --no-dbf         Don't use a DBF (database) file.\n");
   fprintf(f, "  -S, --no-shp         Don't use a SHP (shape) file, implies --no-shx.\n");
   fprintf(f, "  -X, --no-shx         Don't use a SHX (shape index) file.\n");
+  fprintf(f, "  -P, --no-prj         Don't use a PRJ (projection) file.\n");
   
   fprintf(f, "\nFilter Options:\n");
   fprintf(f, "  -q, --query          DBF query of form: \"FIELD=value\".\n");
@@ -316,9 +318,12 @@ void print_schema(FILE *f, SHAPEFILE *sha,
   DBUG_VOID_RETURN;
 }
 
-void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
+void print_record(FILE *f,
+                  SHAPEFILE_RECORD *record, 
+                  char *table_name,
                   char *auto_increment_key,
-                  int opt_delimited, int opt_geometry_as_text)
+                  int opt_delimited,
+                  int opt_geometry_as_text)
 {
   SHAPEFILE *sha = record->shapefile;
   RECORD *dbf_record = record->dbf_record;
@@ -369,7 +374,7 @@ void print_record(FILE *f, SHAPEFILE_RECORD *record, char *table_name,
     if (!opt_delimited)
       fprintf(f, "'");
 
-    wkt_write(record->geometry, f);
+    wkt_write(record->geometry, sha->projection, f);
     
     if (!opt_delimited)
       fprintf(f, "'");
@@ -410,6 +415,7 @@ int main(int argc, char **argv)
   SHAPEFILE *sha;
   SHAPEFILE_SCAN *scan;
   SHAPEFILE_RECORD *rec;
+  PROJECTION *proj;
   int shapefile_flags = 0;
   int ret = 0;
 
@@ -459,6 +465,9 @@ int main(int argc, char **argv)
       break;
     case 'X':
       shapefile_flags |= SHAPEFILE_NO_SHX;
+      break;
+    case 'P':
+      shapefile_flags |= SHAPEFILE_NO_PRJ;
       break;
     case 's':
       opt_no_schema++;
@@ -537,14 +546,16 @@ int main(int argc, char **argv)
   /* set defaults */
 
   if (geometry_field == NULL)
-    {
-      geometry_field = (opt_geometry_as_text ? "geo_as_text" : "geo");
-    }
+  {
+    geometry_field = (opt_geometry_as_text ? "geo_as_text" : "geo");
+  }
 
   if (!auto_increment_key && !primary_key)
-    {
-      auto_increment_key = "id";
-    }
+  {
+    auto_increment_key = "id";
+  }
+
+  proj = projection_init();
 
   /* open each shapefile and start processing */
   
@@ -562,7 +573,13 @@ int main(int argc, char **argv)
         fprintf(stderr, "Couldn't open files, missing files?\n");
         ret = 3; goto err2;
       }
-  
+      
+      if(sha->flags & SHAPEFILE_HAS_PRJ)
+      {
+        projection_set(proj, sha->prj->proj4_def, "+proj=latlong");
+        shapefile_set_projection(sha, proj);
+      }
+
       if(!table_name) table_name = (char *)strdup(basename(argv[optind]));
 
       if(sha->flags & SHAPEFILE_HAS_DBF) {

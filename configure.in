@@ -7,6 +7,9 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_RANLIB
 
+AM_PROG_LEX
+AC_PROG_YACC
+
 AC_LIB_Z
 
 AC_C_CONST
@@ -117,4 +120,4 @@ then
   CFLAGS="$CFLAGS -lgen "
 fi
 
-AC_OUTPUT(Makefile wkb/Makefile wkt/Makefile dbf/Makefile shp/Makefile e00/Makefile tiger/Makefile tests/Makefile tools/Makefile)
+AC_OUTPUT(Makefile wkb/Makefile wkt/Makefile dbf/Makefile prj/Makefile shp/Makefile e00/Makefile tiger/Makefile tests/Makefile tools/Makefile)

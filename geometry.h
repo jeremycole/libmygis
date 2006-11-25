@@ -109,8 +109,6 @@ typedef struct geometry_multipolygon_st {
   uint32  items;
   GEOMETRY_POLYGON *polygons;
 } GEOMETRY_MULTIPOLYGON;
-  
-
 
 
 typedef union geometry_any {

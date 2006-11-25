@@ -16,21 +16,54 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef WKT_H
-#define WKT_H
+#include <stdio.h>
 
 #include "mygis.h"
 #include "geometry.h"
-#include "projection.h"
+#include "shapefile.h"
 
-extern const char WKT_TYPES[8][20];
+int main(int argc, char **argv)
+{
+  SHAPEFILE *sha;
+  SHAPEFILE_RECORD *rec;
 
-/*
+  int i;
 
-THE PUBLIC API
+  DBUG_ENTER("main");
+  DBUG_PROCESS(argv[0]);
+  DBUG_PUSH("d:t");
 
-*/
+  if(argc != 2) {
+    printf("usage %s <shapefile>\n", argv[0]);
+    DBUG_RETURN(-1);
+  }
 
-void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f);
+  if(!(sha = shapefile_init(0))) {
+    printf("Couldn't init\n");
+    DBUG_RETURN(-2);
+  }
 
-#endif /* WKT_H */
+  if(shapefile_open(sha, argv[1], 'r') < 0) {
+    printf("Couldn't open\n");
+    DBUG_RETURN(-3);
+  }
+
+  shapefile_dump(sha);
+
+  for(i=1; i<100; i+=10) {
+    shapefile_record_seek(sha, i);
+    if((rec = shapefile_read_next(sha))) {
+      shapefile_record_dump(rec);
+      shapefile_record_free(rec);
+    } else {
+      printf("Error reading record\n");
+      return 4;
+    }
+    printf("\n\n\n");
+  }
+
+  shapefile_close(sha);
+  shapefile_free(sha);
+
+  DBUG_RETURN(0);
+}

@@ -33,11 +33,15 @@ SHAPEFILE *shapefile_init(int flags)
   if(!(shapefile->shp = shp_init(flags))) goto err2;
   if(!(shapefile->shx = shx_init(flags))) goto err3;
   if(!(shapefile->dbf = dbf_init(flags))) goto err4;
+  if(!(shapefile->prj = prj_init(flags))) goto err5;
 
   shapefile->flags = flags;
+  shapefile->projection = NULL;
 
   DBUG_RETURN(shapefile);
 
+ err5:
+  free(shapefile->dbf);
  err4:
   free(shapefile->shx);
  err3:
@@ -51,7 +55,7 @@ SHAPEFILE *shapefile_init(int flags)
 
 int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
 {
-  char *shpname, *shxname, *dbfname;
+  char *shpname, *shxname, *dbfname, *prjname;
 
   DBUG_ENTER("shapefile_open");
   DBUG_PRINT("info", ("SHAPEFILE: Opening '%s', mode '%c'", basename, mode));
@@ -73,7 +77,12 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
     fprintf(stderr, "Couldn't allocate memory for dbfname\n");
     goto err3;
   }
-
+  
+  if(!(prjname = (char *)malloc(strlen(basename)+5))) {
+    fprintf(stderr, "Couldn't allocate memory for prjname\n");
+    goto err3;
+  }
+  
   strcpy(shpname, basename);
   strcat(shpname, ".shp");
 
@@ -82,6 +91,9 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
 
   strcpy(dbfname, basename);
   strcat(dbfname, ".dbf");
+
+  strcpy(prjname, basename);
+  strcat(prjname, ".prj");
 
   if(!(shapefile->flags & SHAPEFILE_NO_SHP)) {
     if(shp_open(shapefile->shp, shpname, mode) < 0)
@@ -102,12 +114,20 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
     shapefile->flags |= SHAPEFILE_HAS_DBF;
   }
 
+  if(!(shapefile->flags & SHAPEFILE_NO_PRJ)) {
+    if(prj_parse(shapefile->prj, prjname) < 0)
+      goto err7;
+    shapefile->flags |= SHAPEFILE_HAS_PRJ;
+  }
+
   free(shpname);
   free(shxname);
   free(dbfname);
+  free(prjname);
 
   DBUG_RETURN(0);
 
+ err7:
   if(!(shapefile->flags & SHAPEFILE_NO_DBF)) dbf_close(shapefile->dbf);
  err6:
   if(!(shapefile->flags & SHAPEFILE_NO_SHX)) shx_close(shapefile->shx);
@@ -121,6 +141,11 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
   free(shpname);
  err1:
   DBUG_RETURN(-1);
+}
+
+void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)
+{
+  shapefile->projection = projection;
 }
 
 void shapefile_record_seek(SHAPEFILE *shapefile, uint32 record)
@@ -227,6 +252,9 @@ void shapefile_dump(SHAPEFILE *shapefile)
 
   if(shapefile->flags & SHAPEFILE_HAS_DBF)
     dbf_dump(shapefile->dbf);
+    
+  if(shapefile->flags & SHAPEFILE_HAS_PRJ)
+    prj_dump(shapefile->prj);
   DBUG_VOID_RETURN;
 }
 
@@ -253,6 +281,7 @@ void shapefile_free(SHAPEFILE *shapefile)
   shp_free(shapefile->shp);
   shx_free(shapefile->shx);
   dbf_free(shapefile->dbf);
+  prj_free(shapefile->prj);
   free(shapefile);
   DBUG_VOID_RETURN;
 }

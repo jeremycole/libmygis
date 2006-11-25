@@ -16,21 +16,24 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef WKT_H
-#define WKT_H
+#ifndef PRJ_DEFS_H
+#define PRJ_DEFS_H
 
-#include "mygis.h"
-#include "geometry.h"
-#include "projection.h"
+#include "prj.h"
 
-extern const char WKT_TYPES[8][20];
+typedef struct prj_proj4_names_st
+{
+  char *prj_name;
+  char *proj4_name;
+} PRJ_PROJ4_NAMES;
 
-/*
+PRJ_PROJ4_NAMES prj_proj4_geogcs_names[];
+PRJ_PROJ4_NAMES prj_proj4_datum_names[];
+PRJ_PROJ4_NAMES prj_proj4_spheroid_names[];
+PRJ_PROJ4_NAMES prj_proj4_projection_names[];
+PRJ_PROJ4_NAMES prj_proj4_unit_names[];
+PRJ_PROJ4_NAMES prj_proj4_parameter_names[];
 
-THE PUBLIC API
+char *prj_proj4_names_find(PRJ_PROJ4_NAMES *names, char *name);
 
-*/
-
-void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f);
-
-#endif /* WKT_H */
+#endif /* PRJ_DEFS_H */
