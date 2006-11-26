@@ -179,10 +179,10 @@ void shp_dump(SHP *shp)
 {
   DBUG_ENTER("shp_dump");
   printf("\n");
-  printf("SHP: Dump: 0x%08x\n", (int)shp);
+  printf("SHP: Dump: " PTR_FORMAT "\n", PTR_CAST(shp));
   printf("  Structure:\n");
-  printf("    header:     0x%08x\n", (int)shp->header);
-  printf("    index:      0x%08x\n", (int)shp->index);
+  printf("    header:     " PTR_FORMAT "\n", PTR_CAST(shp->header));
+  printf("    index:      " PTR_FORMAT "\n", PTR_CAST(shp->index));
   printf("    filename:   %s\n", shp->filename);
   printf("    fd:         %i\n", shp->fd);
   printf("    mode:       %c\n", shp->mode);
@@ -201,14 +201,14 @@ void shp_dump(SHP *shp)
   printf("    shapetype:  %s (%i)\n", 
 	 SHP_TYPES[shp->header->shapetype],
 	 shp->header->shapetype);
-  printf("    mbr_minx:   %+011.6lf\n", shp->header->mbr_minx);
-  printf("    mbr_miny:   %+011.6lf\n", shp->header->mbr_miny);
-  printf("    mbr_maxx:   %+011.6lf\n", shp->header->mbr_maxx);
-  printf("    mbr_maxy:   %+011.6lf\n", shp->header->mbr_maxy);
-  printf("    mbr_minz:   %+011.6lf\n", shp->header->mbr_minz);
-  printf("    mbr_maxz:   %+011.6lf\n", shp->header->mbr_maxz);
-  printf("    mbr_minm:   %+011.6lf\n", shp->header->mbr_minm);
-  printf("    mbr_maxm:   %+011.6lf\n", shp->header->mbr_maxm);
+  printf("    mbr_minx:   %+011.6f\n", shp->header->mbr_minx);
+  printf("    mbr_miny:   %+011.6f\n", shp->header->mbr_miny);
+  printf("    mbr_maxx:   %+011.6f\n", shp->header->mbr_maxx);
+  printf("    mbr_maxy:   %+011.6f\n", shp->header->mbr_maxy);
+  printf("    mbr_minz:   %+011.6f\n", shp->header->mbr_minz);
+  printf("    mbr_maxz:   %+011.6f\n", shp->header->mbr_maxz);
+  printf("    mbr_minm:   %+011.6f\n", shp->header->mbr_minm);
+  printf("    mbr_maxm:   %+011.6f\n", shp->header->mbr_maxm);
   printf("\n\n");
   DBUG_VOID_RETURN;
 }

@@ -145,7 +145,9 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
 
 void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)
 {
+#ifdef HAVE_PROJECTION
   shapefile->projection = projection;
+#endif
 }
 
 void shapefile_record_seek(SHAPEFILE *shapefile, uint32 record)

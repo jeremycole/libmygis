@@ -47,6 +47,7 @@ PRJ_PROJ4_NAMES prj_proj4_projection_names[] =
 PRJ_PROJ4_NAMES prj_proj4_unit_names[] =
 {
   { "Meter", "m" },
+  { "Foot_US", "us-ft" },
   { NULL, NULL }
 };
 
@@ -69,6 +70,8 @@ char *prj_proj4_names_find(PRJ_PROJ4_NAMES *names, char *name)
   DBUG_ENTER("prj_proj4_names_find");
   for(; cur; cur++)
   {
+    if(!cur->prj_name)
+      DBUG_RETURN(NULL);
     if(!strcmp(cur->prj_name, name))
       DBUG_RETURN(cur->proj4_name);
   }

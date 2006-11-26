@@ -56,7 +56,7 @@ int prj_parse(PRJ *prj, char *prjfile)
 {
   int fd;
   off_t size;
-  char check[6];
+  char *name;
   PAIRNODE *param;
 
   DBUG_ENTER("prj_parse");
@@ -93,22 +93,35 @@ int prj_parse(PRJ *prj, char *prjfile)
 
   prj_parse_yacc(prj, prjfile);
 
-  strcat(prj->proj4_def, " +proj=");
-  strcat(prj->proj4_def, prj_proj4_names_find(prj_proj4_projection_names,
-                                              prj->projcs.projection));
+  name= prj_proj4_names_find(prj_proj4_projection_names,
+                             prj->projcs.projection);
+  if(name)
+  {
+    strcat(prj->proj4_def, " +proj=");
+    strcat(prj->proj4_def, name);
+  }
 
-  strcat(prj->proj4_def, " +datum=");
-  strcat(prj->proj4_def, prj_proj4_names_find(prj_proj4_datum_names,
-                                              prj->projcs.geogcs.datum.name));
-  
-  strcat(prj->proj4_def, " +units=");
-  strcat(prj->proj4_def, prj_proj4_names_find(prj_proj4_unit_names,
-                                              prj->projcs.unit.name));
+  name= prj_proj4_names_find(prj_proj4_datum_names,
+                             prj->projcs.geogcs.datum.name);
+  if(name)
+  {
+    strcat(prj->proj4_def, " +datum=");
+    strcat(prj->proj4_def, name);
+  }
+
+  name= prj_proj4_names_find(prj_proj4_unit_names,
+                             prj->projcs.unit.name);
+  if(name)
+  {
+    strcat(prj->proj4_def, " +units=");
+    strcat(prj->proj4_def, name);
+  }
 
   for(param = prj->projcs.parameters->root; param; param=param->next) {
+    name= prj_proj4_names_find(prj_proj4_parameter_names,
+                               param->pair.key);
     strcat(prj->proj4_def, " +");
-    strcat(prj->proj4_def, prj_proj4_names_find(prj_proj4_parameter_names,
-                                                param->pair.key));
+    strcat(prj->proj4_def, name);
     strcat(prj->proj4_def, "=");
     strcat(prj->proj4_def, param->pair.value);
   }

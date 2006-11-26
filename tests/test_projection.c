@@ -21,6 +21,15 @@
 #include "mygis.h"
 #include "projection.h"
 
+#ifndef HAVE_PROJECTION
+
+int main(int argc, char **argv)
+{
+  return 0;
+}
+
+#else /* HAVE_PROJECTION */
+
 int main(int argc, char **argv) {
   PAIRLIST *args;
   PROJECTION *proj;
@@ -87,3 +96,5 @@ int main(int argc, char **argv) {
 
   return 0;
 }
+
+#endif /* !HAVE_PROJECTION */

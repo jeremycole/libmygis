@@ -18,7 +18,7 @@ test_pairlist_SOURCES = test_pairlist.c
 test_pairlist_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_projection_SOURCES = test_projection.c
-test_projection_LDADD = $(LIBOBJS) ../libmygis.a -L/usr/local/lib -lproj
+test_projection_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_fixed_SOURCES = test_fixed.c
 test_fixed_LDADD = $(LIBOBJS) ../libmygis.a
@@ -45,13 +45,13 @@ test_dbf_scan_SOURCES = test_dbf_scan.c
 test_dbf_scan_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_shapefile_SOURCES = test_shapefile.c
-test_shapefile_LDADD = $(LIBOBJS) ../libmygis.a -L/usr/local/lib -lproj
+test_shapefile_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_shapefile_scan_SOURCES = test_shapefile_scan.c
-test_shapefile_scan_LDADD = $(LIBOBJS) ../libmygis.a -L/usr/local/lib -lproj
+test_shapefile_scan_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_shapefile_projection_SOURCES = test_shapefile_projection.c
-test_shapefile_projection_LDADD = $(LIBOBJS) ../libmygis.a -L/usr/local/lib -lproj
+test_shapefile_projection_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_tiger_SOURCES = test_tiger.c
 test_tiger_LDADD = $(LIBOBJS) ../libmygis.a

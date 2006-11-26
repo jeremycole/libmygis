@@ -30,6 +30,14 @@
 #include "dbug.h"
 #include "portability.h"
 
+#if SIZEOF_VOID_P == 4
+#define PTR_FORMAT "0x%08x"
+#define PTR_CAST(p) ((unsigned long int) (p))
+#elif SIZEOF_VOID_P == 8
+#define PTR_FORMAT "0x%016x"
+#define PTR_CAST(p) ((unsigned long long int) (p))
+#endif
+
 extern const char *mygis_version;
 extern const char *mygis_copyright;
 extern const char *mygis_license;
@@ -217,7 +225,7 @@ swapping the bytes will incur a function call.
 
 #define MYGIS_WRITE_UINT16_LE(p, v)  MYGIS_WRITE_UINT16(p, v) 
 #define MYGIS_WRITE_UINT32_LE(p, v)  MYGIS_WRITE_UINT32(p, v)
-#define MYGIS_WRITE_UINT64_LE(p v)   MYGIS_WRITE_UINT64(p, v)
+#define MYGIS_WRITE_UINT64_LE(p, v)  MYGIS_WRITE_UINT64(p, v)
 #define MYGIS_WRITE_FLOAT_LE(p, v)   MYGIS_WRITE_FLOAT(p, v)
 #define MYGIS_WRITE_DOUBLE_LE(p, v)  MYGIS_WRITE_DOUBLE(p, v)
 #define MYGIS_WRITE_UINT16_BE(p, v)  MYGIS_WRITE_UINT16(p, mygis_swap_uint16(v))

@@ -28,16 +28,17 @@
 
 POINT wkt_reproject(POINT *point, PROJECTION *projection)
 {
-  POINT tpoint;
+  POINT tpoint = *point;
 
+#ifdef HAVE_PROJECTION
   if(projection)
   {
     tpoint = *(projection_transform(projection, point));
     tpoint.x *= RAD_TO_DEG;
     tpoint.y *= RAD_TO_DEG;
-  } else {
-    tpoint = *point;
   }
+#endif
+
   return tpoint;
 }
 

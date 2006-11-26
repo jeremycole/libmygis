@@ -21,9 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 PROJECTION *projection_init()
 {
-  PROJECTION *proj;
+  PROJECTION *proj = NULL;
 
   DBUG_ENTER("projection_init");
   if(!(proj = PROJECTION_INIT))
@@ -45,23 +46,24 @@ int projection_set(PROJECTION *proj, char *from, char *to)
   proj->from      = strdup(from);
   proj->to        = strdup(to);
 
+#ifdef HAVE_PROJECTION
   if(!(proj->proj4_pj_from = pj_init_plus(proj->from)))
-    goto err5;
+    goto err2;
 
   if(!(proj->proj4_pj_to   = pj_init_plus(proj->to)))
-    goto err6;
+  {
+    pj_free(proj->proj4_pj_from);
+    goto err2;
+  }
+#endif /* HAVE PROJECTION */
 
   proj->is_set = 1;
 
   DBUG_RETURN(0);
 
- err6:
-  pj_free(proj->proj4_pj_to);
- err5:
-  pj_free(proj->proj4_pj_from);
- err4:
-  free(proj->to);
  err2:
+  free(proj->to);
+ err1:
   free(proj->from);
  err:
   DBUG_RETURN(-1);
@@ -71,6 +73,7 @@ void projection_unset(PROJECTION *proj)
 {
   DBUG_ENTER("projection_unset");
 
+#ifdef HAVE_PROJECTION
   if(!proj->is_set)
   {
     pj_free(proj->proj4_pj_to);
@@ -80,14 +83,15 @@ void projection_unset(PROJECTION *proj)
     free(proj->from);
     free(proj->from_name);
   }
-  
+
+  proj->proj4_pj_from = NULL;
+  proj->proj4_pj_to   = NULL;
+#endif /* HAVE_PROJECTION */
+
   proj->from_name = NULL;
   proj->from      = NULL;
   proj->to_name   = NULL;
-  proj->to        = NULL;
-  
-  proj->proj4_pj_from = NULL;
-  proj->proj4_pj_to   = NULL;
+  proj->to        = NULL;  
 
   proj->is_set    = 0;
 
@@ -101,6 +105,8 @@ POINT *projection_transform(PROJECTION *proj, POINT *point)
   int rc;
 
   DBUG_ENTER("projection_transform");
+
+#ifdef HAVE_PROJECTION
   if(!proj->is_set) 
     goto err;
 
@@ -109,6 +115,7 @@ POINT *projection_transform(PROJECTION *proj, POINT *point)
 
   if(rc)
     DBUG_RETURN(NULL);
+#endif /* HAVE_PROJECTION */
 
  err:
   DBUG_RETURN(ret);
@@ -117,15 +124,19 @@ POINT *projection_transform(PROJECTION *proj, POINT *point)
 void projection_dump(PROJECTION *proj)
 {
   DBUG_ENTER("projection_dump");
+
   printf("PROJECTION: Dump: 0x%08x\n", (int)proj);
   printf("  Structure:\n");
-  printf("    from_name:      %s\n", proj->from_name);
   printf("    from:           %s\n", proj->from);
-  printf("    proj4_pj_from:  0x%08x\n", (int)proj->proj4_pj_from);
-  printf("    to_name:        %s\n", proj->to_name);
   printf("    to:             %s\n", proj->to);
+#ifdef HAVE_PROJECTION
+  printf("    proj4_pj_from:  0x%08x\n", (int)proj->proj4_pj_from);
   printf("    proj4_pj_to:    0x%08x\n", (int)proj->proj4_pj_to);  
+#else
+  printf("    (projection support is disabled)\n");
+#endif /* HAVE_PROJECTION */
   printf("\n\n");
+
   DBUG_VOID_RETURN;
 }
 
@@ -136,6 +147,4 @@ void projection_free(PROJECTION *proj)
   free(proj);
   DBUG_VOID_RETURN;
 }
-
-
 
