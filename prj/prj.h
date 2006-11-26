@@ -20,7 +20,6 @@
 #define PRJ_H
 
 #include "mygis.h"
-#include "prj_yacc_stub.h"
 #include "../pairlist.h"
 #include "../projection.h"
 
