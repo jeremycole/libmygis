@@ -56,6 +56,7 @@ void yyerror(char *);
 
 prj_file:
   projcs_def
+  | geogcs_def
   ;
   
 projcs_def:

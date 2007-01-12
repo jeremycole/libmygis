@@ -84,13 +84,15 @@ int prj_parse(PRJ *prj, char *prjfile)
     fprintf(stderr, "Didn't read entire file\n");
     DBUG_RETURN(-3);
   }
-  
+
+  /*
   if(strncmp(prj->definition, "PROJCS", 6) != 0)
   {
     fprintf(stderr, "Doesn't look like a real PRJ file; doesn't start with PROJCS");
     DBUG_RETURN(-4);
   }
-
+  */
+  
   prj_parse_yacc(prj, prjfile);
 
   name= prj_proj4_names_find(prj_proj4_projection_names,
