@@ -154,7 +154,8 @@ void geometry_dump(GEOMETRY *geometry, int level) {
 void geometry_free(GEOMETRY *geometry)
 {
   LINEARRING  *linearring;
-  uint32      j;
+  GEOMETRY_POLYGON *polygon;
+  uint32      j, k;
 
   DBUG_ENTER("geometry_free");
 
@@ -173,10 +174,12 @@ void geometry_free(GEOMETRY *geometry)
     free(geometry->value.point->point);
     free(geometry->value.point);
     break;
+
   case T_LINESTRING:
     free(geometry->value.linestring->points);
     free(geometry->value.linestring);
     break;
+
   case T_POLYGON:
     linearring = geometry->value.polygon->linearrings;
     for(j=0;j<(geometry->value.polygon->items);j++,linearring++) {
@@ -185,9 +188,25 @@ void geometry_free(GEOMETRY *geometry)
     free(geometry->value.polygon->linearrings);
     free(geometry->value.polygon);
     break;
+
+  case T_MULTIPOLYGON:
+    polygon = geometry->value.multipolygon->polygons;
+    for(k=0; k<geometry->value.multipolygon->items; k++, polygon++)
+    {
+      linearring = polygon->linearrings;
+      for(j=0; j<polygon->items; j++, linearring++) {
+        free(linearring->points);
+      }
+      free(polygon->linearrings);
+      free(polygon);
+    }
+    free(geometry->value.multipolygon->polygons);
+    free(geometry->value.multipolygon);
+    break;
+
+
   case T_MULTIPOINT:
   case T_MULTILINESTRING:
-  case T_MULTIPOLYGON:
   case T_GEOMETRYCOLLECTION:
   default:
     DBUG_PRINT("leak", ("Object %s was allocated that can't be freed.\n",
