@@ -198,7 +198,6 @@ void geometry_free(GEOMETRY *geometry)
         free(linearring->points);
       }
       free(polygon->linearrings);
-      free(polygon);
     }
     free(geometry->value.multipolygon->polygons);
     free(geometry->value.multipolygon);
