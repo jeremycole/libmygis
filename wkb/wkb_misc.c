@@ -29,7 +29,9 @@ uint32 wkb_size(GEOMETRY *geometry)
 {
   POINT       *point;
   LINEARRING  *linearring;
-  uint32      points, linearrings, i, j;
+  GEOMETRY_POLYGON *polygon;
+  uint32      points, linearrings, polygons;
+  uint32      i, j, k;
   uint32      size = 0;
 
   DBUG_ENTER("wkb_size");
@@ -52,15 +54,35 @@ uint32 wkb_size(GEOMETRY *geometry)
 
   case T_POLYGON:
     size += WKB_SZ_NUMITEMS; /* number of linearrings */
-    linearring = geometry->value.polygon->linearrings;
-    for(j=0;j<(linearrings=geometry->value.polygon->items);j++,linearring++) {
+    linearring  = geometry->value.polygon->linearrings;
+    linearrings = geometry->value.polygon->items;
+    for(j=0;j<linearrings;j++,linearring++) {
       size += WKB_SZ_NUMITEMS; /* number of points */
       size += WKB_SZ_POINT * linearring->items;
     }
     break;
+
+  case T_MULTIPOLYGON:
+    size += WKB_SZ_NUMITEMS; /* number of polygons */
+    polygon  = geometry->value.multipolygon->polygons;
+    polygons = geometry->value.multipolygon->items;
+    for(k=0; k<polygons; k++, polygon++)
+    {
+      size += WKB_SZ_BYTEORDER; /* byte order */
+      size += WKB_SZ_TYPE;      /* object type */
+      size += WKB_SZ_NUMITEMS;  /* number of linearrings */
+      linearring  = polygon->linearrings;
+      linearrings = polygon->items;
+      for(j=0;j<linearrings;j++,linearring++)
+      {
+        size += WKB_SZ_NUMITEMS; /* number of points */
+        size += WKB_SZ_POINT * linearring->items;
+      }
+    }
+    break;
+
   case T_MULTIPOINT:
   case T_MULTILINESTRING:
-  case T_MULTIPOLYGON:
   case T_GEOMETRYCOLLECTION:
   default:
     fprintf(stderr, "oops, can't estimate size of unknown type.\n");

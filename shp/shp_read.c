@@ -89,11 +89,11 @@ LINEARRING *_shp_read_linearrings(char *pos, uint32 *parts,
 
   if( (lr=lrc=LINEARRING_INIT(num_parts)) ) {
     for(;num_parts--;lrc++,parts++) {
-      lrc->type   = LR_NONE;
+      lrc->type   = LR_UNKNOWN;
       lrc->items  = ((num_parts)?(MYGIS_READ_UINT32_LE((parts+1))):num_points)-(MYGIS_READ_UINT32_LE(parts));
       lrc->points = _shp_read_points(pos, lrc->items);
       lrc->area   = abs(area=geometry_linearring_area(lrc));
-      lrc->type   = area<0?LR_ADD:(area>0?LR_SUBTRACT:LR_NONE);
+      lrc->type   = area<0.0?LR_EXTERIOR:(area>0.0?LR_INTERIOR:LR_UNKNOWN);
 
       pos += SHP_SZ_POINT*lrc->items;
     }
@@ -196,9 +196,20 @@ GEOMETRY *_shp_read_geometry_polyline(char *content)
 
 GEOMETRY *_shp_read_geometry_polygon(char *content)
 {
-  GEOMETRY *geometry;
+  GEOMETRY *geometry= NULL;
+  GEOMETRY *return_geometry= NULL;
   double *mbr;
   uint32 num_parts, num_points;
+
+  uint32 exterior= 0;
+  uint32 item;
+  LINEARRING *linearrings, *linearring, **linearringp;
+
+  uint32 *exterior_rings_items;
+  LINEARRING **exterior_rings;
+  uint32 last_exterior_ring;
+  
+  GEOMETRY_POLYGON *polygon;
 
   DBUG_ENTER("_shp_read_geometry_polygon");
 
@@ -206,21 +217,57 @@ GEOMETRY *_shp_read_geometry_polygon(char *content)
   num_parts  = SHP_REC2_NUMPARTS(content);
   num_points = SHP_REC2_NUMPOINTS(content);
 
-  if( (geometry = geometry_init(T_POLYGON)) ) {
-    if( (geometry->value.polygon = GEOMETRY_POLYGON_INIT) ) {
-      geometry->mbr.min.x = MYGIS_READ_DOUBLE_LE(mbr++);
-      geometry->mbr.min.y = MYGIS_READ_DOUBLE_LE(mbr++);
-      geometry->mbr.max.x = MYGIS_READ_DOUBLE_LE(mbr++);
-      geometry->mbr.max.y = MYGIS_READ_DOUBLE_LE(mbr++);
-      geometry->value.polygon->items = num_parts;
-      geometry->value.polygon->linearrings = _shp_read_linearrings(SHP_REC2_POINTS(content), SHP_REC2_PARTS(content), num_parts, num_points);
-    } else {
-      free(geometry);
-      DBUG_RETURN(NULL);
+  if(! (geometry = geometry_init(T_MULTIPOLYGON)) )
+    goto err0;
+
+  if(! (geometry->value.multipolygon = GEOMETRY_MULTIPOLYGON_INIT) )
+    goto err1;
+
+  geometry->mbr.min.x = MYGIS_READ_DOUBLE_LE(mbr++);
+  geometry->mbr.min.y = MYGIS_READ_DOUBLE_LE(mbr++);
+  geometry->mbr.max.x = MYGIS_READ_DOUBLE_LE(mbr++);
+  geometry->mbr.max.y = MYGIS_READ_DOUBLE_LE(mbr++);
+
+  linearrings = _shp_read_linearrings(SHP_REC2_POINTS(content), SHP_REC2_PARTS(content), num_parts, num_points);
+
+  exterior_rings       = MYGIS_MALLOC_X(LINEARRING *, num_parts);
+  exterior_rings_items = MYGIS_MALLOC_X(uint32,       num_parts);
+
+  last_exterior_ring= 0;
+  for(item=0, linearring=linearrings; item<num_parts; item++, linearring++)
+  {
+    if(linearring->type == LR_EXTERIOR)
+    {
+      if(exterior > 0)
+        exterior_rings_items[exterior-1] = (item - last_exterior_ring);
+
+      exterior_rings[exterior] = linearring;
+      exterior++;
+      last_exterior_ring = item;
     }
-    DBUG_RETURN(geometry);
   }
-  DBUG_RETURN(NULL);
+
+  exterior_rings_items[exterior-1] = (item - last_exterior_ring);
+
+  geometry->value.multipolygon->items = exterior;
+  geometry->value.multipolygon->polygons = 
+    MYGIS_MALLOC_X(GEOMETRY_POLYGON, exterior);
+    
+  polygon= geometry->value.multipolygon->polygons;
+  for(item=0, linearringp=exterior_rings; item<exterior; item++, linearringp++, polygon++)
+  {
+    polygon->items= exterior_rings_items[item];
+    polygon->linearrings= *linearringp;
+  }
+
+  return_geometry= geometry;
+
+ err2:
+  free(exterior_rings_items);
+ err1:
+  free(exterior_rings);
+ err0:
+  DBUG_RETURN(return_geometry);
 }
 
 GEOMETRY *shp_read_next(SHP *shp)

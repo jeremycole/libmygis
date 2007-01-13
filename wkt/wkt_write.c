@@ -47,15 +47,18 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
   POINT       *point;
   POINT       tpoint;
   LINEARRING  *linearring;
-  uint32      points, linearrings, i, j;
+  GEOMETRY_POLYGON *polygon;
+  uint32      points, linearrings, polygons;
+  uint32      i, j, k;
 
   DBUG_ENTER("wkt_write");
 
   if(!geometry) DBUG_VOID_RETURN;
 
-  fprintf(f, "%s(", GEOMETRY_TYPES[geometry->type]);
+  /* fprintf(f, "%s(", GEOMETRY_TYPES[geometry->type]); */
   switch(geometry->type) {
   case T_POINT:
+    fprintf(f, "POINT(");
     tpoint= wkt_reproject(geometry->value.point->point, projection);
 
     fprintf(f, "%F %F",
@@ -64,8 +67,10 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
     break;
 
   case T_LINESTRING:
-    point = geometry->value.linestring->points;
-    for(i=0;i<(points=geometry->value.linestring->items);i++,point++) {
+    fprintf(f, "LINESTRING(");
+    point  = geometry->value.linestring->points;
+    points = geometry->value.linestring->items;
+    for(i=0;i<points;i++,point++) {
       tpoint= wkt_reproject(point, projection);
 
       fprintf(f, "%F %F%s",
@@ -75,11 +80,14 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
     break;
 
   case T_POLYGON:
-    linearring = geometry->value.polygon->linearrings;
-    for(j=0;j<(linearrings=geometry->value.polygon->items);j++,linearring++) {
+    linearring  = geometry->value.polygon->linearrings;
+    linearrings = geometry->value.polygon->items;
+    fprintf(f, "POLYGON(");
+    for(j=0; j<linearrings; j++, linearring++) {
       fprintf(f, "(");
-      point = linearring->points;
-      for(i=0;i<(points=linearring->items);i++,point++) {
+      point  = linearring->points;
+      points = linearring->items;
+      for(i=0; i<points; i++, point++) {
         tpoint= wkt_reproject(point, projection);
 
         fprintf(f, "%F %F%s",
@@ -89,9 +97,38 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
       fprintf(f, ")%s", j<linearrings-1?", ":"");
     }
     break;
+
+  case T_MULTIPOLYGON:
+    polygon  = geometry->value.multipolygon->polygons;
+    polygons = geometry->value.multipolygon->items;
+    fprintf(f, (polygons<=1)?"POLYGON(":"MULTIPOLYGON(");
+    for(k=0; k<polygons; k++, polygon++)
+    {
+      linearring  = polygon->linearrings;
+      linearrings = polygon->items;
+      if(polygons>1) fprintf(f, "(");
+      for(j=0;j<linearrings;j++,linearring++)
+      {
+        point  = linearring->points;
+        points = linearring->items;
+        fprintf(f, "(");
+        for(i=0; i<points; i++, point++)
+        {
+          tpoint= wkt_reproject(point, projection);
+  
+          fprintf(f, "%F %F%s",
+            tpoint.x, tpoint.y,
+            i<points-1?",  ":"");
+        }
+        fprintf(f, ")%s", j<linearrings-1?", ":"");
+      }
+      if(polygons>1) fprintf(f, ")%s", k<polygons-1?", ":"");
+    }
+    break;
+
+
   case T_MULTIPOINT:
   case T_MULTILINESTRING:
-  case T_MULTIPOLYGON:
   case T_GEOMETRYCOLLECTION:
   default:
     fprintf(f, "...");

@@ -49,9 +49,10 @@ GEOMETRY *geometry_init(GEOMETRY_TYPE type)
 }
 
 void geometry_dump(GEOMETRY *geometry, int level) {
-  LINEARRING  *linearring;
   POINT *point;
-  uint32      i, j;
+  LINEARRING  *linearring;
+  GEOMETRY_POLYGON *polygon;
+  uint32      i, j, k;
 
   DBUG_ENTER("geometry_dump");
 
@@ -87,7 +88,7 @@ void geometry_dump(GEOMETRY *geometry, int level) {
       linearring = geometry->value.polygon->linearrings;
       for(j=0;j<(geometry->value.polygon->items);j++,linearring++) {
 	printf("  %sLINEARRING %5i: %5i point%s, %12.6f area\n",
-	       (linearring->type==LR_ADD)?"+":((linearring->type==LR_SUBTRACT)?"-":((linearring->type==LR_NONE)?"=":"*")),
+	       (linearring->type==LR_EXTERIOR)?"+":((linearring->type==LR_INTERIOR)?"-":((linearring->type==LR_UNKNOWN)?"=":"*")),
 	       j,
 	       linearring->items,
 	       linearring->items>1?"s":"",
@@ -102,9 +103,45 @@ void geometry_dump(GEOMETRY *geometry, int level) {
     }
     break;
 
+  case T_MULTIPOLYGON:
+    printf("MULTIPOLYGON: %5i polygon%s\n",
+      geometry->value.multipolygon->items,
+      geometry->value.multipolygon->items>1?"s":"");
+    if(level > 0)
+    {
+      polygon = geometry->value.multipolygon->polygons;
+      for(k=0;k<(geometry->value.multipolygon->items);k++,polygon++)
+      {
+        printf("  POLYGON %5i: %5i linearring%s\n",
+          k,
+          polygon->items,
+          polygon->items>1?"s":"");
+
+        linearring = polygon->linearrings;
+        for(j=0;j<(polygon->items);j++,linearring++)
+        {
+          printf("    %sLINEARRING %5i: %5i point%s, %12.6f area\n",
+            (linearring->type==LR_EXTERIOR)?"+":((linearring->type==LR_INTERIOR)?"-":((linearring->type==LR_UNKNOWN)?"=":"*")),
+           j,
+           linearring->items,
+           linearring->items>1?"s":"",
+           linearring->area);
+          if(level > 2)
+          {
+            for(point=linearring->points,i=0; i<linearring->items; point++,i++)
+            {
+              printf("      POINT %5i: %12.6f, %12.6f\n",
+                     i, point->x, point->y);
+            }
+          }
+        }
+      }
+    }
+    break;
+
+
   case T_MULTIPOINT:
   case T_MULTILINESTRING:
-  case T_MULTIPOLYGON:
   case T_GEOMETRYCOLLECTION:
   default:
     printf("UNKNOWN: Uknown object: Type %i: %s.\n",

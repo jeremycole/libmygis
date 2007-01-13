@@ -58,7 +58,7 @@ LINEARRING *_wkb_read_linearrings(char *pos, uint32 num, char **next)
       c->items  = items = MYGIS_READ_UINT32_LE(pos);
       c->points = _wkb_read_points((pos+SZ_UINT32), items, next);
       c->area   = fabs(area=geometry_linearring_area(c));
-      c->type   = area<0?LR_ADD:(area>0?LR_SUBTRACT:LR_NONE);
+      c->type   = area<0?LR_EXTERIOR:(area>0?LR_INTERIOR:LR_UNKNOWN);
 
       pos += WKB_SZ_NUMITEMS+(WKB_SZ_POINT*items);
       c++;
@@ -69,123 +69,164 @@ LINEARRING *_wkb_read_linearrings(char *pos, uint32 num, char **next)
   DBUG_RETURN(NULL);
 }
 
-GEOMETRY *_wkb_read_geometry_point(WKB *wkb)
+GEOMETRY_POINT *_wkb_read_geometry_points(WKB *wkb, uint32 num)
 {
-  GEOMETRY *geometry;
+  GEOMETRY_POINT *point, *points;
   char *next;
+  uint32 i;
 
   DBUG_ENTER("_wkb_read_geometry_point");
 
-  if( (geometry = geometry_init(T_POINT)) ) {
-    if( (geometry->value.point = GEOMETRY_POINT_INIT) ) {
-      geometry->value.point->point = _wkb_read_points(WKB_DATA(wkb->cur), 1, &next);
-    } else {
-      free(geometry);
-      DBUG_RETURN(NULL);
-    }
+  if(! (points = GEOMETRY_POINT_INIT_X(num)) )
+    goto err0;
+
+  for(i=0, point=points; i<num; i++, point++)
+  {
+    point->point = _wkb_read_points(WKB_DATA(wkb->cur), 1, &next);
 
     wkb->cur = next;
-
-    DBUG_RETURN(geometry);
   }
+  DBUG_RETURN(points);
+
+ err0:
   DBUG_RETURN(NULL);
 }
 
 
-GEOMETRY *_wkb_read_geometry_linestring(WKB *wkb)
+GEOMETRY_LINESTRING *_wkb_read_geometry_linestrings(WKB *wkb, uint32 num)
 {
-  GEOMETRY *geometry;
+  GEOMETRY_LINESTRING *linestring, *linestrings;
   char *next;
-  int items;
+  uint32 i;
 
   DBUG_ENTER("_wkb_read_geometry_linestring");
 
-  if( (geometry = geometry_init(T_LINESTRING)) ) {
-    if( (geometry->value.linestring = GEOMETRY_LINESTRING_INIT) ) {
-      geometry->value.linestring->items = items = WKB_NUMITEMS(wkb->cur);
-      geometry->value.linestring->points = _wkb_read_points(WKB_DATA(wkb->cur), items, &next);
-    } else {
-      free(geometry);
-      DBUG_RETURN(NULL);
-    }
+  if(! (linestrings = GEOMETRY_LINESTRING_INIT_X(num)) )
+    goto err0;
+
+  for(i=0, linestring=linestrings; i<num; i++, linestring++)
+  {
+    linestring->items  = WKB_NUMITEMS(wkb->cur);
+    linestring->points = _wkb_read_points(WKB_DATA(wkb->cur), linestring->items, &next);
 
     wkb->cur = next;
-
-    DBUG_RETURN(geometry);
   }
+
+  DBUG_RETURN(linestrings);
+
+ err0:
   DBUG_RETURN(NULL);
 }
 
-
-GEOMETRY *_wkb_read_geometry_polygon(WKB *wkb)
+GEOMETRY_POLYGON *_wkb_read_geometry_polygons(WKB *wkb, uint32 num)
 {
-  GEOMETRY *geometry;
+  GEOMETRY_POLYGON *polygon, *polygons;
   char *next;
-  int items;
+  uint32 i;
 
-  DBUG_ENTER("_wkb_read_geometry_polygon");
+  DBUG_ENTER("_wkb_read_polygon");
 
-  if( (geometry = geometry_init(T_POLYGON)) ) {
-    if( (geometry->value.polygon = GEOMETRY_POLYGON_INIT) ) {
-      geometry->value.polygon->items = items = WKB_NUMITEMS(wkb->cur);
-      geometry->value.polygon->linearrings = _wkb_read_linearrings(WKB_DATA(wkb->cur), items, &next);
-    } else {
-      free(geometry);
-      DBUG_RETURN(NULL);
-    }
+  if(! (polygons = GEOMETRY_POLYGON_INIT_X(num)) )
+    goto err0;
 
+  for(i=0, polygon=polygons; i<num; i++, polygon++)
+  {
+    polygon->items       = WKB_NUMITEMS(wkb->cur);
+    polygon->linearrings = _wkb_read_linearrings(WKB_DATA(wkb->cur), polygon->items, &next);
+  
     wkb->cur = next;
-
-    DBUG_RETURN(geometry);
   }
+
+  DBUG_RETURN(polygons);
+
+ err0:
   DBUG_RETURN(NULL);
 }
 
-GEOMETRY *_wkb_read_geometry_multipoint(WKB *wkb)
+GEOMETRY_MULTIPOLYGON *_wkb_read_geometry_multipolygon(WKB *wkb)
+{
+  GEOMETRY_MULTIPOLYGON *mpolygon;
+  char *next;
+  uint32 i;
+
+  DBUG_ENTER("_wkb_read_geometry_multipolygon");
+
+  if(! (mpolygon = GEOMETRY_MULTIPOLYGON_INIT) )
+    goto err0;
+
+  mpolygon->items    = WKB_NUMITEMS(wkb->cur);
+  wkb->cur= WKB_DATA(wkb->cur);
+  mpolygon->polygons = _wkb_read_geometry_polygons(wkb, mpolygon->items);
+  
+  DBUG_RETURN(mpolygon);
+
+ err0:
+  DBUG_RETURN(NULL);
+}
+
+
+GEOMETRY_MULTIPOINT *_wkb_read_geometry_multipoint(WKB *wkb)
 {
   DBUG_ENTER("_wkb_read_geometry_multipoint");
   DBUG_RETURN(NULL);
 }
 
-GEOMETRY *_wkb_read_geometry_multilinestring(WKB *wkb)
+GEOMETRY_MULTILINESTRING *_wkb_read_geometry_multilinestring(WKB *wkb)
 {
   DBUG_ENTER("_wkb_read_geometry_multilinestring");
   DBUG_RETURN(NULL);
 }
 
-GEOMETRY *_wkb_read_geometry_multipolygon(WKB *wkb)
-{
-  DBUG_ENTER("_wkb_read_geometry_multipolygon");
-  DBUG_RETURN(NULL);
-}
 
 GEOMETRY *wkb_read_next(WKB *wkb)
 {
   DBUG_ENTER("wkb_read_next");
+  GEOMETRY *geometry = NULL;
+  
   if((!wkb) || ((wkb->cur - wkb->data) >= wkb->data_len))
-    DBUG_RETURN(NULL);
+    goto err0;
 
   switch(WKB_TYPE(wkb->cur)) {
   case WKB_POINT:
-    DBUG_RETURN(_wkb_read_geometry_point(wkb));
+    if(! (geometry = geometry_init(T_POINT)))
+      goto err0;
+    if(! (geometry->value.point = _wkb_read_geometry_points(wkb, 1)))
+      goto err1;
     break;
   case WKB_LINESTRING:
-    DBUG_RETURN(_wkb_read_geometry_linestring(wkb));
+    if(! (geometry = geometry_init(T_LINESTRING)))
+      goto err0;
+    if(! (geometry->value.linestring = _wkb_read_geometry_linestrings(wkb, 1)))
+      goto err1;
     break;
   case WKB_POLYGON:
-    DBUG_RETURN(_wkb_read_geometry_polygon(wkb));
+    if(! (geometry = geometry_init(T_POLYGON)))
+      goto err0;
+    if(! (geometry->value.polygon = _wkb_read_geometry_polygons(wkb, 1)))
+      goto err1;
+    break;
+  case WKB_MULTIPOLYGON:
+    if(! (geometry = geometry_init(T_MULTIPOLYGON)))
+      goto err0;
+    if(! (geometry->value.multipolygon = _wkb_read_geometry_multipolygon(wkb)))
+      goto err1;
     break;
   case WKB_MULTIPOINT:
   case WKB_MULTILINESTRING:
-  case WKB_MULTIPOLYGON:
   case WKB_GEOMETRYCOLLECTION:
     printf("Got %s, but can't handle.\n", WKB_TYPES[WKB_TYPE(wkb->cur)]);
-    DBUG_RETURN(NULL);
+    goto err0;
     break;
 
   default:
     printf("oops!  got type=%i \n", WKB_TYPE(wkb->cur));
-    DBUG_RETURN(NULL);
+    goto err0;
   }
 
+  DBUG_RETURN(geometry);
+
+ err1:
+  free(geometry);
+ err0:
+  DBUG_RETURN(NULL);
 }

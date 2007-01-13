@@ -21,8 +21,8 @@
 
 #include "mygis.h"
 
-#define POINT_INIT(x)                  MYGIS_MALLOC_X(POINT, x)
-#define LINEARRING_INIT(x)             MYGIS_MALLOC_X(LINEARRING, x)
+#define POINT_INIT(x)                  MYGIS_MALLOC_X(POINT, (x))
+#define LINEARRING_INIT(x)             MYGIS_MALLOC_X(LINEARRING, (x))
 
 #define GEOMETRY_INIT                  MYGIS_MALLOC(GEOMETRY)
 #define GEOMETRY_POINT_INIT            MYGIS_MALLOC(GEOMETRY_POINT)
@@ -32,6 +32,10 @@
 #define GEOMETRY_MULTILINESTRING_INIT  MYGIS_MALLOC(GEOMETRY_MULTILINESTRING)
 #define GEOMETRY_MULTIPOLYGON_INIT     MYGIS_MALLOC(GEOMETRY_MULTIPOLYGON)
 #define GEOMETRYCOLLECTION_INIT        MYGIS_MALLOC(GEOMETRYCOLLECTION)
+
+#define GEOMETRY_POINT_INIT_X(x)       MYGIS_MALLOC_X(GEOMETRY_POINT, (x))
+#define GEOMETRY_LINESTRING_INIT_X(x)  MYGIS_MALLOC_X(GEOMETRY_LINESTRING, (x))
+#define GEOMETRY_POLYGON_INIT_X(x)     MYGIS_MALLOC_X(GEOMETRY_POLYGON, (x))
 
 #define GEOMETRY_TYPE_MAX 8
 
@@ -47,9 +51,9 @@ typedef enum geometry_type_en {
 } GEOMETRY_TYPE;
 
 typedef enum linearring_type_en {
-  LR_NONE              = 0,
-  LR_ADD               = 1,
-  LR_SUBTRACT          = 2
+  LR_UNKNOWN           = 0,
+  LR_EXTERIOR          = 1,
+  LR_INTERIOR          = 2
 } LINEARRING_TYPE;
 
 extern const char GEOMETRY_TYPES[GEOMETRY_TYPE_MAX][20];
