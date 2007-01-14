@@ -1,0 +1,56 @@
+libmygis ChangeLog
+==================
+
+VERSION 0.7
+***********
+
+0.7.2     2007-01-14
+
+  * Updated copyright to 2007.
+  * Changed the PRJ parser to use YYPARSE_PARAM so that it can be thread-
+    safe and reentrant.
+
+0.7.1     2007-01-12
+
+  * Oops, did not free memory for MULTIPOLYGON.
+
+0.7.0     2007-01-12
+
+  * Added support for MULTIPOLYGON.
+  * Changed Shapefile parsing to parse Shapefile POLYGON to internal
+    MULTIPOLYGON, as Shapefile POLYGON may contain many separate polygon
+    external rings.
+
+
+VERSION 0.6
+***********
+
+0.6.0     unreleased
+
+  * Added support for projections, but did not make any 0.6.x releases.
+    This functionality is available in 0.7.x.
+
+
+VERSION 0.5
+***********
+
+0.5.5     2005-08-02
+0.5.1     2005-03-23
+0.5.0     2005-03-15
+
+
+VERSION 0.4
+***********
+
+0.4.3     2005-03-07
+0.4.2     2005-03-04
+0.4.1     2005-02-26
+0.4.0     2005-02-25
+
+
+VERSION 0.3
+***********
+
+0.3.0     2005-02-12
+
+  * Initial public release.
