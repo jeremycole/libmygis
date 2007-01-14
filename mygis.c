@@ -29,7 +29,7 @@
 const char *mygis_version   = { "libmygis " VERSION DEBUG_STRING };
 const char *mygis_copyright = {
   "Copyright:\n"
-  "  (c) 2004-2005, Jeremy Cole\n"
+  "  (c) 2004-2007, Jeremy Cole\n"
   "  (c)      2005, Wavemarket, Inc.\n"
 };
 const char *mygis_license   = { "LGPL - Lesser (Library) General Public License" };
