@@ -1,6 +1,9 @@
 %{
 #define YYINCLUDED 1
 
+#define YYPARSE_PARAM projcs
+#define PROJCS ((PRJ_PROJCS *)(YYPARSE_PARAM))
+
 #include <stdio.h>
 #include <string.h>
 #include "../mygis.h"
@@ -9,10 +12,9 @@
 extern char* yytext;
 extern int yylineno;
 extern FILE* yyin;
-int yyparse();
+int yyparse(void *YYPARSE_PARAM);
 int yylex();
 
-PRJ_PROJCS *projcs;
 PRJ_KV *unit;
 
 char tmpbuf[4096];
@@ -66,7 +68,7 @@ projcs_def:
     projcs_body
   P_CB_SYM
   {
-    strcpy(projcs->name, $3);
+    strcpy(PROJCS->name, $3);
   }
   ;
 
@@ -86,13 +88,13 @@ projcs_body_part:
 geogcs_def:
   GEOGCS_SYM
   P_OB_SYM
-    { unit = &projcs->geogcs.unit; }
+    { unit = &PROJCS->geogcs.unit; }
     STRING_SYM P_COMMA_SYM
     geogcs_body
-    { unit = &projcs->unit; }
+    { unit = &PROJCS->unit; }
   P_CB_SYM
   {
-    strcpy(projcs->geogcs.name, $4);
+    strcpy(PROJCS->geogcs.name, $4);
   }
   ;
   
@@ -115,7 +117,7 @@ datum_def:
     spheroid_def
   P_CB_SYM
   {
-    strcpy(projcs->geogcs.datum.name, $3);
+    strcpy(PROJCS->geogcs.datum.name, $3);
   }
   ;
 
@@ -127,9 +129,9 @@ spheroid_def:
     REAL_SYM 
   P_CB_SYM
   {
-    strcpy(projcs->geogcs.datum.spheroid.name, $3);
-    projcs->geogcs.datum.spheroid.value1 = $5;
-    projcs->geogcs.datum.spheroid.value2 = $7;
+    strcpy(PROJCS->geogcs.datum.spheroid.name, $3);
+    PROJCS->geogcs.datum.spheroid.value1 = $5;
+    PROJCS->geogcs.datum.spheroid.value2 = $7;
   }
   ;
 
@@ -140,8 +142,8 @@ primem_def:
     REAL_SYM 
   P_CB_SYM
   {
-    strcpy(projcs->geogcs.primem.name, $3);
-    projcs->geogcs.primem.value = $5;
+    strcpy(PROJCS->geogcs.primem.name, $3);
+    PROJCS->geogcs.primem.value = $5;
   }
   ;
 
@@ -163,7 +165,7 @@ projection_def:
     STRING_SYM
   P_CB_SYM
   {
-    strcpy(projcs->projection, $3);
+    strcpy(PROJCS->projection, $3);
   }
   ;
 
@@ -175,7 +177,7 @@ parameter_def:
   P_CB_SYM
   {
     sprintf(tmpbuf, "%0.10f", $5);
-    pairlist_add(projcs->parameters, $3, tmpbuf);
+    pairlist_add(PROJCS->parameters, $3, tmpbuf);
   }
   ;
   
@@ -192,10 +194,9 @@ void prj_parse_yacc(PRJ *prj, char *prjfile)
   FILE *f;
   f = fopen(prjfile, "r");
   
-  projcs = &prj->projcs;
   yyin = f;
-  yyparse();
-  projcs->is_filled = 1;
+  yyparse((void *)&prj->projcs);
+  prj->projcs.is_filled = 1;
 
   fclose(f);
 }
