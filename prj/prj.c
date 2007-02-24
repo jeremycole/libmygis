@@ -57,6 +57,7 @@ int prj_parse(PRJ *prj, char *prjfile)
   int fd;
   off_t size;
   char *name;
+  char str_value[100];
   PAIRNODE *param;
 
   DBUG_ENTER("prj_parse");
@@ -125,7 +126,14 @@ int prj_parse(PRJ *prj, char *prjfile)
     strcat(prj->proj4_def, " +");
     strcat(prj->proj4_def, name);
     strcat(prj->proj4_def, "=");
-    strcat(prj->proj4_def, param->pair.value);
+    if((prj->projcs.unit.name) && ((strcmp(name, "x_0")==0) || (strcmp(name, "y_0")==0)))
+    {
+      sprintf(str_value, "%0.10f", 
+              prj->projcs.unit.value * atof(param->pair.value));
+      strcat(prj->proj4_def, str_value);
+    } else {
+      strcat(prj->proj4_def, param->pair.value);
+    }
   }
 
   close(fd);

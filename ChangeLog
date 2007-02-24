@@ -4,6 +4,13 @@ libmygis ChangeLog
 VERSION 0.7
 ***********
 
+0.7.3     2007-02-23
+
+  * Fixed a bug with complex projections which use a different projection
+    not based on meters.  The x_0 and y_0 parameters are now converted to
+    meters before being passed to PROJ.4.  Thanks to Adam Dingle for finding
+    this bug.
+
 0.7.2     2007-01-14
 
   * Updated copyright to 2007.
