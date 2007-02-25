@@ -126,7 +126,8 @@ int prj_parse(PRJ *prj, char *prjfile)
     strcat(prj->proj4_def, " +");
     strcat(prj->proj4_def, name);
     strcat(prj->proj4_def, "=");
-    if((prj->projcs.unit.name) && ((strcmp(name, "x_0")==0) || (strcmp(name, "y_0")==0)))
+    if((prj->projcs.unit.name)
+       && ((strcmp(name, "x_0")==0) || (strcmp(name, "y_0")==0)))
     {
       sprintf(str_value, "%0.10f", 
               prj->projcs.unit.value * atof(param->pair.value));
