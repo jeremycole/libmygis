@@ -150,6 +150,13 @@ void prj_dump(PRJ *prj)
 
   printf("\n");
   printf("PRJ: Dump: 0x%08x\n", (int)prj);
+  printf("  Re-projection available: %s\n",
+#ifdef HAVE_PROJECTION
+    "yes"
+#else
+    "no"
+#endif
+  );
   printf("  Structure:\n");
 
   if(prj->projcs.is_filled)

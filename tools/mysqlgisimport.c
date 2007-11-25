@@ -35,7 +35,7 @@
 const char *program = {"mysqlgisimport"};
 const char *version = {"0.5"};
 
-static const char *short_options = {"?dDXSsnt:q:g:o:r:a:p:Gi"};
+static const char *short_options = {"?dDXPSsnt:q:g:o:r:a:p:Gi"};
 static struct option long_options[] = {
   {"help",                no_argument,       NULL, '?'},
 #ifdef DEBUG
