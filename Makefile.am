@@ -54,8 +54,3 @@ AM_CFLAGS = @CFLAGS@
 all: $(ROOT_OBJECTS) all-recursive $(lib_LIBRARIES)
 	(cd tests && make all)
 	(cd tools && make all)
-
-clean:
-	(cd tools && make clean)
-	(cd tests && make clean)
-	rm -f $(OBJS) $(LIB)
