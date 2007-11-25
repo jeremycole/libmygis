@@ -263,6 +263,9 @@ void shapefile_dump(SHAPEFILE *shapefile)
   printf("    mode:       %c\n", shapefile->mode);
   printf("\n\n");
 
+  if(shapefile->projection)
+    projection_dump(shapefile->projection);
+
   if(shapefile->flags & SHAPEFILE_HAS_SHP)
     shp_dump(shapefile->shp);
 

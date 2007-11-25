@@ -239,7 +239,7 @@ POINT geometry_point_reproject(POINT *point, PROJECTION *projection)
   POINT tpoint = *point;
 
 #ifdef HAVE_PROJECTION
-  if(projection)
+  if(projection && projection->is_set)
   {
     tpoint = *(projection_transform(projection, point));
     tpoint.x *= RAD_TO_DEG;
