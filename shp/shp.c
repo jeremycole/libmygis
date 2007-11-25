@@ -209,7 +209,7 @@ void shp_dump(SHP *shp)
   printf("    shapetype:  %s (%i)\n", 
 	 SHP_TYPES[shp->header->shapetype],
 	 shp->header->shapetype);
-  if(shp->projection)
+  if(shp->projection && shp->projection->is_set)
   {
     rpoint.x = shp->header->mbr_minx; rpoint.y = shp->header->mbr_miny;
     tpoint = geometry_point_reproject(&rpoint, shp->projection);

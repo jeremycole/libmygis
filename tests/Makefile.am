@@ -9,6 +9,7 @@ bin_PROGRAMS = \
 	test_e00 \
 	test_shp test_shx \
 	test_dbf test_dbf_scan \
+	test_prj \
 	test_shapefile test_shapefile_scan test_shapefile_projection \
 	test_tiger
 
@@ -43,6 +44,9 @@ test_dbf_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_dbf_scan_SOURCES = test_dbf_scan.c
 test_dbf_scan_LDADD = $(LIBOBJS) ../libmygis.a
+
+test_prj_SOURCES = test_prj.c
+test_prj_LDADD = $(LIBOBJS) ../libmygis.a
 
 test_shapefile_SOURCES = test_shapefile.c
 test_shapefile_LDADD = $(LIBOBJS) ../libmygis.a

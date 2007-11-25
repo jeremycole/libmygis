@@ -16,38 +16,40 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef PROJECTION_H
-#define PROJECTION_H
-
-#ifdef HAVE_PROJECTION
-#include <proj_api.h>
-#endif /* HAVE_PROJECTION */
+#include <stdio.h>
 
 #include "mygis.h"
-#include "pairlist.h"
+#include "geometry.h"
+#include "prj/prj.h"
 
-typedef struct projection_st {
-  int is_set;
-  char *from_name;
-  char *from;
-  char *to_name;
-  char *to;
-#ifdef HAVE_PROJECTION
-  projPJ proj4_pj_from;
-  projPJ proj4_pj_to;
-#else
-  void *proj4_pj_from;
-  void *proj4_pj_to;
-#endif /* HAVE_PROJECTION */
-} PROJECTION;
+int main(int argc, char **argv)
+{
+  PRJ *prj;
 
-#define PROJECTION_INIT                      MYGIS_MALLOC(PROJECTION)
+  int i;
 
-PROJECTION *projection_init();
-int projection_set(PROJECTION *proj, char *from, char *to);
-void projection_unset(PROJECTION *proj);
-POINT *projection_transform(PROJECTION *proj, POINT *point);
-void projection_dump(PROJECTION *proj);
-void projection_free(PROJECTION *proj);
+  DBUG_ENTER("main");
+  DBUG_PROCESS(argv[0]);
+  DBUG_PUSH("d:t");
 
-#endif /* PAIRLIST_H */
+  if(argc != 2) {
+    printf("usage %s <shapefile.prj>\n", argv[0]);
+    DBUG_RETURN(-1);
+  }
+
+  if(!(prj = prj_init(0))) {
+    printf("Couldn't init\n");
+    DBUG_RETURN(-2);
+  }
+
+  if(prj_parse(prj, argv[1]) < 0) {
+    printf("Couldn't parse\n");
+    DBUG_RETURN(-3);
+  }
+
+  prj_dump(prj);
+
+  prj_free(prj);
+
+  DBUG_RETURN(0);
+}
