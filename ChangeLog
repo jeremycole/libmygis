@@ -4,6 +4,14 @@ libmygis ChangeLog
 VERSION 0.7
 ***********
 
+0.7.5     2007-11-25
+
+  * Added missing -P command-line option to mysqlgisimport.
+  * Fixed problems with recursive build.
+  * Fixed tests/test_shapefile so that it doesn't try to seek past the
+    end of the file when dumping records.
+  * Finished projection support and cleaned up projection code.
+
 0.7.3     2007-02-23
 
   * Fixed a bug with complex projections which use a different projection
