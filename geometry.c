@@ -22,7 +22,16 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "projection.h"
 #include "geometry.h"
+
+/* 
+
+Point in Polygon test
+
+http://geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
+
+*/
 
 const char GEOMETRY_TYPES[GEOMETRY_TYPE_MAX][20] = {
   {"NULL"},
@@ -48,8 +57,14 @@ GEOMETRY *geometry_init(GEOMETRY_TYPE type)
   DBUG_RETURN(NULL);
 }
 
+void geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection)
+{
+  geometry->projection = projection;
+}
+
 void geometry_dump(GEOMETRY *geometry, int level) {
   POINT *point;
+  POINT tpoint;
   LINEARRING  *linearring;
   GEOMETRY_POLYGON *polygon;
   uint32      i, j, k;
@@ -63,41 +78,44 @@ void geometry_dump(GEOMETRY *geometry, int level) {
 
   switch(geometry->type) {
   case T_POINT:
-    printf("POINT: %12.6f, %12.6f\n",
-	   geometry->value.point->point->x,
-	   geometry->value.point->point->y);
+    point = geometry->value.point->point;
+    tpoint = geometry_point_reproject(point, geometry->projection);
+    printf("POINT: %12.6f, %12.6f\n", tpoint.x, tpoint.y);
     break;
 
   case T_LINESTRING:
     printf("LINESTRING: %5i point%s\n",
-	   geometry->value.linestring->items,
-	   geometry->value.linestring->items>1?"s":""
-	   );
+      geometry->value.linestring->items,
+      geometry->value.linestring->items>1?"s":""
+    );
     if(level > 1) {
       for(point=geometry->value.linestring->points,i=0; i<geometry->value.linestring->items; point++,i++) {
-	printf("  POINT %5i: %12.6f, %12.6f\n", i, point->x, point->y);
+        tpoint = geometry_point_reproject(point, geometry->projection);
+        printf("  POINT %5i: %12.6f, %12.6f\n", i, tpoint.x, tpoint.y);
       }
     }
     break;
 
   case T_POLYGON:
     printf("POLYGON: %5i linearring%s\n",
-	   geometry->value.polygon->items,
-	   geometry->value.polygon->items>1?"s":"");
+      geometry->value.polygon->items,
+      geometry->value.polygon->items>1?"s":""
+    );
     if(level > 0) {
       linearring = geometry->value.polygon->linearrings;
       for(j=0;j<(geometry->value.polygon->items);j++,linearring++) {
-	printf("  %sLINEARRING %5i: %5i point%s, %12.6f area\n",
-	       (linearring->type==LR_EXTERIOR)?"+":((linearring->type==LR_INTERIOR)?"-":((linearring->type==LR_UNKNOWN)?"=":"*")),
-	       j,
-	       linearring->items,
-	       linearring->items>1?"s":"",
-	       linearring->area);
-	if(level > 2) {
-	  for(point=linearring->points,i=0; i<linearring->items; point++,i++) {
-	    printf("    POINT %5i: %12.6f, %12.6f\n", i, point->x, point->y);
-	  }
-	}
+        printf("  %sLINEARRING %5i: %5i point%s, %12.6f area\n",
+          (linearring->type==LR_EXTERIOR)?"+":((linearring->type==LR_INTERIOR)?"-":((linearring->type==LR_UNKNOWN)?"=":"*")),
+          j,
+          linearring->items,
+          linearring->items>1?"s":"",
+          linearring->area);
+        if(level > 2) {
+          for(point=linearring->points,i=0; i<linearring->items; point++,i++) {
+            tpoint = geometry_point_reproject(point, geometry->projection);
+            printf("    POINT %5i: %12.6f, %12.6f\n", i, tpoint.x, tpoint.y);
+          }
+        }
 		   
       }
     }
@@ -130,8 +148,9 @@ void geometry_dump(GEOMETRY *geometry, int level) {
           {
             for(point=linearring->points,i=0; i<linearring->items; point++,i++)
             {
+              tpoint = geometry_point_reproject(point, geometry->projection);
               printf("      POINT %5i: %12.6f, %12.6f\n",
-                     i, point->x, point->y);
+                     i, tpoint.x, tpoint.y);
             }
           }
         }
@@ -215,14 +234,21 @@ void geometry_free(GEOMETRY *geometry)
   DBUG_VOID_RETURN;
 }
 
-/* 
+POINT geometry_point_reproject(POINT *point, PROJECTION *projection)
+{
+  POINT tpoint = *point;
 
-Point in Polygon test
+#ifdef HAVE_PROJECTION
+  if(projection)
+  {
+    tpoint = *(projection_transform(projection, point));
+    tpoint.x *= RAD_TO_DEG;
+    tpoint.y *= RAD_TO_DEG;
+  }
+#endif
 
-http://geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
-
-*/
-
+  return tpoint;
+}
 
 double geometry_linearring_area(LINEARRING *linearring) {
   POINT *s, *p, *r;

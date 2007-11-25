@@ -126,6 +126,11 @@ int shp_open(SHP *shp, char *shpfile, char mode)
   DBUG_RETURN(shp->fd);
 }
 
+void shp_set_projection(SHP *shp, PROJECTION *projection)
+{
+  shp->projection = projection;
+}
+
 void shp_index(SHP *shp, SHX *shx)
 {
   DBUG_ENTER("shp_index");
@@ -177,12 +182,15 @@ void shp_rewind(SHP *shp)
 
 void shp_dump(SHP *shp)
 {
+  POINT rpoint, tpoint;
+
   DBUG_ENTER("shp_dump");
   printf("\n");
   printf("SHP: Dump: " PTR_FORMAT "\n", PTR_CAST(shp));
   printf("  Structure:\n");
   printf("    header:     " PTR_FORMAT "\n", PTR_CAST(shp->header));
   printf("    index:      " PTR_FORMAT "\n", PTR_CAST(shp->index));
+  printf("    projection: " PTR_FORMAT "\n", PTR_CAST(shp->projection));
   printf("    filename:   %s\n", shp->filename);
   printf("    fd:         %i\n", shp->fd);
   printf("    mode:       %c\n", shp->mode);
@@ -201,14 +209,26 @@ void shp_dump(SHP *shp)
   printf("    shapetype:  %s (%i)\n", 
 	 SHP_TYPES[shp->header->shapetype],
 	 shp->header->shapetype);
-  printf("    mbr_minx:   %+011.6f\n", shp->header->mbr_minx);
-  printf("    mbr_miny:   %+011.6f\n", shp->header->mbr_miny);
-  printf("    mbr_maxx:   %+011.6f\n", shp->header->mbr_maxx);
-  printf("    mbr_maxy:   %+011.6f\n", shp->header->mbr_maxy);
-  printf("    mbr_minz:   %+011.6f\n", shp->header->mbr_minz);
-  printf("    mbr_maxz:   %+011.6f\n", shp->header->mbr_maxz);
-  printf("    mbr_minm:   %+011.6f\n", shp->header->mbr_minm);
-  printf("    mbr_maxm:   %+011.6f\n", shp->header->mbr_maxm);
+  if(shp->projection)
+  {
+    rpoint.x = shp->header->mbr_minx; rpoint.y = shp->header->mbr_miny;
+    tpoint = geometry_point_reproject(&rpoint, shp->projection);
+    printf("    mbr_minx:   %+20.6f (reprojected)\n", tpoint.x);
+    printf("    mbr_miny:   %+20.6f (reprojected)\n", tpoint.y);
+    rpoint.x = shp->header->mbr_maxx; rpoint.y = shp->header->mbr_maxy;
+    tpoint = geometry_point_reproject(&rpoint, shp->projection);
+    printf("    mbr_maxx:   %+20.6f (reprojected)\n", tpoint.x);
+    printf("    mbr_maxy:   %+20.6f (reprojected)\n", tpoint.y);
+  } else {
+    printf("    mbr_minx:   %+20.6f\n", shp->header->mbr_minx);
+    printf("    mbr_miny:   %+20.6f\n", shp->header->mbr_miny);
+    printf("    mbr_maxx:   %+20.6f\n", shp->header->mbr_maxx);
+    printf("    mbr_maxy:   %+20.6f\n", shp->header->mbr_maxy);
+  }
+  printf("    mbr_minz:   %+20.6f\n", shp->header->mbr_minz);
+  printf("    mbr_maxz:   %+20.6f\n", shp->header->mbr_maxz);
+  printf("    mbr_minm:   %+20.6f\n", shp->header->mbr_minm);
+  printf("    mbr_maxm:   %+20.6f\n", shp->header->mbr_maxm);
   printf("\n\n");
   DBUG_VOID_RETURN;
 }

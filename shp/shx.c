@@ -138,14 +138,14 @@ void shx_dump(SHX *shx)
   printf("    shapetype:  %s (%i)\n", 
 	 SHP_TYPES[shx->header->shapetype],
 	 shx->header->shapetype);
-  printf("    mbr_minx:   %+011.6lf\n", shx->header->mbr_minx);
-  printf("    mbr_miny:   %+011.6lf\n", shx->header->mbr_miny);
-  printf("    mbr_maxx:   %+011.6lf\n", shx->header->mbr_maxx);
-  printf("    mbr_maxy:   %+011.6lf\n", shx->header->mbr_maxy);
-  printf("    mbr_minz:   %+011.6lf\n", shx->header->mbr_minz);
-  printf("    mbr_maxz:   %+011.6lf\n", shx->header->mbr_maxz);
-  printf("    mbr_minm:   %+011.6lf\n", shx->header->mbr_minm);
-  printf("    mbr_maxm:   %+011.6lf\n", shx->header->mbr_maxm);
+  printf("    mbr_minx:   %+20.6f\n", shx->header->mbr_minx);
+  printf("    mbr_miny:   %+20.6f\n", shx->header->mbr_miny);
+  printf("    mbr_maxx:   %+20.6f\n", shx->header->mbr_maxx);
+  printf("    mbr_maxy:   %+20.6f\n", shx->header->mbr_maxy);
+  printf("    mbr_minz:   %+20.6f\n", shx->header->mbr_minz);
+  printf("    mbr_maxz:   %+20.6f\n", shx->header->mbr_maxz);
+  printf("    mbr_minm:   %+20.6f\n", shx->header->mbr_minm);
+  printf("    mbr_maxm:   %+20.6f\n", shx->header->mbr_maxm);
   printf("\n\n");
   DBUG_VOID_RETURN;
 }

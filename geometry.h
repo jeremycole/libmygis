@@ -20,6 +20,7 @@
 #define GEOMETRY_H
 
 #include "mygis.h"
+#include "projection.h"
 
 #define POINT_INIT(x)                  MYGIS_MALLOC_X(POINT, (x))
 #define LINEARRING_INIT(x)             MYGIS_MALLOC_X(LINEARRING, (x))
@@ -50,32 +51,7 @@ typedef enum geometry_type_en {
   T_GEOMETRYCOLLECTION = 7
 } GEOMETRY_TYPE;
 
-typedef enum linearring_type_en {
-  LR_UNKNOWN           = 0,
-  LR_EXTERIOR          = 1,
-  LR_INTERIOR          = 2
-} LINEARRING_TYPE;
-
 extern const char GEOMETRY_TYPES[GEOMETRY_TYPE_MAX][20];
-
-/* Internally-used structures */
-
-typedef struct point_st {
-  double x;
-  double y;
-/*
-  double z;
-  double m;
-*/
-} POINT;
-
-typedef struct linearring_st {
-  uint32 items;
-  POINT *points;
-  LINEARRING_TYPE type;
-  double area;
-} LINEARRING;
-
 
 /* Externally-used structures */
 
@@ -146,6 +122,8 @@ typedef struct geometry_st {
   byte    byteorder;
   uint32  items;
 
+  PROJECTION *projection;
+
   GEOMETRY_TYPE  type;
   GEOMETRY_ANY   value;
   GEOMETRY_MBR   mbr;
@@ -166,9 +144,11 @@ PUBLIC API
 */
 
 GEOMETRY  *geometry_init(GEOMETRY_TYPE type);
+void      geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection);
 void      geometry_dump(GEOMETRY *geometry, int level);
 void      geometry_free(GEOMETRY *geometry);
 
+POINT     geometry_point_reproject(POINT *point, PROJECTION *projection);
 double    geometry_linearring_area(LINEARRING *linearring);
 
 #endif

@@ -99,6 +99,7 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
     if(shp_open(shapefile->shp, shpname, mode) < 0)
       goto err4;
     shapefile->flags |= SHAPEFILE_HAS_SHP;
+    shp_set_projection(shapefile->shp, shapefile->projection);
   }
 
   if(!(shapefile->flags & SHAPEFILE_NO_SHX)) {
@@ -145,9 +146,11 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
 
 void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)
 {
-#ifdef HAVE_PROJECTION
   shapefile->projection = projection;
-#endif
+  if(shapefile->flags & SHAPEFILE_HAS_SHP)
+  {
+    shp_set_projection(shapefile->shp, shapefile->projection);
+  }
 }
 
 void shapefile_record_seek(SHAPEFILE *shapefile, uint32 record)
@@ -246,6 +249,20 @@ void shapefile_record_free(SHAPEFILE_RECORD *record)
 void shapefile_dump(SHAPEFILE *shapefile)
 {
   DBUG_ENTER("shapefile_dump");
+
+  printf("\n");
+  printf("SHAPEFILE: Dump: " PTR_FORMAT "\n", PTR_CAST(shapefile));
+  printf("  Structure:\n");
+  printf("    shp:        " PTR_FORMAT "\n", PTR_CAST(shapefile->shp));
+  printf("    shx:        " PTR_FORMAT "\n", PTR_CAST(shapefile->shx));
+  printf("    dbf:        " PTR_FORMAT "\n", PTR_CAST(shapefile->dbf));
+  printf("    prj:        " PTR_FORMAT "\n", PTR_CAST(shapefile->prj));
+  printf("    projection: " PTR_FORMAT "\n", PTR_CAST(shapefile->projection));
+  printf("    basename:   %s\n", shapefile->basename);
+  printf("    flags:      %i\n", shapefile->flags);
+  printf("    mode:       %c\n", shapefile->mode);
+  printf("\n\n");
+
   if(shapefile->flags & SHAPEFILE_HAS_SHP)
     shp_dump(shapefile->shp);
 
@@ -257,6 +274,7 @@ void shapefile_dump(SHAPEFILE *shapefile)
     
   if(shapefile->flags & SHAPEFILE_HAS_PRJ)
     prj_dump(shapefile->prj);
+
   DBUG_VOID_RETURN;
 }
 
