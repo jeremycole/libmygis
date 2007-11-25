@@ -26,22 +26,6 @@
 #include "wkt.h"
 #include "wkt_priv.h"
 
-POINT wkt_reproject(POINT *point, PROJECTION *projection)
-{
-  POINT tpoint = *point;
-
-#ifdef HAVE_PROJECTION
-  if(projection)
-  {
-    tpoint = *(projection_transform(projection, point));
-    tpoint.x *= RAD_TO_DEG;
-    tpoint.y *= RAD_TO_DEG;
-  }
-#endif
-
-  return tpoint;
-}
-
 void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
 {
   POINT       *point;
@@ -59,7 +43,8 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
   switch(geometry->type) {
   case T_POINT:
     fprintf(f, "POINT(");
-    tpoint= wkt_reproject(geometry->value.point->point, projection);
+    point = geometry->value.point->point;
+    tpoint= geometry_point_reproject(point, projection);
 
     fprintf(f, "%F %F",
 	    tpoint.x,
@@ -71,7 +56,7 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
     point  = geometry->value.linestring->points;
     points = geometry->value.linestring->items;
     for(i=0;i<points;i++,point++) {
-      tpoint= wkt_reproject(point, projection);
+      tpoint= geometry_point_reproject(point, projection);
 
       fprintf(f, "%F %F%s",
 	      tpoint.x, tpoint.y,
@@ -88,7 +73,7 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
       point  = linearring->points;
       points = linearring->items;
       for(i=0; i<points; i++, point++) {
-        tpoint= wkt_reproject(point, projection);
+        tpoint= geometry_point_reproject(point, projection);
 
         fprintf(f, "%F %F%s",
           tpoint.x, tpoint.y,
@@ -114,7 +99,7 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
         fprintf(f, "(");
         for(i=0; i<points; i++, point++)
         {
-          tpoint= wkt_reproject(point, projection);
+          tpoint= geometry_point_reproject(point, projection);
   
           fprintf(f, "%F %F%s",
             tpoint.x, tpoint.y,

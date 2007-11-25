@@ -41,11 +41,11 @@
 #define SHAPEFILE_RECORD_INIT           MYGIS_MALLOC(SHAPEFILE_RECORD)
 
 typedef struct shapefile_st {
-  PROJECTION      *projection;
   SHP             *shp;
   SHX             *shx;
   DBF             *dbf;
   PRJ             *prj;
+  PROJECTION      *projection;
   char            *basename;
   int             flags;
   char            mode;

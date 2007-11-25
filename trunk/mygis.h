@@ -61,6 +61,31 @@ typedef signed long long   sint64;
 #define SZ_FLOAT  (4)
 #define SZ_DOUBLE (8)
 
+/* Internally-used structures */
+
+typedef struct point_st {
+  double x;
+  double y;
+/*
+  double z;
+  double m;
+*/
+} POINT;
+
+typedef enum linearring_type_en {
+  LR_UNKNOWN           = 0,
+  LR_EXTERIOR          = 1,
+  LR_INTERIOR          = 2
+} LINEARRING_TYPE;
+
+typedef struct linearring_st {
+  uint32 items;
+  POINT *points;
+  LINEARRING_TYPE type;
+  double area;
+} LINEARRING;
+
+
 /* Useful Macros */
 
 #define MIN(x, y)                    (((x)<(y))?(x):(y))

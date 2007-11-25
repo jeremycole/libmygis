@@ -25,7 +25,6 @@
 
 #include "mygis.h"
 #include "pairlist.h"
-#include "geometry.h"
 
 typedef struct projection_st {
   int is_set;

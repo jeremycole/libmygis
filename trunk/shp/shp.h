@@ -77,6 +77,8 @@ typedef struct shp_st {
   int               flags;
   int               position;
   int               records;
+  
+  PROJECTION        *projection;
 } SHP;
 
 
@@ -88,6 +90,7 @@ PUBLIC API
 
 SHP       *shp_init(int flags);
 int       shp_open(SHP *shp, char *shpfile, char mode);
+void      shp_set_projection(SHP *shp, PROJECTION *projection);
 void      shp_index(SHP *shp, SHX *shx);
 GEOMETRY  *shp_read_next(SHP *shp);
 void      shp_seek(SHP *shp, int pos);

@@ -26,8 +26,10 @@ int main(int argc, char **argv)
 {
   SHAPEFILE *sha;
   SHAPEFILE_RECORD *rec;
+  PROJECTION *proj;
 
-  int i;
+  int rc;
+  int i, max;
 
   DBUG_ENTER("main");
   DBUG_PROCESS(argv[0]);
@@ -43,14 +45,24 @@ int main(int argc, char **argv)
     DBUG_RETURN(-2);
   }
 
-  if(shapefile_open(sha, argv[1], 'r') < 0) {
+  if((rc= shapefile_open(sha, argv[1], 'r')) < 0) {
     printf("Couldn't open\n");
     DBUG_RETURN(-3);
   }
 
+  proj = projection_init();
+
+  if(sha->flags & SHAPEFILE_HAS_PRJ)
+  {
+    projection_set(proj, sha->prj->proj4_def, "+proj=latlong");
+    shapefile_set_projection(sha, proj);
+  }
+
   shapefile_dump(sha);
 
-  for(i=1; i<100; i+=10) {
+  max = sha->dbf->numrecords < 100 ? sha->dbf->numrecords : 100;
+
+  for(i=1; i<max; i+=10) {
     shapefile_record_seek(sha, i);
     if((rec = shapefile_read_next(sha))) {
       shapefile_record_dump(rec);

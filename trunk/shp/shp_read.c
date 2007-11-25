@@ -205,8 +205,9 @@ GEOMETRY *_shp_read_geometry_polygon(char *content)
   uint32 item;
   LINEARRING *linearrings, *linearring, **linearringp;
 
-  uint32 *exterior_rings_items;
-  LINEARRING **exterior_rings;
+  LINEARRING  **exterior_rings;
+  uint32      *exterior_rings_items;
+
   uint32 last_exterior_ring;
   
   GEOMETRY_POLYGON *polygon;
@@ -257,6 +258,8 @@ GEOMETRY *_shp_read_geometry_polygon(char *content)
   for(item=0, linearringp=exterior_rings; item<exterior; item++, linearringp++, polygon++)
   {
     polygon->items= exterior_rings_items[item];
+    
+    /* appears we need to dupe the memory at linearringp to avoid a double free later */
     polygon->linearrings= *linearringp;
   }
 
@@ -360,6 +363,8 @@ GEOMETRY *shp_read_next(SHP *shp)
     fprintf(stderr, "oops!  got type=%i (0x%08x)\n", type, type);
     DBUG_RETURN(NULL);
   }
+
+  geometry_set_projection(geometry, shp->projection);
 
   shp->position++;
   free(content);
