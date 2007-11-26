@@ -19,7 +19,7 @@
 #ifndef PROJECTION_H
 #define PROJECTION_H
 
-#include "projection_priv.h"
+#include <mygis/mygis.h>
 
 typedef struct projection_st {
   int is_set;
