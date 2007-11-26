@@ -15,6 +15,7 @@ mygistigerincludedir = $(mygisincludedir)/tiger
 
 mygisinclude_HEADERS = \
   mygis.h  \
+  dbug.h \
   compare.h \
   pairlist.h \
   record.h \
@@ -44,10 +45,10 @@ mygisprjinclude_HEADERS = \
   prj/prj.h
 
 mygistigerinclude_HEADERS = \
-  tiger/tiger.h
+  tiger/tiger.hls
 
 noinst_HEADERS = \
-  dbug.h portability.h
+  portability.h
 
 lib_LTLIBRARIES = libmygis.la
 
