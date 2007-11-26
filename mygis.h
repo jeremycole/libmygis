@@ -19,6 +19,10 @@
 #ifndef MYGIS_H
 #define MYGIS_H
 
+#ifndef DEBUG
+#define DBUG_OFF
+#endif
+
 #include <mygis/dbug.h>
 
 extern const char *mygis_version;

@@ -19,10 +19,6 @@
 #ifndef MYGIS_PRIV_H
 #define MYGIS_PRIV_H
 
-#ifndef DEBUG
-#define DBUG_OFF
-#endif
-
 #define _GNU_SOURCE
 
 #include "config.h"
