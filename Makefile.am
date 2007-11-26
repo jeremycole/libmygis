@@ -45,7 +45,7 @@ mygisprjinclude_HEADERS = \
   prj/prj.h
 
 mygistigerinclude_HEADERS = \
-  tiger/tiger.hls
+  tiger/tiger.h
 
 noinst_HEADERS = \
   portability.h
