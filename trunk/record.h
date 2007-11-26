@@ -19,8 +19,6 @@
 #ifndef RECORD_H
 #define RECORD_H
 
-#include "record_priv.h"
-
 typedef enum data_type_en {
   CHARACTER,
   NUMBER,
