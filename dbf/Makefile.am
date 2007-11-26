@@ -1,11 +1,11 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-lib_LIBRARIES = libdbf.a
+noinst_LTLIBRARIES = libdbf.la
 
-libdbf_a_SOURCES = \
+libdbf_la_SOURCES = \
   dbf.c dbf_read.c dbf_scan.c dbf_misc.c dbf.h dbf_priv.h \
   ../config.h
-libdbf_a_LIBADD = ../compare.o $(LIBOBJS)
+libdbf_la_LIBADD = ../compare.o @LTLIBOBJS@
 
 INCLUDES = -I$(srcdir) -I..
 

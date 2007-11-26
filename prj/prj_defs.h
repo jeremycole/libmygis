@@ -19,20 +19,18 @@
 #ifndef PRJ_DEFS_H
 #define PRJ_DEFS_H
 
-#include "prj.h"
-
 typedef struct prj_proj4_names_st
 {
   char *prj_name;
   char *proj4_name;
 } PRJ_PROJ4_NAMES;
 
-PRJ_PROJ4_NAMES prj_proj4_geogcs_names[];
-PRJ_PROJ4_NAMES prj_proj4_datum_names[];
-PRJ_PROJ4_NAMES prj_proj4_spheroid_names[];
-PRJ_PROJ4_NAMES prj_proj4_projection_names[];
-PRJ_PROJ4_NAMES prj_proj4_unit_names[];
-PRJ_PROJ4_NAMES prj_proj4_parameter_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_geogcs_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_datum_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_spheroid_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_projection_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_unit_names[];
+extern PRJ_PROJ4_NAMES prj_proj4_parameter_names[];
 
 char *prj_proj4_names_find(PRJ_PROJ4_NAMES *names, char *name);
 

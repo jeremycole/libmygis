@@ -1,19 +1,19 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-lib_LIBRARIES = libprj.a
+noinst_LTLIBRARIES = libprj.la
 
-libprj_a_SOURCES = \
+libprj_la_SOURCES = \
   prj_yacc.y prj_yacc.h \
   prj_lex.l \
   prj.c prj.h \
   prj_defs.c prj_defs.h \
   ../config.h
 
-libprj_a_LIBADD = \
-  ../compare.o ../projection.o $(LIBOBJS)
+libprj_la_LIBADD = \
+  ../compare.o ../projection.o @LTLIBOBJS@
 
 INCLUDES = -I$(srcdir) -I..
 
-YFLAGS = -d
+AM_YFLAGS = -d
 
 all: $(OBJS)

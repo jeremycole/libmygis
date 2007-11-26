@@ -16,27 +16,32 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#ifndef TIGER_DEFS_H
+#define TIGER_DEFS_H
+
 #include "tiger.h"
 
-FIXED_FILE_DEF tiger_file_def_rt1[];
-FIXED_FILE_DEF tiger_file_def_rt2[];
-FIXED_FILE_DEF tiger_file_def_rt4[];
-FIXED_FILE_DEF tiger_file_def_rt5[];
-FIXED_FILE_DEF tiger_file_def_rt6[];
-FIXED_FILE_DEF tiger_file_def_rt7[];
-FIXED_FILE_DEF tiger_file_def_rt8[];
-FIXED_FILE_DEF tiger_file_def_rta[];
-FIXED_FILE_DEF tiger_file_def_rtb[];
-FIXED_FILE_DEF tiger_file_def_rtc[];
-FIXED_FILE_DEF tiger_file_def_rte[];
-FIXED_FILE_DEF tiger_file_def_rth[];
-FIXED_FILE_DEF tiger_file_def_rti[];
-FIXED_FILE_DEF tiger_file_def_rtm[];
-FIXED_FILE_DEF tiger_file_def_rtp[];
-FIXED_FILE_DEF tiger_file_def_rtr[];
-FIXED_FILE_DEF tiger_file_def_rts[];
-FIXED_FILE_DEF tiger_file_def_rtt[];
-FIXED_FILE_DEF tiger_file_def_rtu[];
-FIXED_FILE_DEF tiger_file_def_rtz[];
+extern FIXED_FILE_DEF tiger_file_def_rt1[];
+extern FIXED_FILE_DEF tiger_file_def_rt2[];
+extern FIXED_FILE_DEF tiger_file_def_rt4[];
+extern FIXED_FILE_DEF tiger_file_def_rt5[];
+extern FIXED_FILE_DEF tiger_file_def_rt6[];
+extern FIXED_FILE_DEF tiger_file_def_rt7[];
+extern FIXED_FILE_DEF tiger_file_def_rt8[];
+extern FIXED_FILE_DEF tiger_file_def_rta[];
+extern FIXED_FILE_DEF tiger_file_def_rtb[];
+extern FIXED_FILE_DEF tiger_file_def_rtc[];
+extern FIXED_FILE_DEF tiger_file_def_rte[];
+extern FIXED_FILE_DEF tiger_file_def_rth[];
+extern FIXED_FILE_DEF tiger_file_def_rti[];
+extern FIXED_FILE_DEF tiger_file_def_rtm[];
+extern FIXED_FILE_DEF tiger_file_def_rtp[];
+extern FIXED_FILE_DEF tiger_file_def_rtr[];
+extern FIXED_FILE_DEF tiger_file_def_rts[];
+extern FIXED_FILE_DEF tiger_file_def_rtt[];
+extern FIXED_FILE_DEF tiger_file_def_rtu[];
+extern FIXED_FILE_DEF tiger_file_def_rtz[];
 
-TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE];
+extern TIGER_FILE_TYPES tiger_file_types[TIGER_MAX_FILE_TYPE];
+
+#endif /* TIGER_DEFS_H */
