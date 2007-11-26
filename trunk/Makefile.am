@@ -1,4 +1,4 @@
-SUBDIRS = wkb wkt e00 dbf prj shp tiger
+SUBDIRS = extra wkb wkt e00 dbf prj shp tiger
 
 MAINTAINERCLEANFILES = \
   aclocal.m4 configure config.status config.log config.h \
@@ -75,6 +75,8 @@ libmygis_la_LIBADD = \
   prj/libprj.la \
   shp/libshp.la \
   tiger/libtiger.la
+
+libmygis_la_LDFLAGS = -version-info 0:0:0
 
 INCLUDES = -I$(srcdir) -I..
 
