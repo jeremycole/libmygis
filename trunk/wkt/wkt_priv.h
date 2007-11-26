@@ -19,8 +19,15 @@
 #ifndef WKT_PRIV_H
 #define WKT_PRIV_H
 
+#include "mygis_priv.h"
 #include "wkt.h"
+#include "geometry_priv.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 
+extern const char WKT_TYPES[8][20];
 
 #endif /* WKT_PRIV_H */

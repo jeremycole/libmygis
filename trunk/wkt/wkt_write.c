@@ -16,14 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include "mygis.h"
-#include "geometry.h"
-
-#include "wkt.h"
 #include "wkt_priv.h"
 
 void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)

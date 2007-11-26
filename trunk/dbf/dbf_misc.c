@@ -16,17 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#include "mygis.h"
-
-#include "dbf.h"
 #include "dbf_priv.h"
 
 char *dbf_record_field(RECORD *record, char *key)

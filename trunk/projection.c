@@ -16,11 +16,12 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-#include "projection.h"
 #include <stdlib.h>
 #include <string.h>
 
+#include "mygis_priv.h"
+#include "projection.h"
+#include "projection_priv.h"
 
 PROJECTION *projection_init()
 {
@@ -47,12 +48,12 @@ int projection_set(PROJECTION *proj, char *from, char *to)
   proj->to        = strdup(to);
 
 #ifdef HAVE_PROJECTION
-  if(!(proj->proj4_pj_from = pj_init_plus(proj->from)))
+  if(!(proj->proj4_pj_from = (projPJ)pj_init_plus(proj->from)))
     goto err2;
 
-  if(!(proj->proj4_pj_to   = pj_init_plus(proj->to)))
+  if(!(proj->proj4_pj_to   = (projPJ)pj_init_plus(proj->to)))
   {
-    pj_free(proj->proj4_pj_from);
+    pj_free((projPJ)proj->proj4_pj_from);
     goto err2;
   }
 #endif /* HAVE PROJECTION */
@@ -76,8 +77,8 @@ void projection_unset(PROJECTION *proj)
   if(!proj->is_set)
   {
 #ifdef HAVE_PROJECTION
-    pj_free(proj->proj4_pj_to);
-    pj_free(proj->proj4_pj_from);
+    pj_free((projPJ)proj->proj4_pj_to);
+    pj_free((projPJ)proj->proj4_pj_from);
 #endif /* HAVE_PROJECTION */
     free(proj->to);
     free(proj->to_name);
@@ -110,7 +111,7 @@ POINT *projection_transform(PROJECTION *proj, POINT *point)
   if(!proj->is_set) 
     goto err;
 
-  rc= pj_transform(proj->proj4_pj_from, proj->proj4_pj_to,
+  rc= pj_transform((projPJ)proj->proj4_pj_from, (projPJ)proj->proj4_pj_to,
                    1, 0, &ret->x, &ret->y, &trash_z);
 
   if(rc)

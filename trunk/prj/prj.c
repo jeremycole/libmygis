@@ -16,17 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-
-#include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-
-#include "prj.h"
-#include "prj_defs.h"
+#include "prj_priv.h"
 
 PRJ *prj_init(int flags)
 {

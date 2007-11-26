@@ -16,19 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-
-#include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#include "dbf.h"
 #include "dbf_priv.h"
-
 
 DBF_SCAN *dbf_scan_init(DBF *dbf, COMPARE *compare, char *key, char *value) {
   DBF_SCAN *scan;

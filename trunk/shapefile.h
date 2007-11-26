@@ -19,12 +19,12 @@
 #ifndef SHAPEFILE_H
 #define SHAPEFILE_H
 
-#include "shp/shp.h"
-#include "shp/shx.h"
-#include "dbf/dbf.h"
-#include "prj/prj.h"
-#include "compare.h"
-#include "projection.h"
+#include <mygis/shp/shp.h>
+#include <mygis/shp/shx.h>
+#include <mygis/dbf/dbf.h>
+#include <mygis/prj/prj.h>
+#include <mygis/compare.h>
+#include <mygis/projection.h>
 
 #define SHAPEFILE_NO_SHP                0x0001
 #define SHAPEFILE_NO_SHX                0x0002
@@ -35,10 +35,6 @@
 #define SHAPEFILE_HAS_SHX               0x2000
 #define SHAPEFILE_HAS_DBF               0x4000
 #define SHAPEFILE_HAS_PRJ               0x8000
-
-#define SHAPEFILE_INIT                  MYGIS_MALLOC(SHAPEFILE)
-#define SHAPEFILE_SCAN_INIT             MYGIS_MALLOC(SHAPEFILE_SCAN)
-#define SHAPEFILE_RECORD_INIT           MYGIS_MALLOC(SHAPEFILE_RECORD)
 
 typedef struct shapefile_st {
   SHP             *shp;

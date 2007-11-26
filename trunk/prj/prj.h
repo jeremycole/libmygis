@@ -19,11 +19,8 @@
 #ifndef PRJ_H
 #define PRJ_H
 
-#include "mygis.h"
-#include "../pairlist.h"
-#include "../projection.h"
-
-#define PRJ_INIT                   MYGIS_MALLOC(PRJ)
+#include <mygis/pairlist.h>
+#include <mygis/projection.h>
 
 #define PRJ_NAME_LEN 100
 

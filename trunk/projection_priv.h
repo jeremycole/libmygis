@@ -16,18 +16,16 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef SHX_PRIV_H
-#define SHX_PRIV_H
+#ifndef PROJECTION_PRIV_H
+#define PROJECTION_PRIV_H
 
-#include "mygis_priv.h"
-#include "shx.h"
-#include "geometry.h"
+#ifdef HAVE_PROJECTION
+#include <proj_api.h>
+#endif /* HAVE_PROJECTION */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "mygis.h"
+#include "pairlist.h"
 
-int _shx_read_header(SHX *shx);
-int _shx_write_header(SHX *shx);
+#define PROJECTION_INIT                      MYGIS_MALLOC(PROJECTION)
 
-#endif /* SHX_PRIV_H */
+#endif /* PROJECTION_PRIV_H */

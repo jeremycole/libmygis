@@ -16,18 +16,18 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef SHX_PRIV_H
-#define SHX_PRIV_H
+#ifndef RECORD_PRIV_H
+#define RECORD_PRIV_H
 
 #include "mygis_priv.h"
-#include "shx.h"
-#include "geometry.h"
+#include "record.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 
-int _shx_read_header(SHX *shx);
-int _shx_write_header(SHX *shx);
+#define RECORD_INIT                    MYGIS_MALLOC(RECORD)
+#define CELL_INIT                      MYGIS_MALLOC(CELL)
+#define CELL_NODE_INIT                 MYGIS_MALLOC(CELL_NODE)
 
-#endif /* SHX_PRIV_H */
+#endif /* RECORD_PRIV_H */

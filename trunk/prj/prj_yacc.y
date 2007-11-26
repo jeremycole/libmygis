@@ -4,10 +4,7 @@
 #define YYPARSE_PARAM projcs
 #define PROJCS ((PRJ_PROJCS *)(YYPARSE_PARAM))
 
-#include <stdio.h>
-#include <string.h>
-#include "../mygis.h"
-#include "prj.h"
+#include "prj_priv.h"
 
 extern char* yytext;
 extern int yylineno;

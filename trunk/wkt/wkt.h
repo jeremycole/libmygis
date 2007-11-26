@@ -19,11 +19,8 @@
 #ifndef WKT_H
 #define WKT_H
 
-#include "mygis.h"
-#include "geometry.h"
-#include "projection.h"
-
-extern const char WKT_TYPES[8][20];
+#include <mygis/geometry.h>
+#include <mygis/projection.h>
 
 /*
 

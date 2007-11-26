@@ -19,7 +19,20 @@
 #ifndef E00_PRIV_H
 #define E00_PRIV_H
 
+#include "mygis_priv.h"
 #include "e00.h"
+
+#include <errno.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+
+#define E00_INIT                   MYGIS_MALLOC(E00)
+#define E00_SECTION_INIT           MYGIS_MALLOC(E00_SECTION)
 
 E00_SECTION_ID e00_section_id(char *section_tag);
 E00_SECTION *e00_open_section(E00 *e00, char *section_name);

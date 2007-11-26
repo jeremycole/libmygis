@@ -28,6 +28,7 @@
 #include "sh_header.h"
 #include "shp.h"
 #include "shx.h"
+#include "shp_priv.h"
 #include "shx_priv.h"
 
 

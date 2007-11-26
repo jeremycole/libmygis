@@ -16,18 +16,19 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef SHX_PRIV_H
-#define SHX_PRIV_H
+#ifndef SHAPEFILE_PRIV_H
+#define SHAPEFILE_PRIV_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "mygis_priv.h"
-#include "shx.h"
+#include "shapefile.h"
 #include "geometry.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#define SHAPEFILE_INIT                  MYGIS_MALLOC(SHAPEFILE)
+#define SHAPEFILE_SCAN_INIT             MYGIS_MALLOC(SHAPEFILE_SCAN)
+#define SHAPEFILE_RECORD_INIT           MYGIS_MALLOC(SHAPEFILE_RECORD)
 
-int _shx_read_header(SHX *shx);
-int _shx_write_header(SHX *shx);
-
-#endif /* SHX_PRIV_H */
+#endif /* SHAPEFILE_PRIV_H */

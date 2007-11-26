@@ -19,4 +19,17 @@
 #ifndef PRJ_PRIV_H
 #define PRJ_PRIV_H
 
+#include "mygis_priv.h"
+#include "prj.h"
+#include "prj_defs.h"
+
+#include <errno.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+
+#define PRJ_INIT                   MYGIS_MALLOC(PRJ)
+
 #endif /* PRJ_PRIV_H */

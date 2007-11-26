@@ -26,11 +26,13 @@
 #define _GNU_SOURCE
 #include <getopt.h>
 
-#include "mygis.h"
-#include "pairlist.h"
-#include "geometry.h"
-#include "shapefile.h"
-#include "wkt/wkt.h"
+#include <mygis/mygis.h>
+#include <mygis/pairlist.h>
+#include <mygis/geometry.h>
+#include <mygis/shapefile.h>
+#include <mygis/wkt/wkt.h>
+
+#include "dbug.h"
 
 const char *program = {"mysqlgisimport"};
 const char *version = {"0.5"};

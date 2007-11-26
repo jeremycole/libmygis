@@ -9,8 +9,8 @@ libprj_la_SOURCES = \
   prj_defs.c prj_defs.h \
   ../config.h
 
-libprj_la_LIBADD = \
-  ../compare.o ../projection.o @LTLIBOBJS@
+#libprj_la_LIBADD = \
+#  ../compare.lo ../projection.lo @LTLIBOBJS@
 
 INCLUDES = -I$(srcdir) -I..
 

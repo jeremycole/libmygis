@@ -19,12 +19,7 @@
 #ifndef PROJECTION_H
 #define PROJECTION_H
 
-#ifdef HAVE_PROJECTION
-#include <proj_api.h>
-#endif /* HAVE_PROJECTION */
-
-#include "mygis.h"
-#include "pairlist.h"
+#include "projection_priv.h"
 
 typedef struct projection_st {
   int is_set;
@@ -32,16 +27,9 @@ typedef struct projection_st {
   char *from;
   char *to_name;
   char *to;
-#ifdef HAVE_PROJECTION
-  projPJ proj4_pj_from;
-  projPJ proj4_pj_to;
-#else
   void *proj4_pj_from;
   void *proj4_pj_to;
-#endif /* HAVE_PROJECTION */
 } PROJECTION;
-
-#define PROJECTION_INIT                      MYGIS_MALLOC(PROJECTION)
 
 PROJECTION *projection_init();
 int projection_set(PROJECTION *proj, char *from, char *to);
