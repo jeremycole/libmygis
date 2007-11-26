@@ -52,3 +52,7 @@ AM_CFLAGS = @CFLAGS@
 all: $(ROOT_OBJECTS) all-recursive $(lib_LIBRARIES)
 	(cd tests && make all)
 	(cd tools && make all)
+
+install: all install-recursive
+	(cd tests && make install)
+	(cd tools && make install)
