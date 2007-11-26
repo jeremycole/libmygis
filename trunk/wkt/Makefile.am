@@ -1,9 +1,9 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-lib_LIBRARIES = libwkt.a
+noinst_LTLIBRARIES = libwkt.la
 
-libwkt_a_SOURCES = wkt.c wkt_write.c wkt.h wkt_priv.h ../geometry.h ../config.h
-libwkt_a_LIBADD = $(LIBOBJS)
+libwkt_la_SOURCES = wkt.c wkt_write.c wkt.h wkt_priv.h ../geometry.h ../config.h
+libwkt_la_LIBADD = @LTLIBOBJS@
 
 INCLUDES = -I$(srcdir) -I..
 

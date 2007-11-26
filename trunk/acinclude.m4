@@ -1,15 +1,20 @@
+m4_include([libtool.m4])
+
 # System libraries
 
-AC_DEFUN(AC_LIB_Z, [
-  AC_CHECK_LIB(z, compress)
+AC_DEFUN([AC_LIB_Z_FOR_MYSQL], [
+  if test "x$want_mysql" = "xyes"
+  then
+    AC_CHECK_LIB(z, compress)
+  fi
 ])
 
-AC_DEFUN(AC_FUNC_CRYPT, [
+AC_DEFUN([AC_FUNC_CRYPT], [
   AC_CHECK_LIB(crypt, crypt)
   AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [], [the `crypt' library]))
 ])
 
-AC_DEFUN(AC_LIB_PROJ, [
+AC_DEFUN([AC_LIB_PROJ], [
   if test "x$want_projection" = "xyes"
   then
     AC_CHECK_LIB(proj, pj_init)
@@ -18,7 +23,7 @@ AC_DEFUN(AC_LIB_PROJ, [
 
 # MySQL Libraries and Headers
 
-AC_DEFUN(AC_LIB_MYSQL, [
+AC_DEFUN([AC_LIB_MYSQL], [
   AC_ARG_WITH(mysql-lib,
   [  --with-mysql-lib=DIR    Look for MySQL client library in DIR],
   mysql_lib=$withval, mysql_lib="")
@@ -63,7 +68,7 @@ AC_DEFUN(AC_LIB_MYSQL, [
 ])
 
 
-AC_DEFUN(AC_HEADER_MYSQL, [
+AC_DEFUN([AC_HEADER_MYSQL], [
   AC_ARG_WITH(mysql-include,
   [  --with-mysql-include=DIR
                           Look for MySQL include files in DIR],

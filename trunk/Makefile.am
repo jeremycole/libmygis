@@ -19,33 +19,31 @@ include_HEADERS = \
   prj/prj.h \
   tiger/tiger.h
 
-lib_LIBRARIES = libmygis.a
+lib_LTLIBRARIES = libmygis.la
 
-libmygis_a_SOURCES = \
+libmygis_la_SOURCES = \
   mygis.c 
 
 ROOT_OBJECTS = \
-  portability.o \
-  dbug.o \
-  compare.o \
-  pairlist.o \
-  record.o \
-  fixed.o \
-  projection.o \
-  geometry.o \
-  shapefile.o
-  
-libmygis_a_LIBADD = \
+  portability.lo \
+  dbug.lo \
+  compare.lo \
+  pairlist.lo \
+  record.lo \
+  fixed.lo \
+  projection.lo \
+  geometry.lo \
+  shapefile.lo
+
+libmygis_la_LIBADD = \
   $(ROOT_OBJECTS) \
-  wkb/wkb.o wkb/wkb_read.o wkb/wkb_write.o wkb/wkb_misc.o \
-  wkt/wkt.o wkt/wkt_write.o \
-  e00/e00.o e00/e00_read.o e00/e00_write.o \
-  dbf/dbf.o dbf/dbf_read.o dbf/dbf_scan.o dbf/dbf_misc.o \
-  prj/prj.o prj/prj_defs.o prj/prj_lex.o prj/prj_yacc.o \
-  shp/sh_header.o \
-  shp/shp.o shp/shp_read.o shp/shp_write.o \
-  shp/shx.o shp/shx_read.o shp/shx_write.o \
-  tiger/tiger.o tiger/tiger_read.o
+  wkb/libwkb.la \
+  wkt/libwkt.la \
+  e00/libe00.la \
+  dbf/libdbf.la \
+  prj/libprj.la \
+  shp/libshp.la \
+  tiger/libtiger.la
 
 INCLUDES = -I$(srcdir) -I..
 

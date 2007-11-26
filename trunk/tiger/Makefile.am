@@ -1,13 +1,13 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-lib_LIBRARIES = libtiger.a
+noinst_LTLIBRARIES = libtiger.la
 
-libtiger_a_SOURCES = \
+libtiger_la_SOURCES = \
   tiger.c tiger.h \
   tiger_defs.c tiger_defs.h \
   tiger_read.c \
   ../config.h
-libtiger_a_LIBADD = ../compare.o $(LIBOBJS)
+libtiger_la_LIBADD = ../compare.o @LTLIBOBJS@
 
 INCLUDES = -I$(srcdir) -I..
 
