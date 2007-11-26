@@ -19,6 +19,7 @@
 #ifndef FIXED_PRIV_H
 #define FIXED_PRIV_H 
 
+#include "mygis_priv.h"
 #include "fixed.h"
 
 #include <errno.h>
