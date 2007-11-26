@@ -19,17 +19,10 @@
 #ifndef FIXED_H
 #define FIXED_H 
 
-#include "mygis.h"
-#include "compare.h"
-#include "record.h"
-#include "fixed.h"
-
-#define FIXED_INIT                     MYGIS_MALLOC(FIXED)
-#define FIXED_FIELD_INIT               MYGIS_MALLOC(FIXED_FIELD)
-#define FIXED_FIELD_NODE_INIT          MYGIS_MALLOC(FIXED_FIELD_NODE)
-
-#define FIXED_F_CRLF                   0x0001
-#define FIXED_F_NULLS                  0x1000
+#include <mygis/mygis.h>
+#include <mygis/compare.h>
+#include <mygis/record.h>
+#include <mygis/fixed.h>
 
 typedef enum fixed_padding_en {
   LEFT             = 'L',

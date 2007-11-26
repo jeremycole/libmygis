@@ -19,6 +19,7 @@
 #include <string.h>
 
 #include "mygis.h"
+#include "mygis_priv.h"
 
 #ifdef DEBUG
 #define DEBUG_STRING " (debug)"

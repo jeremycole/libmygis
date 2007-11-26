@@ -16,18 +16,17 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef SHX_PRIV_H
-#define SHX_PRIV_H
+#ifndef PAIRLIST_PRIV_H
+#define PAIRLIST_PRIV_H
 
 #include "mygis_priv.h"
-#include "shx.h"
-#include "geometry.h"
+#include "pairlist.h"
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include <string.h>
 
-int _shx_read_header(SHX *shx);
-int _shx_write_header(SHX *shx);
+#define PAIR_INIT                      MYGIS_MALLOC(PAIR)
+#define PAIRNODE_INIT                  MYGIS_MALLOC(PAIRNODE)
+#define PAIRLIST_INIT                  MYGIS_MALLOC(PAIRLIST)
 
-#endif /* SHX_PRIV_H */
+#endif /* PAIRLIST_PRIV_H */

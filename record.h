@@ -19,9 +19,7 @@
 #ifndef RECORD_H
 #define RECORD_H
 
-#define RECORD_INIT                    MYGIS_MALLOC(RECORD)
-#define CELL_INIT                      MYGIS_MALLOC(CELL)
-#define CELL_NODE_INIT                 MYGIS_MALLOC(CELL_NODE)
+#include "record_priv.h"
 
 typedef enum data_type_en {
   CHARACTER,
@@ -60,7 +58,7 @@ typedef struct cell_node_st {
 typedef struct record_st {
   void *source;
   CELL_NODE *head, *tail;
-  uint cells;
+  uint32 cells;
 } RECORD;
 
 RECORD     *record_init(void *source);

@@ -19,7 +19,43 @@
 #ifndef WKB_PRIV_H
 #define WKB_PRIV_H
 
+#include "mygis_priv.h"
 #include "wkb.h"
+#include "geometry_priv.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define WKB_SZ_BYTEORDER           1
+#define WKB_SZ_TYPE                4
+#define WKB_SZ_NUMITEMS            4
+#define WKB_SZ_POINT               (SZ_DOUBLE*2)
+
+#define WKB_F_DUPE                 0x0001
+
+#define WKB_UNKNOWN                0
+#define WKB_POINT                  1
+#define WKB_LINESTRING             2
+#define WKB_POLYGON                3
+#define WKB_MULTIPOINT             4
+#define WKB_MULTILINESTRING        5
+#define WKB_MULTIPOLYGON           6
+#define WKB_GEOMETRYCOLLECTION     7
+
+#define WKB_BYTEORDER(pos)         MYGIS_READ_BYTE_LE(pos)
+#define WKB_TYPE(pos)              MYGIS_READ_UINT32_LE(pos+1)
+#define WKB_NUMITEMS(pos)          MYGIS_READ_UINT32_LE(pos+5)
+#define WKB_DATA(pos)              (pos+(WKB_TYPE(pos)==WKB_POINT?5:9))
+
+#define WKB_X(pos)                 (pos)
+#define WKB_Y(pos)                 (pos+SZ_DOUBLE)
+
+#define WKB_INIT                   MYGIS_MALLOC(WKB)
+
+#define WKB_TYPE_MAX 8
+extern const char WKB_TYPES[8][20];
 
 POINT      *_wkb_read_points(char *pos, uint32 num, char **next);
 LINEARRING *_wkb_read_linearrings(char *pos, uint32 num, char **next);

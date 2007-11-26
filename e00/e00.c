@@ -16,20 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-
-#include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-
-#include "geometry.h"
-
-#include "e00.h"
 #include "e00_priv.h"
 
 E00_SECTION_TAG E00_SECTION_TAGS[E00_SECTION_IDS+1] = {

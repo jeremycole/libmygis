@@ -16,17 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-#include "geometry.h"
-
-#include "shp.h"
 #include "shp_priv.h"
-#include "sh_header.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 
 void _sh_header_swap(SH_HEADER *header)
 {

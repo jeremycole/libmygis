@@ -19,8 +19,6 @@
 #ifndef PAIRLIST_H
 #define PAIRLIST_H
 
-#include "mygis.h"
-
 #include "compare.h"
 
 typedef struct pair_st {
@@ -39,10 +37,6 @@ typedef struct pairlist_st {
   PAIRNODE *root;
   int pairs;
 } PAIRLIST;
-
-#define PAIR_INIT                      MYGIS_MALLOC(PAIR)
-#define PAIRNODE_INIT                  MYGIS_MALLOC(PAIRNODE)
-#define PAIRLIST_INIT                  MYGIS_MALLOC(PAIRLIST)
 
 PAIR *pair_set(PAIR *pair, char *key, char *value);
 

@@ -16,14 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-
-#include "mygis.h"
-#include "geometry.h"
-
-#include "shx.h"
+#include "shx_priv.h"
 
 int _shx_read_header(SHX *shx)
 {

@@ -16,18 +16,25 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef SHX_PRIV_H
-#define SHX_PRIV_H
+#ifndef FIXED_PRIV_H
+#define FIXED_PRIV_H 
 
-#include "mygis_priv.h"
-#include "shx.h"
-#include "geometry.h"
+#include "fixed.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
 
-int _shx_read_header(SHX *shx);
-int _shx_write_header(SHX *shx);
+#define FIXED_INIT                     MYGIS_MALLOC(FIXED)
+#define FIXED_FIELD_INIT               MYGIS_MALLOC(FIXED_FIELD)
+#define FIXED_FIELD_NODE_INIT          MYGIS_MALLOC(FIXED_FIELD_NODE)
 
-#endif /* SHX_PRIV_H */
+#define FIXED_F_CRLF                   0x0001
+#define FIXED_F_NULLS                  0x1000
+
+#endif /* FIXED_PRIV_H */

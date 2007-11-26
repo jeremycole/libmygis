@@ -16,14 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-#include "geometry.h"
-
-#include "wkb.h"
 #include "wkb_priv.h"
-
-#include <stdlib.h>
-#include <math.h>
 
 POINT *_wkb_read_points(char *pos, uint32 num, char **next)
 {

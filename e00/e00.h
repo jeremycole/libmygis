@@ -19,10 +19,7 @@
 #ifndef E00_H
 #define E00_H
 
-#include "mygis.h"
-#include "geometry.h"
-
-#include <stdio.h>
+#include <stdlib.h>
 
 typedef enum e00_section_id_en {
   UNKNOWN = 0,
@@ -51,9 +48,6 @@ typedef struct e00_section_tag_st {
 } E00_SECTION_TAG;
 
 extern E00_SECTION_TAG E00_SECTION_TAGS[];
-
-#define E00_INIT                   MYGIS_MALLOC(E00)
-#define E00_SECTION_INIT           MYGIS_MALLOC(E00_SECTION)
 
 typedef struct e00_section_st {
   E00_SECTION_ID    id;

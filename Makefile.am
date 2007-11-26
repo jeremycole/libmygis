@@ -4,20 +4,50 @@ MAINTAINERCLEANFILES = \
   aclocal.m4 configure config.status config.log config.h \
   config.h.in Makefile.in *~
 
-include_HEADERS = \
-  mygis.h portability.h dbug.h \
-  compare.h pairlist.h \
-  record.h fixed.h \
+mygisincludedir = $(includedir)/mygis
+mygiswkbincludedir = $(mygisincludedir)/wkb
+mygiswktincludedir = $(mygisincludedir)/wkt
+mygise00includedir = $(mygisincludedir)/e00
+mygisshpincludedir = $(mygisincludedir)/shp
+mygisdbfincludedir = $(mygisincludedir)/dbf
+mygisprjincludedir = $(mygisincludedir)/prj
+mygistigerincludedir = $(mygisincludedir)/tiger
+
+mygisinclude_HEADERS = \
+  mygis.h  \
+  compare.h \
+  pairlist.h \
+  record.h \
+  fixed.h \
   projection.h \
   geometry.h \
-  shapefile.h \
-  wkb/wkb.h \
-  wkt/wkt.h \
-  e00/e00.h \
-  shp/shp.h shp/shx.h shp/sh_header.h \
-  dbf/dbf.h \
-  prj/prj.h \
+  shapefile.h
+
+mygiswkbinclude_HEADERS = \
+  wkb/wkb.h
+
+mygiswktinclude_HEADERS = \
+  wkt/wkt.h
+  
+mygise00include_HEADERS = \
+  e00/e00.h
+
+mygisshpinclude_HEADERS = \
+  shp/shp.h \
+  shp/shx.h \
+  shp/sh_header.h
+
+mygisdbfinclude_HEADERS = \
+  dbf/dbf.h
+  
+mygisprjinclude_HEADERS = \
+  prj/prj.h
+
+mygistigerinclude_HEADERS = \
   tiger/tiger.h
+
+noinst_HEADERS = \
+  dbug.h portability.h
 
 lib_LTLIBRARIES = libmygis.la
 

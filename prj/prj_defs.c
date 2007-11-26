@@ -16,7 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "../mygis.h"
+#include "prj_priv.h"
 #include "prj_defs.h"
 
 PRJ_PROJ4_NAMES prj_proj4_geogcs_names[] =
