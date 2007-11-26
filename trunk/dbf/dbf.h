@@ -19,8 +19,8 @@
 #ifndef DBF_H
 #define DBF_H
 
-#include <compare.h>
-#include <record.h>
+#include <mygis/compare.h>
+#include <mygis/record.h>
 
 /* Possible field types
     C = Character (char *) <254 bytes, check DBF_FLD_LEN for length

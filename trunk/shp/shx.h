@@ -19,8 +19,8 @@
 #ifndef SHX_H
 #define SHX_H
 
-#include "mygis.h"
-#include "sh_header.h"
+#include <mygis/mygis.h>
+#include <mygis/sh_header.h>
 
 #define SHX_POS_HEADER             0
 #define SHX_POS_DATA             100
