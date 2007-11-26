@@ -21,6 +21,7 @@
 
 #include "mygis_priv.h"
 #include "fixed.h"
+#include "record_priv.h"
 
 #include <errno.h>
 #include <stdlib.h>
