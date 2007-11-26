@@ -20,7 +20,7 @@
 #define SHX_H
 
 #include <mygis/mygis.h>
-#include <mygis/sh_header.h>
+#include <mygis/shp/sh_header.h>
 
 #define SHX_POS_HEADER             0
 #define SHX_POS_DATA             100
