@@ -16,16 +16,11 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "tiger.h"
-#include "tiger_defs.h"
+#include "tiger_priv.h"
 
 TIGER *tiger_init(int flags)
 {
-  TIGER            *tiger = NULL;
+  TIGER            *tiger     = NULL;
   TIGER_FILE       *file      = NULL;
   TIGER_FILE_TYPES *file_type = NULL;
   FIXED_FILE_DEF   *file_def  = NULL;
