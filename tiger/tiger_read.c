@@ -16,10 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
-#include "tiger.h"
-
-#include <stdlib.h>
+#include "tiger_priv.h"
 
 TIGER_RECORD *tiger_read_next(TIGER *tiger, TIGER_FILE_TYPE type)
 {

@@ -19,13 +19,9 @@
 #ifndef TIGER_H
 #define TIGER_H 
 
-#include "compare.h"
-#include "fixed.h"
-#include "geometry.h"
-
-#define TIGER_INIT                      MYGIS_MALLOC(TIGER)
-#define TIGER_RECORD_INIT               MYGIS_MALLOC(TIGER_RECORD)
-#define TIGER_SCAN_INIT                 MYGIS_MALLOC(TIGER_SCAN)
+#include <mygis/fixed.h>
+#include <mygis/record.h>
+#include <mygis/compare.h>
 
 #define TIGER_MAX_FILE_TYPE  20
 
