@@ -1,22 +1,16 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-EXTRA_DIST = libmygis.spec.sh
+EXTRA_DIST = libmygis.spec.in
 
-noinst_DATA = libmygis-@VERSION@.spec
+noinst_DATA = libmygis.spec
 
-libmygis.spec: libmygis.spec.sh
+libmygis.spec: libmygis.spec.in
 
-libmygis-@VERSION@.spec: libmygis.spec
-			rm -f $@
-			cp $< $@
+SUFFIXES = .in
 
-SUFFIXES = .sh
-
-.sh:
+.in:
 	@RM@ -f $@ $@-t
 	@SED@ \
 	  -e 's!@''VERSION''@!@VERSION@!' \
 	$< > $@-t
 	@MV@ $@-t $@
-
-all: $(OBJS)
