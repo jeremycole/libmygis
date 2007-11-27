@@ -1,7 +1,7 @@
 Name: libmygis
 Version: @VERSION@
 Release: 0
-Group: Monitoring/Cron
+Group: Development/Libraries/C and C++
 License: LGPL
 Copyright: Copyright 2004-2007 Jeremy Cole and others
 Summary: Library for reading and writing GIS formats
@@ -14,16 +14,24 @@ Source: libmygis-@VERSION@.tar.gz
 %setup
 
 %build
-./configure
+./configure --prefix=/usr
 make
 
 %install
 make install
 
+%package
+
 %files 
-bin/mysqlgisimport
-lib/libmygis.*
-include/mygis
+/usr/lib/libmygis.*
+
+%description 
+Library for reading and writing GIS formats
+
+%package devel
+
+%files
+/usr/include/mygis
 
 %description 
 Library for reading and writing GIS formats
