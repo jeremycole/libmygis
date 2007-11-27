@@ -1,19 +1,22 @@
-SUBDIRS = extra wkb wkt e00 dbf prj shp tiger
+# The order for SUBDIRS is important, as we need to make sure
+# that libmygis.* gets built in . before tests or tools are built
+
+SUBDIRS = extra wkb wkt e00 dbf prj shp tiger . tests tools
 
 MAINTAINERCLEANFILES = \
   aclocal.m4 configure config.status config.log config.h \
   config.h.in Makefile.in *~
 
-mygisincludedir = $(includedir)/mygis
-mygiswkbincludedir = $(mygisincludedir)/wkb
-mygiswktincludedir = $(mygisincludedir)/wkt
-mygise00includedir = $(mygisincludedir)/e00
-mygisshpincludedir = $(mygisincludedir)/shp
-mygisdbfincludedir = $(mygisincludedir)/dbf
-mygisprjincludedir = $(mygisincludedir)/prj
-mygistigerincludedir = $(mygisincludedir)/tiger
+mygis_includedir      = $(includedir)/mygis
+mygis_wkb_includedir   = $(mygis_includedir)/wkb
+mygis_wkt_includedir   = $(mygis_includedir)/wkt
+mygis_e00_includedir   = $(mygis_includedir)/e00
+mygis_shp_includedir   = $(mygis_includedir)/shp
+mygis_dbf_includedir   = $(mygis_includedir)/dbf
+mygis_prj_includedir   = $(mygis_includedir)/prj
+mygis_tiger_includedir = $(mygis_includedir)/tiger
 
-mygisinclude_HEADERS = \
+mygis_include_HEADERS = \
   mygis.h  \
   dbug.h \
   compare.h \
@@ -24,33 +27,35 @@ mygisinclude_HEADERS = \
   geometry.h \
   shapefile.h
 
-mygiswkbinclude_HEADERS = \
+mygis_wkb_include_HEADERS = \
   wkb/wkb.h
 
-mygiswktinclude_HEADERS = \
+mygis_wkt_include_HEADERS = \
   wkt/wkt.h
   
-mygise00include_HEADERS = \
+mygis_e00_include_HEADERS = \
   e00/e00.h
 
-mygisshpinclude_HEADERS = \
+mygis_shp_include_HEADERS = \
   shp/shp.h \
   shp/shx.h \
   shp/sh_header.h
 
-mygisdbfinclude_HEADERS = \
+mygis_dbf_include_HEADERS = \
   dbf/dbf.h
   
-mygisprjinclude_HEADERS = \
+mygis_prj_include_HEADERS = \
   prj/prj.h
 
-mygistigerinclude_HEADERS = \
+mygis_tiger_include_HEADERS = \
   tiger/tiger.h
 
 noinst_HEADERS = \
   portability.h
 
 lib_LTLIBRARIES = libmygis.la
+
+libmygis_la_LDFLAGS = -version-info 0:0:0
 
 libmygis_la_SOURCES = \
   mygis.c 
@@ -76,16 +81,6 @@ libmygis_la_LIBADD = \
   shp/libshp.la \
   tiger/libtiger.la
 
-libmygis_la_LDFLAGS = -version-info 0:0:0
-
 INCLUDES = -I$(srcdir) -I..
 
 AM_CFLAGS = @CFLAGS@
-
-all: $(ROOT_OBJECTS) all-recursive $(lib_LIBRARIES)
-	(cd tests && make all)
-	(cd tools && make all)
-
-install: all install-recursive
-	(cd tests && make install)
-	(cd tools && make install)
