@@ -22,18 +22,6 @@
 #include <mygis/mygis.h>
 #include <mygis/shp/sh_header.h>
 
-#define SHX_POS_HEADER             0
-#define SHX_POS_DATA             100
-
-#define SHX_LEN_FILE_HEADER      100
-#define SHX_LEN_RECORD             8
-
-#define SHX_REC_OFFSET(x)          MYGIS_READ_UINT32_BE((x)+0)
-#define SHX_REC_LENGTH(x)          MYGIS_READ_UINT32_BE((x)+4)
-
-#define SHX_INIT                   MYGIS_MALLOC(SHX)
-#define SHX_RECORD_INIT            MYGIS_MALLOC(SHX_RECORD)
-
 typedef struct shx_st {
   SH_HEADER         *header;
   int               fd;
@@ -59,7 +47,7 @@ SHX                 *shx_init(int flags);
 int                 shx_open(SHX *shx, char *shxfile, char mode);
 SHX_RECORD          *shx_read_next(SHX *shx);
 void                shx_seek(SHX *shx, int pos);
-void                shx_record_seek(SHX *shx, uint32 record);
+void                shx_seek_record(SHX *shx, uint32 record);
 void                shx_rewind(SHX *shx);
 void                shx_dump(SHX *shx);
 void                shx_record_dump(SHX_RECORD *record, int level);

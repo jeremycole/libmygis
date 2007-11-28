@@ -70,7 +70,7 @@ SHAPEFILE           *shapefile_init(int flags);
 int                 shapefile_open(SHAPEFILE *shapefile, char *basename, char mode);
 void                shapefile_set_projection(SHAPEFILE *shapefile,
                                              PROJECTION *projection);
-void                shapefile_seek(SHAPEFILE *shapefile, uint32 record);
+void                shapefile_seek_record(SHAPEFILE *shapefile, uint32 record);
 SHAPEFILE_RECORD    *shapefile_read_next(SHAPEFILE *shapefile);
 void                shapefile_dump(SHAPEFILE *shapefile);
 void                shapefile_close(SHAPEFILE *shapefile);

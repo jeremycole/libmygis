@@ -135,16 +135,16 @@ void shp_seek(SHP *shp, int pos)
   DBUG_VOID_RETURN;
 }
 
-void shp_record_seek(SHP *shp, uint32 record)
+void shp_seek_record(SHP *shp, uint32 record)
 {
   SHX_RECORD *rec;
 
-  DBUG_ENTER("shp_record_seek");
+  DBUG_ENTER("shp_seek_record");
   DBUG_PRINT("info", ("SHP: Record seeking to record %i", record));
 
   if(shp->index) {
     DBUG_PRINT("info", ("SHP: Have index, fast record seek"));
-    shx_record_seek(shp->index, record);
+    shx_seek_record(shp->index, record);
     rec = shx_read_next(shp->index);
     shp_seek(shp, rec->offset);
     shx_record_free(rec);
@@ -162,7 +162,7 @@ void shp_record_seek(SHP *shp, uint32 record)
 void shp_rewind(SHP *shp)
 {
   DBUG_ENTER("shp_rewind");
-  shp_record_seek(shp, 0);
+  shp_seek_record(shp, 0);
   DBUG_VOID_RETURN;
 }
 

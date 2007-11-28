@@ -92,7 +92,7 @@ PUBLIC API
 E00       *e00_init(int flags);
 int       e00_open(E00 *e00, char *e00file, char mode);
 void      e00_seek(E00 *e00, int pos);
-void      e00_record_seek(E00 *e00, uint32 record);
+void      e00_seek_record(E00 *e00, uint32 record);
 void      e00_rewind(E00 *e00);
 void      e00_dump(E00 *e00);
 void      e00_close(E00 *e00);

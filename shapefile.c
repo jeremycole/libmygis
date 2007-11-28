@@ -148,17 +148,17 @@ void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)
   }
 }
 
-void shapefile_seek(SHAPEFILE *shapefile, uint32 record)
+void shapefile_seek_record(SHAPEFILE *shapefile, uint32 record)
 {
-  DBUG_ENTER("shapefile_seek");
+  DBUG_ENTER("shapefile_seek_record");
   DBUG_PRINT("info", ("SHAPEFILE: Record seeking to record %i", record));
 
   if(shapefile->flags & SHAPEFILE_HAS_SHP) {
-    shp_record_seek(shapefile->shp, record);
+    shp_seek_record(shapefile->shp, record);
   }
 
   if(shapefile->flags & SHAPEFILE_HAS_DBF) {
-    dbf_record_seek(shapefile->dbf, record);
+    dbf_seek_record(shapefile->dbf, record);
   }
   DBUG_VOID_RETURN;
 }
@@ -345,8 +345,8 @@ SHAPEFILE_RECORD *shapefile_scan_read_next(SHAPEFILE_SCAN *scan)
   if(shapefile->flags & SHAPEFILE_HAS_DBF) {
     if((match = dbf_scan_next(scan->dbf_scan)) != -1) {
       if(shapefile->flags & SHAPEFILE_HAS_SHP)
-        shp_record_seek(shapefile->shp, match);
-      dbf_record_seek(shapefile->dbf, match);
+        shp_seek_record(shapefile->shp, match);
+      dbf_seek_record(shapefile->dbf, match);
       DBUG_RETURN(shapefile_read_next(shapefile));
     }
   } else {

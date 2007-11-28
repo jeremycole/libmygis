@@ -22,23 +22,23 @@
 #include <mygis/mygis.h>
 
 typedef struct sh_header_st {
-  uint32            filecode;
-  uint32            unused1;
-  uint32            unused2;
-  uint32            unused3;
-  uint32            unused4;
-  uint32            unused5;
-  uint32            filelength;
-  uint32            version;
-  uint32            shapetype;
-  double            mbr_minx;
-  double            mbr_miny;
-  double            mbr_maxx;
-  double            mbr_maxy;
-  double            mbr_minz;
-  double            mbr_maxz;
-  double            mbr_minm;
-  double            mbr_maxm;
+  uint32            filecode;         /* BE */
+  uint32            unused1;          /* BE */
+  uint32            unused2;          /* BE */
+  uint32            unused3;          /* BE */
+  uint32            unused4;          /* BE */
+  uint32            unused5;          /* BE */
+  uint32            filelength;       /* BE */
+  uint32            version;          /* LE */
+  uint32            shapetype;        /* LE */
+  double            mbr_minx;         /* LE */
+  double            mbr_miny;         /* LE */
+  double            mbr_maxx;         /* LE */
+  double            mbr_maxy;         /* LE */
+  double            mbr_minz;         /* LE */
+  double            mbr_maxz;         /* LE */
+  double            mbr_minm;         /* LE */
+  double            mbr_maxm;         /* LE */
 } SH_HEADER;
 
 SH_HEADER           *_sh_header_read(int fd);
