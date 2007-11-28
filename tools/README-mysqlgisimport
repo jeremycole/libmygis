@@ -1,0 +1,2 @@
+The mysqlgisimport program has been moved to mysqlgistools package
+which uses libmygis.

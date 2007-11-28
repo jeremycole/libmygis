@@ -1,7 +1,7 @@
 # The order for SUBDIRS is important, as we need to make sure
-# that libmygis.* gets built in . before tests or tools are built
+# that libmygis.* gets built in . before tests are built
 
-SUBDIRS = extra wkb wkt e00 dbf prj shp tiger . tests tools
+SUBDIRS = extra wkb wkt e00 dbf prj shp tiger . tests
 
 MAINTAINERCLEANFILES = \
   aclocal.m4 configure config.status config.log config.h \
