@@ -148,9 +148,9 @@ void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)
   }
 }
 
-void shapefile_record_seek(SHAPEFILE *shapefile, uint32 record)
+void shapefile_seek(SHAPEFILE *shapefile, uint32 record)
 {
-  DBUG_ENTER("shapefile_record_seek");
+  DBUG_ENTER("shapefile_seek");
   DBUG_PRINT("info", ("SHAPEFILE: Record seeking to record %i", record));
 
   if(shapefile->flags & SHAPEFILE_HAS_SHP) {

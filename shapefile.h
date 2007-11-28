@@ -70,13 +70,14 @@ SHAPEFILE           *shapefile_init(int flags);
 int                 shapefile_open(SHAPEFILE *shapefile, char *basename, char mode);
 void                shapefile_set_projection(SHAPEFILE *shapefile,
                                              PROJECTION *projection);
-void                shapefile_record_seek(SHAPEFILE *shapefile, uint32 record);
+void                shapefile_seek(SHAPEFILE *shapefile, uint32 record);
 SHAPEFILE_RECORD    *shapefile_read_next(SHAPEFILE *shapefile);
-void                shapefile_record_dump(SHAPEFILE_RECORD *record);
-void                shapefile_record_free(SHAPEFILE_RECORD *record);
 void                shapefile_dump(SHAPEFILE *shapefile);
 void                shapefile_close(SHAPEFILE *shapefile);
 void                shapefile_free(SHAPEFILE *shapefile);
+
+void                shapefile_record_dump(SHAPEFILE_RECORD *record);
+void                shapefile_record_free(SHAPEFILE_RECORD *record);
 
 SHAPEFILE_SCAN      *shapefile_scan_init(SHAPEFILE *shapefile,
 					 COMPARE *compare,
