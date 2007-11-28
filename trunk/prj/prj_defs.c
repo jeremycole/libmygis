@@ -41,6 +41,7 @@ PRJ_PROJ4_NAMES prj_proj4_projection_names[] =
 {
   { "Transverse_Mercator", "tmerc" },
   { "Lambert_Conformal_Conic", "lcc" },
+  { "Albers", "aea" },
   { NULL, NULL }
 };
 
