@@ -1,6 +1,20 @@
 libmygis ChangeLog
 ==================
 
+VERSION 0.8
+***********
+
+0.8.0     2007-11-xx
+
+  * Overhauled the entire build system, now uses libtool to build the
+    libraries and does recursive build correctly.
+  * Overhauled all .h files for public use from /usr/include and
+    created many *_priv.h files for internal use.
+  * Created .spec file for building of RPMs.
+  * Removed tools/mysqlgisimport, created new mysqlgistools project
+    to contain this and other future tools.
+  * Removed MySQL linkages from libmygis project.
+
 VERSION 0.7
 ***********
 
