@@ -98,9 +98,9 @@ void shx_seek(SHX *shx, int pos)
   DBUG_VOID_RETURN;
 }
 
-void shx_record_seek(SHX *shx, uint32 record)
+void shx_seek_record(SHX *shx, uint32 record)
 {
-  DBUG_ENTER("shx_record_seek");
+  DBUG_ENTER("shx_seek_record");
   DBUG_PRINT("info", ("SHX: Record seeking to record %i", record));
   shx_seek(shx, SHX_POS_DATA+(SHX_LEN_RECORD*record));
   shx->position = record;
@@ -110,7 +110,7 @@ void shx_record_seek(SHX *shx, uint32 record)
 void shx_rewind(SHX *shx)
 {
   DBUG_ENTER("shx_rewind");
-  shx_record_seek(shx, 0);
+  shx_seek_record(shx, 0);
   DBUG_VOID_RETURN;
 }
 

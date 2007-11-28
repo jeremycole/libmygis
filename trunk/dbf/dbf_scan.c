@@ -79,7 +79,7 @@ RECORD *dbf_scan_read_next(DBF_SCAN *scan) {
   DBUG_ENTER("dbf_scan_read_next");
 
   if((match = dbf_scan_next(scan)) != -1) {
-    dbf_record_seek(dbf, match);
+    dbf_seek_record(dbf, match);
     DBUG_RETURN(dbf_read_next(dbf));
   }
   DBUG_RETURN(NULL);

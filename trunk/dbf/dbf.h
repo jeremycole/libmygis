@@ -85,7 +85,8 @@ typedef struct dbf_scan_st {
 DBF                 *dbf_init(int flags);
 int                 dbf_open(DBF *dbf, char *dbffile, char mode);
 void                dbf_seek(DBF *dbf, int pos);
-void                dbf_record_seek(DBF *dbf, uint32 record);
+void                dbf_seek_record(DBF *dbf, uint32 record);
+RECORD              *dbf_read_next(DBF *dbf);
 void                dbf_rewind(DBF *dbf);
 void                dbf_dump(DBF *dbf);
 void                dbf_close(DBF *dbf);
@@ -97,7 +98,6 @@ int                 dbf_scan_next(DBF_SCAN *scan);
 RECORD              *dbf_scan_read_next(DBF_SCAN *scan);
 void                dbf_scan_free(DBF_SCAN *scan);
 
-RECORD              *dbf_read_next(DBF *dbf);
 char                *dbf_record_field(RECORD *record, char *key);
 
 #endif /* DBF_H */

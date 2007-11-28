@@ -27,6 +27,18 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define SHX_POS_HEADER             0
+#define SHX_POS_DATA             100
+
+#define SHX_LEN_FILE_HEADER      100
+#define SHX_LEN_RECORD             8
+
+#define SHX_REC_OFFSET(x)          MYGIS_READ_UINT32_BE((x)+0)
+#define SHX_REC_LENGTH(x)          MYGIS_READ_UINT32_BE((x)+4)
+
+#define SHX_INIT                   MYGIS_MALLOC(SHX)
+#define SHX_RECORD_INIT            MYGIS_MALLOC(SHX_RECORD)
+
 int _shx_read_header(SHX *shx);
 int _shx_write_header(SHX *shx);
 

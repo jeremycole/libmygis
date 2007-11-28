@@ -50,7 +50,7 @@ void      shp_set_projection(SHP *shp, PROJECTION *projection);
 void      shp_index(SHP *shp, SHX *shx);
 GEOMETRY  *shp_read_next(SHP *shp);
 void      shp_seek(SHP *shp, int pos);
-void      shp_record_seek(SHP *shp, uint32 record);
+void      shp_seek_record(SHP *shp, uint32 record);
 void      shp_rewind(SHP *shp);
 void      shp_dump(SHP *shp);
 void      shp_close(SHP *shp);

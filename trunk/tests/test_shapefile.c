@@ -54,7 +54,7 @@ int main(int argc, char **argv)
   max = sha->dbf->numrecords < 100 ? sha->dbf->numrecords : 100;
 
   for(i=1; i<max; i+=10) {
-    shapefile_seek(sha, i);
+    shapefile_seek_record(sha, i);
     if((rec = shapefile_read_next(sha))) {
       shapefile_record_dump(rec);
       shapefile_record_free(rec);

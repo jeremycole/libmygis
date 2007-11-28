@@ -70,9 +70,9 @@ void dbf_seek(DBF *dbf, int pos)
   DBUG_VOID_RETURN;
 }
 
-void dbf_record_seek(DBF *dbf, uint32 record)
+void dbf_seek_record(DBF *dbf, uint32 record)
 {
-  DBUG_ENTER("dbf_record_seek");
+  DBUG_ENTER("dbf_seek_record");
   DBUG_PRINT("info", ("DBF: Record seeking to record %i", record));
   dbf_seek(dbf, DBF_POS_DATA(dbf->header)+(DBF_HDR_LENRECORD(dbf->header)*record));
   dbf->position = record;
@@ -82,7 +82,7 @@ void dbf_record_seek(DBF *dbf, uint32 record)
 void dbf_rewind(DBF *dbf)
 {
   DBUG_ENTER("dbf_rewind");
-  dbf_record_seek(dbf, 0);
+  dbf_seek_record(dbf, 0);
   DBUG_VOID_RETURN;
 }
 

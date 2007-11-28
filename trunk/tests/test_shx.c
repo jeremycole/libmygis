@@ -51,7 +51,7 @@ int main(int argc, char **argv)
   shx_dump(shx);
 
   for(i=0; i<100; i+=10) {
-    shx_record_seek(shx, i);
+    shx_seek_record(shx, i);
     rec = shx_read_next(shx);
     shx_record_dump(rec, 1);
     shx_record_free(rec);

@@ -39,36 +39,30 @@ extern const char GEOMETRY_TYPES[GEOMETRY_TYPE_MAX][20];
 /* Externally-used structures */
 
 typedef struct geometry_point_st {
-  byte    byteorder;
   POINT   *point;
 } GEOMETRY_POINT;
 
 typedef struct geometry_linestring_st {
-  byte    byteorder;
   uint32  items;
   POINT   *points;
 } GEOMETRY_LINESTRING;
 
 typedef struct geometry_polygon_st {
-  byte    byteorder;
   uint32  items;
   LINEARRING   *linearrings;
 } GEOMETRY_POLYGON;
 
 typedef struct geometry_multipoint_st {
-  byte    byteorder;
   uint32  items;
-  POINT   *points;
+  GEOMETRY_POINT *points;
 } GEOMETRY_MULTIPOINT;
 
 typedef struct geometry_multilinestring_st {
-  byte    byteorder;
   uint32  items;
   GEOMETRY_LINESTRING *linestrings;
 } GEOMETRY_MULTILINESTRING;
   
 typedef struct geometry_multipolygon_st {
-  byte    byteorder;
   uint32  items;
   GEOMETRY_POLYGON *polygons;
 } GEOMETRY_MULTIPOLYGON;
@@ -102,7 +96,6 @@ typedef struct geometry_mbr_st {
 } GEOMETRY_MBR;
 
 typedef struct geometry_st {
-  byte    byteorder;
   uint32  items;
 
   PROJECTION *projection;
@@ -114,7 +107,6 @@ typedef struct geometry_st {
 } GEOMETRY; 
   
 typedef struct geometrycollection_st {
-  byte    byteorder;
   uint32  items;
 
   GEOMETRY *geometries;
@@ -131,6 +123,7 @@ void      geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection);
 void      geometry_dump(GEOMETRY *geometry, int level);
 void      geometry_free(GEOMETRY *geometry);
 
+/* Should these be in geometry.h?  They don't apply to GEOMETRY at all. */
 POINT     geometry_point_reproject(POINT *point, PROJECTION *projection);
 double    geometry_linearring_area(LINEARRING *linearring);
 

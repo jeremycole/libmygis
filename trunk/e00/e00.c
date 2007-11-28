@@ -248,9 +248,9 @@ void e00_seek(E00 *e00, int pos)
   DBUG_VOID_RETURN;
 }
 
-void e00_record_seek(E00 *e00, uint32 record)
+void e00_seek_record(E00 *e00, uint32 record)
 {
-  DBUG_ENTER("e00_record_seek");
+  DBUG_ENTER("e00_seek_record");
   DBUG_PRINT("info", ("E00: Record seeking to record %i", record));
 
   DBUG_VOID_RETURN;
@@ -259,7 +259,7 @@ void e00_record_seek(E00 *e00, uint32 record)
 void e00_rewind(E00 *e00)
 {
   DBUG_ENTER("e00_rewind");
-  e00_record_seek(e00, 0);
+  e00_seek_record(e00, 0);
   DBUG_VOID_RETURN;
 }
 

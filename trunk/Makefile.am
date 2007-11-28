@@ -18,7 +18,6 @@ mygis_tiger_includedir = $(mygis_includedir)/tiger
 
 mygis_include_HEADERS = \
   mygis.h  \
-  dbug.h \
   compare.h \
   pairlist.h \
   record.h \
