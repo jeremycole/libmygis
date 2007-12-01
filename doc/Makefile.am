@@ -11,7 +11,7 @@ variables.texi: variables.texi.in
 	$< > $@-t
 	@MV@ $@-t $@
 
-.texi.html: $< variables.texi ../configure.in
+.texi.html: $< variables.texi.in variables.texi ../configure.in
 	texi2html $<
 
 .in:

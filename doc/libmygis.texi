@@ -33,7 +33,12 @@ Not sure yet.
 @node Top
 @top libmygis
 
-This manual is for libmygis, version @value{libmygis-version}
+This manual is for libmygis, version @value{libmygis-version}.  
+
+@value{libmygis-svn-revision}
+
+@value{libmygis-date}
+
 @end ifnottex
 
 @menu

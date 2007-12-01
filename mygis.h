@@ -28,6 +28,8 @@
 extern const char *mygis_version;
 extern const char *mygis_copyright;
 extern const char *mygis_license;
+extern const char *mygis_revision;
+extern const char *mygis_date;
 
 typedef unsigned char      byte;
 
