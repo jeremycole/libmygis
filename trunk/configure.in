@@ -135,7 +135,7 @@ then
   CFLAGS="$CFLAGS -lgen "
 fi
 
-AC_OUTPUT(Makefile extra/Makefile wkb/Makefile wkt/Makefile dbf/Makefile prj/Makefile shp/Makefile e00/Makefile tiger/Makefile tests/Makefile)
+AC_OUTPUT(Makefile doc/Makefile extra/Makefile wkb/Makefile wkt/Makefile dbf/Makefile prj/Makefile shp/Makefile e00/Makefile tiger/Makefile tests/Makefile)
 
 cat <<EOS
 

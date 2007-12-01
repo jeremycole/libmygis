@@ -28,12 +28,17 @@
 #endif
 
 const char *mygis_version   = { "libmygis " VERSION DEBUG_STRING };
+
 const char *mygis_copyright = {
   "Copyright:\n"
   "  (c) 2004-2007, Jeremy Cole\n"
   "  (c)      2005, Wavemarket, Inc.\n"
 };
+
 const char *mygis_license   = { "LGPL - Lesser (Library) General Public License" };
+
+const char *mygis_revision = { "$Revision$" };
+const char *mygis_date     = { "$Date$" };
 
 inline uint16 mygis_swap_uint16(uint16 in) {
   MYGIS_SWAP_UINT16(&in);
