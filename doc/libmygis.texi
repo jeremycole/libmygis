@@ -1,11 +1,13 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
 @setfilename libmygis.texi
-@settitle libmygis 0.8.0
+@settitle libmygis @value{libmygis-version}
 @c %**end of header
 
+@include variables.texi
+
 @copying
-This manual is for libmygis, version 0.8.0
+This manual is for libmygis, version @value{libmygis-version}
 
 Copyright @copyright{} 2004-2007 Jeremy Cole and others
 
@@ -31,7 +33,7 @@ Not sure yet.
 @node Top
 @top libmygis
 
-This manual is for libmygis, version 0.8.0
+This manual is for libmygis, version @value{libmygis-version}
 @end ifnottex
 
 @menu
@@ -343,7 +345,7 @@ Initialize a @code{SHAPEFILE} and return it.  The @code{flags} argument should b
 
 @subsubsection @code{dbf_record_field}
 
-@subsection The @code{.sbn}/@{.sbx} (spatial index) format (unsupported)
+@subsection The @code{.sbn}/@code{.sbx} (spatial index) format (unsupported)
 @subsection The @code{.shp.xml} (shapefile metadata) format (unsupported)
 
 @node WKB
