@@ -1,7 +1,22 @@
 MAINTAINERCLEANFILES = Makefile.in *~
 
-noinst_DATA = libmygis.html
+SUFFIXES = .in
 
-SUFFIXES = .texi
+noinst_DATA = variables.texi libmygis.html
 
-.texi.html:
+variables.texi: variables.texi.in
+	@RM@ -f $@ $@-t
+	@SED@ \
+	  -e 's!@''VERSION''@!@VERSION@!' \
+	$< > $@-t
+	@MV@ $@-t $@
+
+.texi.html: $< variables.texi ../configure.in
+	texi2html $<
+
+.in:
+	@RM@ -f $@ $@-t
+	@SED@ \
+	  -e 's!@''VERSION''@!@VERSION@!' \
+	$< > $@-t
+	@MV@ $@-t $@
