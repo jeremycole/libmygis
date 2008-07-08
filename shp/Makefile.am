@@ -9,6 +9,6 @@ libshp_la_SOURCES = \
   ../geometry.h ../config.h
 libshp_la_LIBADD = @LTLIBOBJS@
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 all: $(OBJS)

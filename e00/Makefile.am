@@ -7,6 +7,6 @@ libe00_la_SOURCES = \
   ../geometry.h ../config.h
 libe00_la_LIBADD = @LTLIBOBJS@
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 all: $(OBJS)

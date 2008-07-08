@@ -12,7 +12,7 @@ libprj_la_SOURCES = \
 #libprj_la_LIBADD = \
 #  ../compare.lo ../projection.lo @LTLIBOBJS@
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 AM_YFLAGS = -d
 

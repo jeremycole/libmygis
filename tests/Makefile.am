@@ -60,6 +60,6 @@ test_shapefile_projection_LDADD = ../libmygis.la
 test_tiger_SOURCES = test_tiger.c
 test_tiger_LDADD = ../libmygis.la
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 all: $(OBJS)

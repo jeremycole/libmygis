@@ -50,6 +50,13 @@ mygis_tiger_include_HEADERS = \
   tiger/tiger.h
 
 noinst_HEADERS = \
+  mygis_priv.h \
+  fixed_priv.h \
+  geometry_priv.h \
+  pairlist_priv.h \
+  projection_priv.h \
+  record_priv.h \
+  shapefile_priv.h \
   portability.h
 
 lib_LTLIBRARIES = libmygis.la
@@ -80,6 +87,6 @@ libmygis_la_LIBADD = \
   shp/libshp.la \
   tiger/libtiger.la
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 AM_CFLAGS = @CFLAGS@
