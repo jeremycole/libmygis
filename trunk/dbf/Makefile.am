@@ -7,6 +7,6 @@ libdbf_la_SOURCES = \
   ../config.h
 #libdbf_la_LIBADD = ../compare.lo @LTLIBOBJS@
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 all: $(OBJS)

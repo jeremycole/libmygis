@@ -8,6 +8,6 @@ libtiger_la_SOURCES = \
   tiger_read.c \
   ../config.h
 
-INCLUDES = -I$(srcdir) -I..
+INCLUDES = -I$(srcdir) -I$(srcdir)/..
 
 all: $(OBJS)
