@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2004-2005, Jeremy Cole and others
+    Copyright (c) 2004-2008, Jeremy Cole and others
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
