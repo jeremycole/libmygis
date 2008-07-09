@@ -12,5 +12,5 @@ variables.texi: variables.texi.in ../configure.in
 	@MV@ $@-t $@
 
 .texi.html: $< variables.texi.in variables.texi
-	texi2html $<
+	texi2html $< && cp $@ static/$@
 
