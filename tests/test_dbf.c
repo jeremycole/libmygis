@@ -27,24 +27,28 @@ int main(int argc, char **argv)
   RECORD *rec;
   int i;
 
-  if(argc != 2) {
+  if(argc != 2)
+  {
     printf("usage %s <file.dbf>\n", argv[0]);
     return 0;
   }
 
-  if(!(dbf = dbf_init(0))) {
+  if(!(dbf = dbf_init(0)))
+  {
     printf("Couldn't init\n");
     return 0;
   }
 
-  if(dbf_open(dbf, argv[1], 'r') < 0) {
+  if(dbf_open(dbf, argv[1], 'r') < 0)
+  {
     printf("Couldn't open\n");
     return 0;
   }
 
   dbf_dump(dbf);
 
-  for(i=0; (rec = dbf_read_next(dbf)); i++) {
+  for(i=0; (rec = dbf_read_next(dbf)); i++)
+  {
     printf("Record %i:\n", i);
     record_dump(rec);
     record_free(rec);

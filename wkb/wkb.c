@@ -18,14 +18,14 @@
 
 #include "wkb_priv.h"
 
-const char WKB_TYPES[8][20] = {                                                
+const char WKB_TYPES[8][20] = {
   {"UNKNOWN"},
-  {"POINT"},  
+  {"POINT"},
   {"LINESTRING"},
-  {"POLYGON"},   
+  {"POLYGON"},
   {"MULTIPOINT"},
   {"MULTILINESTRING"},
-  {"MULTIPOLYGON"},   
+  {"MULTIPOLYGON"},
   {"GEOMETRYCOLLECTION"}
 };
 
@@ -35,22 +35,25 @@ WKB *wkb_init(int flags)
 
   DBUG_ENTER("wkb_init");
 
-  if(!(wkb = WKB_INIT) ) {
+  if(!(wkb = WKB_INIT) )
     DBUG_RETURN(NULL);
-  }
+
   wkb->mydata = NULL;  wkb->mydata_len = 0;
   wkb->data = NULL;    wkb->data_len = 0;
   wkb->next = NULL;
+
   DBUG_RETURN(wkb);
 }
 
 int wkb_load(WKB *wkb, char *data, unsigned int data_len, int flags)
 {
   DBUG_ENTER("wkb_load");
-  
-  if(flags & WKB_F_DUPE) {
+
+  if(flags & WKB_F_DUPE)
+  {
     if((data_len < wkb->mydata_len) ||
-       (wkb->mydata = wkb->data = (char *)realloc((void *)wkb->mydata, wkb->mydata_len=data_len)) ) {
+       (wkb->mydata = wkb->data = (char *)realloc((void *)wkb->mydata, wkb->mydata_len=data_len)) )
+    {
       memcpy(wkb->data, data, data_len);
     } else {
       DBUG_RETURN(1);
@@ -61,25 +64,31 @@ int wkb_load(WKB *wkb, char *data, unsigned int data_len, int flags)
   wkb->data_len = data_len;
   wkb->flags = flags;
   wkb_rewind(wkb);
+
   DBUG_RETURN(0);
 }
 
 void wkb_rewind(WKB *wkb)
 {
   DBUG_ENTER("wkb_rewind");
-  if(wkb) {
+
+  if(wkb)
+  {
     wkb->cur  = wkb->data;
     wkb->next = NULL;
   }
+
   DBUG_VOID_RETURN;
 }
 
 void wkb_free(WKB *wkb)
 {
   DBUG_ENTER("wkb_free");
+
   if(!wkb) DBUG_VOID_RETURN;
   if(wkb->flags & WKB_F_DUPE) free(wkb->mydata);
   free(wkb);
+
   DBUG_VOID_RETURN;
 }
 

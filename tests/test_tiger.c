@@ -23,7 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   TIGER *tiger;
   TIGER_RECORD *record;
   uint x;
@@ -32,7 +33,8 @@ int main(int argc, char **argv) {
   DBUG_PROCESS(argv[0]);
   //DBUG_PUSH("d:t");
 
-  if(!(tiger = tiger_init(0))) {
+  if(!(tiger = tiger_init(0)))
+  {
     fprintf(stderr, "Couldn't allocate TIGER\n");
     exit(1);
   }
@@ -40,7 +42,8 @@ int main(int argc, char **argv) {
   tiger_open(tiger, argv[1], 'r');
   tiger_dump(tiger);
 
-  for(x=0; x<5 && (record = tiger_read_next(tiger, RT2)); x++) {
+  for(x=0; x<5 && (record = tiger_read_next(tiger, RT2)); x++)
+  {
     tiger_record_dump(record);
     tiger_record_free(record);
   }

@@ -29,10 +29,12 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
 
   DBUG_ENTER("wkt_write");
 
-  if(!geometry) DBUG_VOID_RETURN;
+  if(!geometry)
+    DBUG_VOID_RETURN;
 
   /* fprintf(f, "%s(", GEOMETRY_TYPES[geometry->type]); */
-  switch(geometry->type) {
+  switch(geometry->type)
+  {
   case T_POINT:
     fprintf(f, "POINT(");
     point = geometry->value.point->point;
@@ -47,7 +49,8 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
     fprintf(f, "LINESTRING(");
     point  = geometry->value.linestring->points;
     points = geometry->value.linestring->items;
-    for(i=0;i<points;i++,point++) {
+    for(i=0;i<points;i++,point++)
+    {
       tpoint= geometry_point_reproject(point, projection);
 
       fprintf(f, "%F %F%s",
@@ -60,11 +63,13 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
     linearring  = geometry->value.polygon->linearrings;
     linearrings = geometry->value.polygon->items;
     fprintf(f, "POLYGON(");
-    for(j=0; j<linearrings; j++, linearring++) {
+    for(j=0; j<linearrings; j++, linearring++)
+    {
       fprintf(f, "(");
       point  = linearring->points;
       points = linearring->items;
-      for(i=0; i<points; i++, point++) {
+      for(i=0; i<points; i++, point++)
+      {
         tpoint= geometry_point_reproject(point, projection);
 
         fprintf(f, "%F %F%s",
@@ -92,14 +97,15 @@ void wkt_write(GEOMETRY *geometry, PROJECTION *projection, FILE *f)
         for(i=0; i<points; i++, point++)
         {
           tpoint= geometry_point_reproject(point, projection);
-  
+
           fprintf(f, "%F %F%s",
             tpoint.x, tpoint.y,
             i<points-1?",  ":"");
         }
         fprintf(f, ")%s", j<linearrings-1?", ":"");
       }
-      if(polygons>1) fprintf(f, ")%s", k<polygons-1?", ":"");
+      if(polygons>1)
+        fprintf(f, ")%s", k<polygons-1?", ":"");
     }
     break;
 

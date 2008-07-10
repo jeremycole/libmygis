@@ -22,31 +22,36 @@
 
 #include "compare.h"
 
-int compare_all_func(void *a, void *b) {
+int compare_all_func(void *a, void *b)
+{
   DBUG_ENTER("compare_all_func");
   DBUG_PRINT("info", ("Always returns true"));
   DBUG_RETURN(1);
 }
 
-int compare_string_cs_eq_func(void *a, void *b) {
+int compare_string_cs_eq_func(void *a, void *b)
+{
   DBUG_ENTER("compare_string_cs_eq_func");
   DBUG_PRINT("args", ("a=%s b=%s", (char *)a, (char *)b));
   DBUG_RETURN((strcmp((char *)a, (char *)b)==0));
 }
 
-int compare_string_cs_ne_func(void *a, void *b) {
+int compare_string_cs_ne_func(void *a, void *b)
+{
   DBUG_ENTER("compare_string_ci_eq_func");
   DBUG_PRINT("args", ("a=%s b=%s", (char *)a, (char *)b));
   DBUG_RETURN((strcmp((char *)a, (char *)b)!=0));
 }
-  
-int compare_string_ci_eq_func(void *a, void *b) {
+
+int compare_string_ci_eq_func(void *a, void *b)
+{
   DBUG_ENTER("compare_string_ci_eq_func");
   DBUG_PRINT("args", ("a=%s b=%s", (char *)a, (char *)b));
   DBUG_RETURN((strcasecmp((char *)a, (char *)b)==0));
 }
 
-int compare_string_ci_ne_func(void *a, void *b) {
+int compare_string_ci_ne_func(void *a, void *b)
+{
   DBUG_ENTER("compare_string_ci_ne_func");
   DBUG_PRINT("args", ("a=%s b=%s", (char *)a, (char *)b));
   DBUG_RETURN((strcasecmp((char *)a, (char *)b)!=0));

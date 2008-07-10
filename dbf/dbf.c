@@ -18,16 +18,17 @@
 
 #include "dbf_priv.h"
 
-DBF *dbf_init(int flags) {
+DBF *dbf_init(int flags)
+{
   DBF *dbf;
 
   DBUG_ENTER("dbf_init");
 
-  if(!(dbf = DBF_INIT)) {
+  if(!(dbf = DBF_INIT))
     DBUG_RETURN(NULL);
-  }
 
-  if(!(dbf->header = malloc(DBF_LEN_FILE_HEADER))) {
+  if(!(dbf->header = malloc(DBF_LEN_FILE_HEADER)))
+  {
     free(dbf);
     DBUG_RETURN(NULL);
   }
@@ -47,13 +48,15 @@ int dbf_open(DBF *dbf, char *dbffile, char mode)
   dbf->mode     = mode;
   dbf->filename = strdup(dbffile);
 
-  if((dbf->fd = open(dbffile, O_RDONLY)) < 0) {
+  if((dbf->fd = open(dbffile, O_RDONLY)) < 0)
+  {
     fprintf(stderr, "Error opening DBF file: %i: %s\n",
 	    errno, strerror(errno));
     DBUG_RETURN(-1);
   }
 
-  if(_dbf_read_header(dbf) != 0) {
+  if(_dbf_read_header(dbf) != 0)
+  {
     DBUG_RETURN(-2);
   }
 
@@ -66,7 +69,9 @@ void dbf_seek(DBF *dbf, int pos)
 {
   DBUG_ENTER("dbf_seek");
   DBUG_PRINT("info", ("DBF: Seeking to offset %i", pos));
+
   lseek(dbf->fd, pos, SEEK_SET);
+
   DBUG_VOID_RETURN;
 }
 
@@ -74,15 +79,19 @@ void dbf_seek_record(DBF *dbf, uint32 record)
 {
   DBUG_ENTER("dbf_seek_record");
   DBUG_PRINT("info", ("DBF: Record seeking to record %i", record));
+
   dbf_seek(dbf, DBF_POS_DATA(dbf->header)+(DBF_HDR_LENRECORD(dbf->header)*record));
   dbf->position = record;
+
   DBUG_VOID_RETURN;
 }
 
 void dbf_rewind(DBF *dbf)
 {
   DBUG_ENTER("dbf_rewind");
+
   dbf_seek_record(dbf, 0);
+
   DBUG_VOID_RETURN;
 }
 
@@ -108,7 +117,8 @@ void dbf_dump(DBF *dbf)
   printf("    mode:           %c\n", dbf->mode);
   printf("    position:       %i\n", dbf->position);
   printf("  Fields:\n");
-  for(field = dbf->fields, i=0; i<dbf->numfields; field++, i++) {
+  for(field = dbf->fields, i=0; i<dbf->numfields; field++, i++)
+  {
     printf("    Field %3i:  Name %-10s  Type %c  Length %3i  Decimals %2i  Format %s\n",
 	   i, field->name, field->type, field->length, field->decimals,
 	   field->format);
@@ -121,7 +131,8 @@ void dbf_dump(DBF *dbf)
 void dbf_close(DBF *dbf)
 {
   DBUG_ENTER("dbf_close");
-  if(dbf->fd) {
+  if(dbf->fd)
+  {
     close(dbf->fd);
   }
   DBUG_VOID_RETURN;
@@ -130,7 +141,8 @@ void dbf_close(DBF *dbf)
 void dbf_free(DBF *dbf)
 {
   DBUG_ENTER("dbf_free");
-  if(dbf) {
+  if(dbf)
+  {
     if(dbf->header)   free(dbf->header);
     if(dbf->fields)   free(dbf->fields);
     if(dbf->filename) free(dbf->filename);

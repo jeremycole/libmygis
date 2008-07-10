@@ -24,8 +24,10 @@ POINT *_wkb_read_points(char *pos, uint32 num, char **next)
 
   DBUG_ENTER("_wkb_read_points");
 
-  if( (p=c=POINT_INIT(num)) ) {
-    while(num--) {
+  if( (p=c=POINT_INIT(num)) )
+  {
+    while(num--)
+    {
       c->x = MYGIS_READ_DOUBLE_LE(WKB_X(pos));
       c->y = MYGIS_READ_DOUBLE_LE(WKB_Y(pos));
       /* printf("read point: %F, %F\n", c->x, c->y); */
@@ -35,6 +37,7 @@ POINT *_wkb_read_points(char *pos, uint32 num, char **next)
     *next = pos;
     DBUG_RETURN(p);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -46,8 +49,10 @@ LINEARRING *_wkb_read_linearrings(char *pos, uint32 num, char **next)
 
   DBUG_ENTER("_wkb_read_linearrings");
 
-  if( (p=c=LINEARRING_INIT(num)) ) {
-    while(num--) {
+  if( (p=c=LINEARRING_INIT(num)) )
+  {
+    while(num--)
+    {
       c->items  = items = MYGIS_READ_UINT32_LE(pos);
       c->points = _wkb_read_points((pos+SZ_UINT32), items, next);
       c->area   = fabs(area=geometry_linearring_area(c));
@@ -59,6 +64,7 @@ LINEARRING *_wkb_read_linearrings(char *pos, uint32 num, char **next)
     *next = pos;
     DBUG_RETURN(p);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -76,7 +82,6 @@ GEOMETRY_POINT *_wkb_read_geometry_points(WKB *wkb, uint32 num)
   for(i=0, point=points; i<num; i++, point++)
   {
     point->point = _wkb_read_points(WKB_DATA(wkb->cur), 1, &next);
-
     wkb->cur = next;
   }
   DBUG_RETURN(points);
@@ -126,7 +131,7 @@ GEOMETRY_POLYGON *_wkb_read_geometry_polygons(WKB *wkb, uint32 num)
   {
     polygon->items       = WKB_NUMITEMS(wkb->cur);
     polygon->linearrings = _wkb_read_linearrings(WKB_DATA(wkb->cur), polygon->items, &next);
-  
+
     wkb->cur = next;
   }
 
@@ -150,7 +155,7 @@ GEOMETRY_MULTIPOLYGON *_wkb_read_geometry_multipolygon(WKB *wkb)
   mpolygon->items    = WKB_NUMITEMS(wkb->cur);
   wkb->cur= WKB_DATA(wkb->cur);
   mpolygon->polygons = _wkb_read_geometry_polygons(wkb, mpolygon->items);
-  
+
   DBUG_RETURN(mpolygon);
 
  err0:
@@ -175,11 +180,12 @@ GEOMETRY *wkb_read_next(WKB *wkb)
 {
   DBUG_ENTER("wkb_read_next");
   GEOMETRY *geometry = NULL;
-  
+
   if((!wkb) || ((wkb->cur - wkb->data) >= wkb->data_len))
     goto err0;
 
-  switch(WKB_TYPE(wkb->cur)) {
+  switch(WKB_TYPE(wkb->cur))
+  {
   case WKB_POINT:
     if(! (geometry = geometry_init(T_POINT)))
       goto err0;

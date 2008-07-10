@@ -67,8 +67,9 @@ PRJ_PROJ4_NAMES prj_proj4_parameter_names[] =
 char *prj_proj4_names_find(PRJ_PROJ4_NAMES *names, char *name)
 {
   PRJ_PROJ4_NAMES *cur = names;
-  
+
   DBUG_ENTER("prj_proj4_names_find");
+
   for(; cur; cur++)
   {
     if(!cur->prj_name)
@@ -76,6 +77,6 @@ char *prj_proj4_names_find(PRJ_PROJ4_NAMES *names, char *name)
     if(!strcmp(cur->prj_name, name))
       DBUG_RETURN(cur->proj4_name);
   }
-  
+
   DBUG_RETURN(NULL);
 }

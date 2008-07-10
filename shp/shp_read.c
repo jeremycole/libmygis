@@ -24,7 +24,8 @@ int _shp_read_header(SHP *shp)
 
   shp_seek(shp, SHP_POS_HEADER);
 
-  if(!(shp->header = _sh_header_read(shp->fd))) {
+  if(!(shp->header = _sh_header_read(shp->fd)))
+  {
     close(shp->fd);
     DBUG_RETURN(-2);
   }
@@ -39,8 +40,10 @@ POINT *_shp_read_points(char *pos, uint32 num)
   DBUG_ENTER("_shp_read_points");
   DBUG_PRINT("args", ("pos=0x%08x num=%i", pos, num));
 
-  if( (p=c=POINT_INIT(num)) ) {
-    while(num--) {
+  if( (p=c=POINT_INIT(num)) )
+  {
+    while(num--)
+    {
       c->x = MYGIS_READ_DOUBLE_LE(SHP_X(pos));
       c->y = MYGIS_READ_DOUBLE_LE(SHP_Y(pos));
       c++;
@@ -48,6 +51,7 @@ POINT *_shp_read_points(char *pos, uint32 num)
     }
     DBUG_RETURN(p);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -59,11 +63,13 @@ LINEARRING *_shp_read_linearring(char *pos, uint32 size)
   DBUG_ENTER("_shp_read_linearring");
   DBUG_PRINT("args", ("pos=0x%08x size=%i", pos, size));
 
-  if( (lr=LINEARRING_INIT(1)) ) {
+  if( (lr=LINEARRING_INIT(1)) )
+  {
     lr->items = size;
     lr->points = _shp_read_points(pos, size);
     DBUG_RETURN(lr);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -78,8 +84,10 @@ LINEARRING *_shp_read_linearrings(char *pos, uint32 *parts,
   DBUG_PRINT("args", ("pos=0x%08x parts=0x%08x num_parts=%i num_points=%i",
                       pos, parts, num_parts, num_points));
 
-  if( (lr=lrc=LINEARRING_INIT(num_parts)) ) {
-    for(;num_parts--;lrc++,parts++) {
+  if( (lr=lrc=LINEARRING_INIT(num_parts)) )
+  {
+    for(;num_parts--;lrc++,parts++)
+    {
       lrc->type   = LR_UNKNOWN;
       lrc->items  = ((num_parts)?(MYGIS_READ_UINT32_LE((parts+1))):num_points)-(MYGIS_READ_UINT32_LE(parts));
       lrc->points = _shp_read_points(pos, lrc->items);
@@ -90,9 +98,10 @@ LINEARRING *_shp_read_linearrings(char *pos, uint32 *parts,
     }
     DBUG_RETURN(lr);
   }
+
   DBUG_RETURN(NULL);
 }
-  
+
 
 GEOMETRY *_shp_geometry_null()
 {
@@ -100,9 +109,11 @@ GEOMETRY *_shp_geometry_null()
 
   DBUG_ENTER("_shp_geometry_null");
 
-  if( (geometry = geometry_init(T_NULL)) ) {
+  if( (geometry = geometry_init(T_NULL)) )
+  {
     DBUG_RETURN(geometry);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -112,9 +123,12 @@ GEOMETRY *_shp_read_geometry_point(char *content)
 
   DBUG_ENTER("_shp_read_geometry_point");
 
-  if( (geometry = geometry_init(T_POINT)) ) {
-    if( (geometry->value.point = GEOMETRY_POINT_INIT) ) {
-      if(!(geometry->value.point->point = _shp_read_points(content, 1))) {
+  if( (geometry = geometry_init(T_POINT)) )
+  {
+    if( (geometry->value.point = GEOMETRY_POINT_INIT) )
+    {
+      if(!(geometry->value.point->point = _shp_read_points(content, 1)))
+      {
 	free(geometry);
 	DBUG_RETURN(NULL);
       }
@@ -124,6 +138,7 @@ GEOMETRY *_shp_read_geometry_point(char *content)
     }
     DBUG_RETURN(geometry);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -138,8 +153,10 @@ GEOMETRY *_shp_read_geometry_multipoint(char *content)
   mbr        = SHP_REC1_MBR(content);
   num_points = SHP_REC1_NUMPOINTS(content);
 
-  if( (geometry = geometry_init(T_MULTIPOINT)) ) {
-    if( (geometry->value.multipoint = GEOMETRY_MULTIPOINT_INIT) ) {
+  if( (geometry = geometry_init(T_MULTIPOINT)) )
+  {
+    if( (geometry->value.multipoint = GEOMETRY_MULTIPOINT_INIT) )
+    {
       geometry->mbr.min.x = MYGIS_READ_DOUBLE_LE(mbr++);
       geometry->mbr.min.y = MYGIS_READ_DOUBLE_LE(mbr++);
       geometry->mbr.max.x = MYGIS_READ_DOUBLE_LE(mbr++);
@@ -152,6 +169,7 @@ GEOMETRY *_shp_read_geometry_multipoint(char *content)
     }
     DBUG_RETURN(geometry);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -167,8 +185,10 @@ GEOMETRY *_shp_read_geometry_polyline(char *content)
   num_parts  = SHP_REC2_NUMPARTS(content);
   num_points = SHP_REC2_NUMPOINTS(content);
 
-  if( (geometry = geometry_init(T_LINESTRING)) ) {
-    if( (geometry->value.linestring = GEOMETRY_LINESTRING_INIT) ) {
+  if( (geometry = geometry_init(T_LINESTRING)) )
+  {
+    if( (geometry->value.linestring = GEOMETRY_LINESTRING_INIT) )
+    {
       geometry->mbr.min.x = MYGIS_READ_DOUBLE_LE(mbr++);
       geometry->mbr.min.y = MYGIS_READ_DOUBLE_LE(mbr++);
       geometry->mbr.max.x = MYGIS_READ_DOUBLE_LE(mbr++);
@@ -181,6 +201,7 @@ GEOMETRY *_shp_read_geometry_polyline(char *content)
     }
     DBUG_RETURN(geometry);
   }
+
   DBUG_RETURN(NULL);
 }
 
@@ -200,7 +221,7 @@ GEOMETRY *_shp_read_geometry_polygon(char *content)
   uint32      *exterior_rings_items;
 
   uint32 last_exterior_ring;
-  
+
   GEOMETRY_POLYGON *polygon;
 
   DBUG_ENTER("_shp_read_geometry_polygon");
@@ -242,14 +263,14 @@ GEOMETRY *_shp_read_geometry_polygon(char *content)
   exterior_rings_items[exterior-1] = (item - last_exterior_ring);
 
   geometry->value.multipolygon->items = exterior;
-  geometry->value.multipolygon->polygons = 
+  geometry->value.multipolygon->polygons =
     MYGIS_MALLOC_X(GEOMETRY_POLYGON, exterior);
-    
+
   polygon= geometry->value.multipolygon->polygons;
   for(item=0, linearringp=exterior_rings; item<exterior; item++, linearringp++, polygon++)
   {
     polygon->items= exterior_rings_items[item];
-    
+
     /* appears we need to dupe the memory at linearringp to avoid a double free later */
     polygon->linearrings= *linearringp;
   }
@@ -278,19 +299,23 @@ GEOMETRY *shp_read_next(SHP *shp)
   if(!shp)
     DBUG_RETURN(NULL);
 
-  if((count=read(shp->fd, &record_number, SZ_UINT32)) != SZ_UINT32) {
-    if(count > 0) {
+  if((count=read(shp->fd, &record_number, SZ_UINT32)) != SZ_UINT32)
+  {
+    if(count > 0)
+    {
       fprintf(stderr, "Couldn't read record number\n");
     }
     DBUG_RETURN(NULL);
   }
-  
-  if((count=read(shp->fd, &content_length, SZ_UINT32)) != SZ_UINT32) {
+
+  if((count=read(shp->fd, &content_length, SZ_UINT32)) != SZ_UINT32)
+  {
     fprintf(stderr, "Couldn't read content length\n");
     DBUG_RETURN(NULL);
   }
-    
-  if((count=read(shp->fd, &type, SZ_UINT32)) != SZ_UINT32) {
+
+  if((count=read(shp->fd, &type, SZ_UINT32)) != SZ_UINT32)
+  {
     fprintf(stderr, "Couldn't read shape type\n");
     DBUG_RETURN(NULL);
   }
@@ -307,8 +332,10 @@ GEOMETRY *shp_read_next(SHP *shp)
 	 record_number, content_length);
   */
 
-  if((content=(char *)malloc(content_length))) {
-    if((count=read(shp->fd, content, content_length)) != content_length) {
+  if((content=(char *)malloc(content_length)))
+  {
+    if((count=read(shp->fd, content, content_length)) != content_length)
+    {
       fprintf(stderr, "Couldn't read entire record: read %i bytes, expected %i bytes\n", count, content_length);
       goto err;
     }
@@ -316,7 +343,8 @@ GEOMETRY *shp_read_next(SHP *shp)
     DBUG_RETURN(NULL);
   }
 
-  switch(type) {
+  switch(type)
+  {
   case SHP_NULL:
     geometry = _shp_geometry_null();
     break;
@@ -324,7 +352,7 @@ GEOMETRY *shp_read_next(SHP *shp)
   case SHP_POINT:
     geometry = _shp_read_geometry_point(content);
     break;
-    
+
   case SHP_MULTIPOINT:
     geometry = _shp_read_geometry_multipoint(content);
     break;

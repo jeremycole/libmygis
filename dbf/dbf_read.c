@@ -18,7 +18,8 @@
 
 #include "dbf_priv.h"
 
-int _dbf_read_header(DBF *dbf) {
+int _dbf_read_header(DBF *dbf)
+{
   DBF_FIELD *field;
   int i;
   ssize_t count;
@@ -28,7 +29,8 @@ int _dbf_read_header(DBF *dbf) {
 
   dbf_seek(dbf, DBF_POS_FILE_HEADER);
 
-  if((count=read(dbf->fd, dbf->header, DBF_LEN_FILE_HEADER)) < DBF_LEN_FILE_HEADER) {
+  if((count=read(dbf->fd, dbf->header, DBF_LEN_FILE_HEADER)) < DBF_LEN_FILE_HEADER)
+  {
     fprintf(stderr, "DBF: Error reading header: read only %d bytes, expected %i bytes\n", count, DBF_LEN_FILE_HEADER);
     close(dbf->fd);
     DBUG_RETURN(-2);
@@ -39,8 +41,9 @@ int _dbf_read_header(DBF *dbf) {
   dbf->numrecords    = DBF_HDR_NUMRECORDS(dbf->header);
   dbf->record_length = 0;
 
-  if(dbf->version != 0x03) {
-    fprintf(stderr, "DBF: Unsupported dBase file version 0x%02x\n", 
+  if(dbf->version != 0x03)
+  {
+    fprintf(stderr, "DBF: Unsupported dBase file version 0x%02x\n",
             dbf->version);
     close(dbf->fd);
     DBUG_RETURN(-3);
@@ -48,8 +51,10 @@ int _dbf_read_header(DBF *dbf) {
 
   field = dbf->fields = DBF_FIELD_INIT(dbf->numfields);
 
-  for(i=0; i<dbf->numfields; i++, field++) {
-    if((count=read(dbf->fd, temp, DBF_LEN_FIELD)) < DBF_LEN_FIELD) {
+  for(i=0; i<dbf->numfields; i++, field++)
+  {
+    if((count=read(dbf->fd, temp, DBF_LEN_FIELD)) < DBF_LEN_FIELD)
+    {
       fprintf(stderr, "DBF: Error reading field!\n");
       DBUG_RETURN(-3);
     }
@@ -64,7 +69,8 @@ int _dbf_read_header(DBF *dbf) {
     field->length   = DBF_FLD_LEN(temp);
     field->decimals = DBF_FLD_DECIMALS(temp);
 
-    switch(field->type) {
+    switch(field->type)
+    {
     case DBF_CHARACTER:
       dbf->record_length += field->size = field->length;
       strcpy(field->format, "%s");
@@ -73,13 +79,14 @@ int _dbf_read_header(DBF *dbf) {
 
     case DBF_NUMBER:
       /* if field->decimals >0, fall through to FLOATING */
-      if(field->decimals == 0) {
+      if(field->decimals == 0)
+      {
         dbf->record_length += field->size = field->length;
         strcpy(field->format, "%lld");
         field->metadata.data_type = NUMBER;
         break;
       }
-    
+
     case DBF_FLOATING:
       dbf->record_length += field->size = field->length;
       sprintf(field->format, "%%.%if", field->decimals);
@@ -91,7 +98,7 @@ int _dbf_read_header(DBF *dbf) {
       strcpy(field->format, "%c");
       field->metadata.data_type = LOGICAL;
       break;
-      
+
     case DBF_DATE:
       dbf->record_length += field->size = 8;
       strcpy(field->format, "%8s");
@@ -133,8 +140,10 @@ RECORD *dbf_read_next(DBF *dbf)
 
   buf = cur = memset(dbf->record_buffer, 0, dbf->record_length+1);
 
-  if((count=read(dbf->fd, buf, dbf->record_length+1)) < dbf->record_length+1) {
-    if(count == 1 && buf[0] == DBF_EOF) {
+  if((count=read(dbf->fd, buf, dbf->record_length+1)) < dbf->record_length+1)
+  {
+    if(count == 1 && buf[0] == DBF_EOF)
+    {
       goto endoffile;
     }
     fprintf(stderr, "DBF: Error reading record: read only %i bytes, expected %i bytes\n", count, dbf->record_length+1);
@@ -144,13 +153,15 @@ RECORD *dbf_read_next(DBF *dbf)
 
   if(!(record = record_init(dbf)))
     DBUG_RETURN(NULL);
-  
+
   /* status = cur[0] */
   cur++;
 
-  for(field=dbf->fields, i=0; i<dbf->numfields; field++, i++) {
+  for(field=dbf->fields, i=0; i<dbf->numfields; field++, i++)
+  {
     cell = cell_init(field, &field->metadata);
-    switch(field->type) {
+    switch(field->type)
+    {
     case DBF_CHARACTER:
       if(!(cell->data.character = (char *)strndup(cur, field->size)))
         goto oom;
@@ -161,17 +172,18 @@ RECORD *dbf_read_next(DBF *dbf)
       if(!(cell->data.date = (char *)strndup(cur, field->size)))
         goto oom;
       break;
-      
-    case DBF_NUMBER: 
+
+    case DBF_NUMBER:
       /* if field->decimals > 0, fall through to FLOATING */
-      if(field->decimals == 0) {
+      if(field->decimals == 0)
+      {
         if(!(tmp = (char *)strndup(cur, field->size)))
           goto oom;
         cell->data.number = atoll(tmp);
         free(tmp);
         break;
       }
-      
+
     case DBF_FLOATING:
       if(!(tmp = (char *)strndup(cur, field->size)))
         goto oom;

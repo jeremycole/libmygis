@@ -32,17 +32,20 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(argc != 2) {
+  if(argc != 2)
+  {
     printf("usage %s <shapefile.prj>\n", argv[0]);
     DBUG_RETURN(-1);
   }
 
-  if(!(prj = prj_init(0))) {
+  if(!(prj = prj_init(0)))
+  {
     printf("Couldn't init\n");
     DBUG_RETURN(-2);
   }
 
-  if(prj_parse(prj, argv[1]) < 0) {
+  if(prj_parse(prj, argv[1]) < 0)
+  {
     printf("Couldn't parse\n");
     DBUG_RETURN(-3);
   }

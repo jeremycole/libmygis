@@ -37,7 +37,8 @@ PAIRLIST *pairlist_init(COMPARE *compare_key, COMPARE *compare_value)
   PAIRLIST *list;
 
   DBUG_ENTER("pairlist_init");
-  if(!(list = PAIRLIST_INIT)) {
+  if(!(list = PAIRLIST_INIT))
+  {
     DBUG_RETURN(NULL);
   }
 
@@ -45,7 +46,7 @@ PAIRLIST *pairlist_init(COMPARE *compare_key, COMPARE *compare_value)
   list->compare_value = compare_value;
   list->root = NULL;
   list->pairs = 0;
-  
+
   DBUG_RETURN(list);
 }
 
@@ -80,8 +81,10 @@ PAIRNODE *pairlist_get(PAIRLIST *list, char *key)
 
   if(!cur) DBUG_RETURN(NULL);
 
-  for(; cur; cur=cur->next) {
-    if(list->compare_key->func(cur->pair.key, key)) {
+  for(; cur; cur=cur->next)
+  {
+    if(list->compare_key->func(cur->pair.key, key))
+    {
       DBUG_RETURN(cur);
     }
   }
@@ -94,7 +97,8 @@ char *pairlist_get_value(PAIRLIST *list, char *key)
   PAIRNODE *node;
 
   DBUG_ENTER("pairlist_get_value");
-  if((node = pairlist_get(list, key))) {
+  if((node = pairlist_get(list, key)))
+  {
     DBUG_RETURN(node->pair.value);
   }
   DBUG_RETURN(NULL);
@@ -126,7 +130,8 @@ void pairlist_dump(PAIRLIST *list)
 
   DBUG_ENTER("pairlist_dump");
 
-  for(; cur; cur=cur->next) {
+  for(; cur; cur=cur->next)
+  {
     printf("Node 0x%08x: <%s> = <%s>\n", (unsigned int)cur, cur->pair.key, cur->pair.value);
   }
 
@@ -139,10 +144,12 @@ void pairlist_free(PAIRLIST *list)
 
   DBUG_ENTER("pairlist_free");
 
-  for(; cur; cur=cur->next) {
+  for(; cur; cur=cur->next)
+  {
     free(cur->pair.key);
     free(cur->pair.value);
-    if(cur->next) cur->next->prev = NULL;
+    if(cur->next)
+      cur->next->prev = NULL;
     free(cur);
   }
 
