@@ -1,3 +1,0 @@
-@set libmygis-version @VERSION@
-@set libmygis-svn-revision $Revision$
-@set libmygis-date $Date$

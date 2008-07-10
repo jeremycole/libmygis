@@ -1,9 +1,0 @@
-The mysqlgisimport program has been moved to mysqlgistools package
-which uses libmygis.  You can find the new package here:
-
-  http://jcole.us/software/mysqlgistools/
-
-I hope this makes it easier to use libmygis in many other software
-packages in the future.  In addition this will make it much easier
-to bear the linkages to the MySQL client libraries required for
-some planned features in mysqlgisimport and other tools. 
