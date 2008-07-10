@@ -1,0 +1,90 @@
+libmygis ChangeLog
+==================
+
+VERSION 0.8
+***********
+
+0.8.0     2008-07-xx
+
+  * Overhauled the entire build system, now uses libtool to build the
+    libraries and does recursive build correctly.
+  * Overhauled all .h files for public use from /usr/include and
+    created many *_priv.h files for internal use.
+  * Created .spec file for building of RPMs.
+  * Removed tools/mysqlgisimport, created new mysqlgistools project
+    to contain this and other future tools.
+  * Removed MySQL linkages from libmygis project.
+  * Lots of cleanup of build system.
+  * Updated copyright years.
+  * Checked in project files for Eclipse using the GNU C Autotools project
+  	type.
+  
+
+VERSION 0.7
+***********
+
+0.7.5     2007-11-25
+
+  * Added missing -P command-line option to mysqlgisimport.
+  * Fixed problems with recursive build.
+  * Fixed tests/test_shapefile so that it doesn't try to seek past the
+    end of the file when dumping records.
+  * Finished projection support and cleaned up projection code.
+
+0.7.3     2007-02-23
+
+  * Fixed a bug with complex projections which use a different projection
+    not based on meters.  The x_0 and y_0 parameters are now converted to
+    meters before being passed to PROJ.4.  Thanks to Adam Dingle for finding
+    this bug.
+
+0.7.2     2007-01-14
+
+  * Updated copyright to 2007.
+  * Changed the PRJ parser to use YYPARSE_PARAM so that it can be thread-
+    safe and reentrant.
+
+0.7.1     2007-01-12
+
+  * Oops, did not free memory for MULTIPOLYGON.
+
+0.7.0     2007-01-12
+
+  * Added support for MULTIPOLYGON.
+  * Changed Shapefile parsing to parse Shapefile POLYGON to internal
+    MULTIPOLYGON, as Shapefile POLYGON may contain many separate polygon
+    external rings.
+
+
+VERSION 0.6
+***********
+
+0.6.0     unreleased
+
+  * Added support for projections, but did not make any 0.6.x releases.
+    This functionality is available in 0.7.x.
+
+
+VERSION 0.5
+***********
+
+0.5.5     2005-08-02
+0.5.1     2005-03-23
+0.5.0     2005-03-15
+
+
+VERSION 0.4
+***********
+
+0.4.3     2005-03-07
+0.4.2     2005-03-04
+0.4.1     2005-02-26
+0.4.0     2005-02-25
+
+
+VERSION 0.3
+***********
+
+0.3.0     2005-02-12
+
+  * Initial public release.

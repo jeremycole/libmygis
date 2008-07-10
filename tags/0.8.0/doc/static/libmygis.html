@@ -1,0 +1,2931 @@
+<HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- Created on July, 8  2008 by texi2html 1.64 -->
+<!-- 
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Olaf Bachmann <obachman@mathematik.uni-kl.de>
+Send bugs and suggestions to <texi2html@mathematik.uni-kl.de>
+ 
+-->
+<HEAD>
+<TITLE>libmygis: </TITLE>
+
+<META NAME="description" CONTENT="libmygis: ">
+<META NAME="keywords" CONTENT="libmygis: ">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META NAME="Generator" CONTENT="texi2html 1.64">
+
+</HEAD>
+
+<BODY LANG="" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+
+<A NAME="SEC_Top"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1>libmygis</H1></P><P>
+
+This manual is for libmygis, version 0.8.0.  
+</P><P>
+
+$Revision: 88 $
+</P><P>
+
+$Date: 2007-12-01 02:18:23 -0800 (Sat, 01 Dec 2007) $
+</P><P>
+
+<BLOCKQUOTE><TABLE BORDER=0 CELLSPACING=0> 
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC1">1. Basic Types</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC4">2. Geometries</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC27">3. Records</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC42">4. Projections</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC51">5. Shapefiles</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC122">6. WKB</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC132">7. WKT</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+<TR><TD ALIGN="left" VALIGN="TOP"><A HREF="libmygis.html#SEC135">Index</A></TD><TD>&nbsp;&nbsp;</TD><TD ALIGN="left" VALIGN="TOP"></TD></TR>
+</TABLE></BLOCKQUOTE>
+<P>
+
+<HR SIZE=1>
+<A NAME="SEC1"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC2"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<A NAME="Basic Types"></A>
+<H1> 1. Basic Types </H1>
+<!--docid::SEC1::-->
+<P>
+
+<CODE>libmygis</CODE> provides two basic types which are used by <CODE>GEOMETRY</CODE> internally.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC2"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC1"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC3"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC1"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 1.1 <CODE>POINT</CODE> </H2>
+<!--docid::SEC2::-->
+<P>
+
+The <CODE>POINT</CODE> type has two fields of type <CODE>double</CODE>: <CODE>x</CODE> and <CODE>y</CODE>.  These are most commonly used to represent longitude and latitude, respectively.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC3"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC2"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC1"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 1.2 <CODE>LINEARRING</CODE> </H2>
+<!--docid::SEC3::-->
+<P>
+
+The <CODE>LINEARRING</CODE> type has four fields: <CODE>items</CODE>, <CODE>points</CODE>, <CODE>type</CODE>, and <CODE>area</CODE>.
+</P><P>
+
+<A NAME="Geometries"></A>
+<HR SIZE="6">
+<A NAME="SEC4"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC3"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC5"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 2. Geometries </H1>
+<!--docid::SEC4::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC5"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC6"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 2.1 Single Geometry Subtypes </H2>
+<!--docid::SEC5::-->
+<P>
+
+A single geometry subtype is a type that contains only a single geometry; that is, a single point, linestring, or polygon.  These are containers for the underlying basic types <CODE>POINT</CODE> and <CODE>LINEARRING</CODE> provided by <CODE>mygis.h</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC6"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC5"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC7"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC5"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.1.1 <CODE>GEOMETRY_POINT</CODE> </H3>
+<!--docid::SEC6::-->
+<P>
+
+The <CODE>GEOMETRY_POINT</CODE> type contains a single <CODE>POINT</CODE> as a pointer named <CODE>point</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC7"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC6"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC8"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC8"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC5"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.1.2 <CODE>GEOMETRY_LINESTRING</CODE> </H3>
+<!--docid::SEC7::-->
+<P>
+
+The <CODE>GEOMETRY_LINESTRING</CODE> type contains an array of <CODE>POINT</CODE> as a pointer named <CODE>points</CODE>, and a count of the items allocated at <CODE>points</CODE> in <CODE>items</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC8"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC7"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC5"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.1.3 <CODE>GEOMETRY_POLYGON</CODE> </H3>
+<!--docid::SEC8::-->
+<P>
+
+The <CODE>GEOMETRY_POLYGON</CODE> type contains an array of <CODE>LINEARRING</CODE> as a pointer named <CODE>linearrings</CODE>, and a count of the items allocated at <CODE>linearrings</CODE> in <CODE>items</CODE>.  Although this type is considered a single polygon, it actually contains multiple polygons.  The first polygon in <CODE>linearrings</CODE> contains the exterior rings (that is, the outer polygon).  The following polygons in <CODE>linearrings</CODE> are any interior rings (that is, holes in the outer polygon).  All interior rings must be within the boundaries of the exterior ring.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC9"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC8"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC10"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 2.2 Multiple Geometry Subtypes </H2>
+<!--docid::SEC9::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC10"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC11"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.2.1 <CODE>GEOMETRY_MULTIPOINT</CODE> </H3>
+<!--docid::SEC10::-->
+<P>
+
+The <CODE>GEOMETRY_MULTIPOINT</CODE> type contains an array of <CODE>GEOMETRY_POINT</CODE> as a pointer named <CODE>points</CODE>, and a count of the items allocated at <CODE>points</CODE> in <CODE>items</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC11"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC10"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC12"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC12"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.2.2 <CODE>GEOMETRY_MULTILINESTRING</CODE> </H3>
+<!--docid::SEC11::-->
+<P>
+
+The <CODE>GEOMETRY_MULTILINESTRING</CODE> type contains an array of <CODE>GEOMETRY_LINESTRING</CODE> as a pointer named <CODE>linestrings</CODE>, and a count of the items allocated at <CODE>linestrings</CODE> in <CODE>items</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC12"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC11"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC9"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.2.3 <CODE>GEOMETRY_MULTIPOLYGON</CODE> </H3>
+<!--docid::SEC12::-->
+<P>
+
+The <CODE>GEOMETRY_MULTIPOLYGON</CODE> type contains an array of <CODE>GEOMETRY_POLYGON</CODE> as a pointer named <CODE>polygons</CODE>, and a count of the items allocated at <CODE>polygons</CODE> in <CODE>items</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC13"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC12"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 2.3 Geometry Collections </H2>
+<!--docid::SEC13::-->
+<P>
+
+The <CODE>GEOMETRYCOLLECTION</CODE> type is represented in the code but is not currently supported.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC14"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC13"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC15"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 2.4 The <CODE>GEOMETRY</CODE> container </H2>
+<!--docid::SEC14::-->
+<P>
+
+The <CODE>GEOMETRY</CODE> type is normally used by any function that needs to return an arbitrary geometry.  The <CODE>type</CODE> field determines its type, and the <CODE>value</CODE> field contains the actual geometry.  The <CODE>mbr</CODE> field contains the minimum bounding rectangle for the geometry.  The <CODE>info</CODE> field contains any number of key/value pairs.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC15"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC16"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.4.1 <CODE>GEOMETRY_TYPE</CODE> </H3>
+<!--docid::SEC15::-->
+<P>
+
+The <CODE>GEOMETRY_TYPE</CODE> type is an enumeration of the possible geometry types which could be stored in a <CODE>GEOMETRY_ANY</CODE>.  Its possible values are: <CODE>T_NULL</CODE>, <CODE>T_POINT</CODE>, <CODE>T_LINESTRING</CODE>, <CODE>T_POLYGON</CODE>, <CODE>T_MULTIPOINT</CODE>, <CODE>T_MULTILINESTRING</CODE>, <CODE>T_MULTIPOLYGON</CODE>, and <CODE>T_GEOMETRYCOLLECTION</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC16"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC15"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC17"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC17"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.4.2 <CODE>GEOMETRY_ANY</CODE> </H3>
+<!--docid::SEC16::-->
+<P>
+
+The <CODE>GEOMETRY_ANY</CODE> type is a union of all possible geometry types, which can be used combined with a <CODE>GEOMETRY_TYPE</CODE> field which stores the actual type stored in the <CODE>GEOMETRY_ANY</CODE>.  The union presents the following pointer fields with their appropriate types: <CODE>point</CODE>, <CODE>linestring</CODE>, <CODE>polygon</CODE>, <CODE>multipoint</CODE>, <CODE>multilinestring</CODE>, <CODE>multipolygon</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC17"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC16"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC18"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC18"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.4.3 <CODE>GEOMETRY_MBR</CODE> </H3>
+<!--docid::SEC17::-->
+<P>
+
+The <CODE>GEOMETRY_MBR</CODE> type is used to store minimum bounding rectangles for geometries.  It contains two <CODE>POINT</CODE> fields, <CODE>min</CODE> and <CODE>max</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC18"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC17"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC14"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.4.4 <CODE>GEOMETRY_INFO</CODE> </H3>
+<!--docid::SEC18::-->
+<P>
+
+This is currently unused?
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC19"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC18"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC20"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 2.5 The <CODE>geometry.h</CODE> API </H2>
+<!--docid::SEC19::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC20"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC21"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.5.1 <CODE>geometry_init</CODE> </H3>
+<!--docid::SEC20::-->
+<P>
+
+<CODE>GEOMETRY *geometry_init(GEOMETRY_TYPE type)</CODE>
+</P><P>
+
+Initialize a <CODE>GEOMETRY</CODE> object of <CODE>type</CODE> type and return it.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC21"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC20"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC22"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC22"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.5.2 <CODE>geometry_set_projection</CODE> </H3>
+<!--docid::SEC21::-->
+<P>
+
+<CODE>void geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection)</CODE>
+</P><P>
+
+Set the <CODE>projection</CODE> field in the <CODE>GEOMETRY</CODE> structure, which is currently only used within the geometry code by <CODE>geometry_dump</CODE> to re-project the contents of the geometry for display.  <CODE>geometry_set_projection</CODE> should be called after initializing geometries with <CODE>geometry_init</CODE> by any code which is creating geometries.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC22"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC21"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC23"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC23"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.5.3 <CODE>geometry_dump</CODE> </H3>
+<!--docid::SEC22::-->
+<P>
+
+<CODE>void geometry_dump(GEOMETRY *geometry)</CODE>
+</P><P>
+
+Dump the contents of <CODE>geometry</CODE> to <CODE>stdout</CODE> in a pretty-printed form for debugging and test purposes.  Optionally re-project any <CODE>POINT</CODE> that is dumped from the geometry by calling <CODE>geometry_point_reproject</CODE> if the user as set the projection with <CODE>geometry_set_projection</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC23"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC22"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC24"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC24"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.5.4 <CODE>geometry_free</CODE> </H3>
+<!--docid::SEC23::-->
+<P>
+
+<CODE>void geometry_free(GEOMETRY *geometry)</CODE>
+</P><P>
+
+Free all memory associated with <CODE>geometry</CODE>.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC24"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC23"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC25"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC19"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 2.5.5 Miscellaneous Functions </H3>
+<!--docid::SEC24::-->
+<HR SIZE="6">
+<A NAME="SEC25"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC24"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC26"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC24"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 2.5.5.1 <CODE>geometry_point_reproject</CODE> </H4>
+<!--docid::SEC25::-->
+<P>
+
+<CODE>POINT geometry_point_reproject(POINT *point, PROJECTION *projection)</CODE>
+</P><P>
+
+Re-project <CODE>point</CODE> using <CODE>projection</CODE> and return a new <CODE>POINT</CODE> with the new projection.
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC26"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC25"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC4"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC24"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 2.5.5.2 <CODE>geometry_linearring_area</CODE> </H4>
+<!--docid::SEC26::-->
+<P>
+
+<CODE>double geometry_linearring_area(LINEARRING *linearring)</CODE>
+</P><P>
+
+Calculate the area represented by the <CODE>linearring</CODE> and return it as a double.  This will return a number which may be positive or negative.  The absolute value represents the area of the linear ring.  If the value is positive, the ring is composed of clockwise points, while if it is negative, the ring is composed of counter-clockwise points.  This can be used to determine if this is an interior or exterior ring in many GIS formats, such as WKB, where the exterior ring is represented by counter-clockwise points and the interior rings are represented by clockwise points.
+</P><P>
+
+<A NAME="Records"></A>
+<HR SIZE="6">
+<A NAME="SEC27"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC26"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC28"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 3. Records </H1>
+<!--docid::SEC27::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC28"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC29"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 3.1 The <CODE>RECORD</CODE> container </H2>
+<!--docid::SEC28::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC29"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC28"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC30"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 3.2 The <CODE>CELL</CODE> container </H2>
+<!--docid::SEC29::-->
+<HR SIZE="6">
+<A NAME="SEC30"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC29"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC31"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC29"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 3.2.1 <CODE>CELL_DATA</CODE> </H3>
+<!--docid::SEC30::-->
+<HR SIZE="6">
+<A NAME="SEC31"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC30"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC29"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 3.2.2 <CODE>METADATA</CODE> </H3>
+<!--docid::SEC31::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC32"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC31"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 3.3 The <CODE>record.h</CODE> API </H2>
+<!--docid::SEC32::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC33"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC34"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 3.3.1 <CODE>RECORD</CODE> API functions </H3>
+<!--docid::SEC33::-->
+<HR SIZE="6">
+<A NAME="SEC34"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC35"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.1.1 <CODE>record_init</CODE> </H4>
+<!--docid::SEC34::-->
+<HR SIZE="6">
+<A NAME="SEC35"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC34"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC36"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC36"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.1.2 <CODE>record_append</CODE> </H4>
+<!--docid::SEC35::-->
+<HR SIZE="6">
+<A NAME="SEC36"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC35"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC37"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC37"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.1.3 <CODE>record_remove</CODE> </H4>
+<!--docid::SEC36::-->
+<HR SIZE="6">
+<A NAME="SEC37"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC36"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC38"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC38"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.1.4 <CODE>record_dump</CODE> </H4>
+<!--docid::SEC37::-->
+<HR SIZE="6">
+<A NAME="SEC38"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC37"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC33"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.1.5 <CODE>record_free</CODE> </H4>
+<!--docid::SEC38::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC39"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC38"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC40"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC32"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 3.3.2 <CODE>CELL</CODE> API functions </H3>
+<!--docid::SEC39::-->
+<HR SIZE="6">
+<A NAME="SEC40"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC41"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.2.1 <CODE>cell_init</CODE> </H4>
+<!--docid::SEC40::-->
+<HR SIZE="6">
+<A NAME="SEC41"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC40"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC27"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC39"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 3.3.2.2 <CODE>cell_free</CODE> </H4>
+<!--docid::SEC41::-->
+<P>
+
+<A NAME="Projections"></A>
+<HR SIZE="6">
+<A NAME="SEC42"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC41"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC43"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 4. Projections </H1>
+<!--docid::SEC42::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC43"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 4.1 The <CODE>PROJECTION</CODE> container </H2>
+<!--docid::SEC43::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC44"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC43"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC45"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 4.2 The <CODE>projection.h</CODE> API </H2>
+<!--docid::SEC44::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC45"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC46"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.1 <CODE>projection_init</CODE> </H3>
+<!--docid::SEC45::-->
+<HR SIZE="6">
+<A NAME="SEC46"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC45"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC47"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC47"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.2 <CODE>projection_set</CODE> </H3>
+<!--docid::SEC46::-->
+<HR SIZE="6">
+<A NAME="SEC47"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC46"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC48"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC48"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.3 <CODE>projection_unset</CODE> </H3>
+<!--docid::SEC47::-->
+<HR SIZE="6">
+<A NAME="SEC48"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC47"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC49"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC49"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.4 <CODE>projection_transform</CODE> </H3>
+<!--docid::SEC48::-->
+<HR SIZE="6">
+<A NAME="SEC49"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC48"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC50"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC50"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.5 <CODE>projection_dump</CODE> </H3>
+<!--docid::SEC49::-->
+<HR SIZE="6">
+<A NAME="SEC50"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC49"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC42"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC44"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 4.2.6 <CODE>projection_free</CODE> </H3>
+<!--docid::SEC50::-->
+<P>
+
+<A NAME="Shapefiles"></A>
+<HR SIZE="6">
+<A NAME="SEC51"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC50"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC52"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 5. Shapefiles </H1>
+<!--docid::SEC51::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC52"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC53"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 5.1 The <CODE>SHAPEFILE</CODE> container </H2>
+<!--docid::SEC52::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC53"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC52"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC54"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC54"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 5.2 The <CODE>SHAPEFILE_RECORD</CODE> container </H2>
+<!--docid::SEC53::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC54"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC53"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 5.3 The <CODE>SHAPEFILE_SCAN</CODE> container </H2>
+<!--docid::SEC54::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC55"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC54"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC56"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 5.4 The <CODE>shapefile.h</CODE> API </H2>
+<!--docid::SEC55::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC56"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.1 <CODE>shapefile_init</CODE> </H3>
+<!--docid::SEC56::-->
+<P>
+
+<CODE>SHAPEFILE *shapefile_init(int flags)</CODE>
+</P><P>
+
+Initialize a <CODE>SHAPEFILE</CODE> and return it.  The <CODE>flags</CODE> argument should be a bitwise-or of zero or more of the following values:
+</P><P>
+
+<UL>
+
+<LI>
+<CODE>SHAPEFILE_NO_SHP</CODE> Don't attempt to open an <CODE>.shp</CODE> (shape) file; no <CODE>GEOMETRY</CODE> will be available for each <CODE>SHAPEFILE_RECORD</CODE>.  Implies <CODE>SHAPEFILE_NO_SHX</CODE>.
+<P>
+
+<LI>
+<CODE>SHAPEFILE_NO_SHX</CODE> Don't attempt to open a <CODE>.shx</CODE> (shape index) file; seeking within the shapefile using <CODE>shapefile_seek_record</CODE> will be much slower.
+<P>
+
+<LI>
+<CODE>SHAPEFILE_NO_DBF</CODE> Don't attempt to open a <CODE>.dbf</CODE> (database) file; no additional field information will be available for each <CODE>SHAPEFILE_RECORD</CODE>.
+<P>
+
+<LI>
+<CODE>SHAPEFILE_NO_PRJ</CODE> Don't attempt to open a <CODE>.prj</CODE> (projection) file; no automatic re-projection of geometries will be possible.
+<P>
+
+</UL>
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC57"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC56"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC58"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC58"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.2 <CODE>shapefile_open</CODE> </H3>
+<!--docid::SEC57::-->
+<P>
+
+<CODE>int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC58"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC59"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC59"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.3 <CODE>shapefile_set_projection</CODE> </H3>
+<!--docid::SEC58::-->
+<P>
+
+<CODE>void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC59"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC58"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC60"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC60"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.4 <CODE>shapefile_seek_record</CODE> </H3>
+<!--docid::SEC59::-->
+<P>
+
+<CODE>void shapefile_seek_record(SHAPEFILE *shapefile, uint32 record)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC60"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC59"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC61"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC61"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.5 <CODE>shapefile_read_next</CODE> </H3>
+<!--docid::SEC60::-->
+<P>
+
+<CODE>SHAPEFILE_RECORD *shapefile_read_next(SHAPEFILE *shapefile)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC61"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC60"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC62"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC62"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.6 <CODE>shapefile_dump</CODE> </H3>
+<!--docid::SEC61::-->
+<P>
+
+<CODE>void shapefile_dump(SHAPEFILE *shapefile)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC62"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC61"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC63"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC63"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.7 <CODE>shapefile_close</CODE> </H3>
+<!--docid::SEC62::-->
+<P>
+
+<CODE>void shapefile_close(SHAPEFILE *shapefile)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC63"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC62"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC64"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC64"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.8 <CODE>shapefile_free</CODE> </H3>
+<!--docid::SEC63::-->
+<P>
+
+<CODE>void shapefile_free(SHAPEFILE *shapefile)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC64"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC63"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC65"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.9 <CODE>shapefile_record_dump</CODE> </H3>
+<!--docid::SEC64::-->
+<P>
+
+<CODE>void shapefile_record_dump(SHAPEFILE_RECORD *record)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC65"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC64"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC66"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.10 <CODE>shapefile_record_free</CODE> </H3>
+<!--docid::SEC65::-->
+<P>
+
+<CODE>void shapefile_record_free(SHAPEFILE_RECORD *record)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC66"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC65"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC67"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.11 <CODE>shapefile_scan_init</CODE> </H3>
+<!--docid::SEC66::-->
+<P>
+
+<CODE>SHAPEFILE_SCAN *shapefile_scan_init(SHAPEFILE *shapefile, COMPARE *compare, char *key, char *value)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC67"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC66"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC68"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.12 <CODE>shapefile_scan_read_next</CODE> </H3>
+<!--docid::SEC67::-->
+<P>
+
+<CODE>SHAPEFILE_RECORD *shapefile_scan_read_next(SHAPEFILE_SCAN *scan)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC68"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC67"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC57"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC55"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.4.13 <CODE>shapefile_scan_free</CODE> </H3>
+<!--docid::SEC68::-->
+<P>
+
+<CODE>void shapefile_scan_free(SHAPEFILE_SCAN *scan)</CODE>
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC69"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC68"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 5.5 Shapefile Subformats </H2>
+<!--docid::SEC69::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC70"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC71"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.1 The <CODE>.shp</CODE> (shape) format </H3>
+<!--docid::SEC70::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC71"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC72"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.1 The <CODE>SHP</CODE> container </H4>
+<!--docid::SEC71::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC72"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC71"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC73"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC73"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.2 <CODE>shp_init</CODE> </H4>
+<!--docid::SEC72::-->
+<HR SIZE="6">
+<A NAME="SEC73"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC72"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC74"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC74"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.3 <CODE>shp_open</CODE> </H4>
+<!--docid::SEC73::-->
+<HR SIZE="6">
+<A NAME="SEC74"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC73"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC75"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC75"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.4 <CODE>shp_set_projection</CODE> </H4>
+<!--docid::SEC74::-->
+<HR SIZE="6">
+<A NAME="SEC75"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC74"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC76"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC76"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.5 <CODE>shp_index</CODE> </H4>
+<!--docid::SEC75::-->
+<HR SIZE="6">
+<A NAME="SEC76"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC75"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC77"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC77"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.6 <CODE>shp_read_next</CODE> </H4>
+<!--docid::SEC76::-->
+<HR SIZE="6">
+<A NAME="SEC77"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC76"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC78"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC78"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.7 <CODE>shp_seek</CODE> </H4>
+<!--docid::SEC77::-->
+<HR SIZE="6">
+<A NAME="SEC78"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC77"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC79"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC79"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.8 <CODE>shp_seek_record</CODE> </H4>
+<!--docid::SEC78::-->
+<HR SIZE="6">
+<A NAME="SEC79"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC78"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC80"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.9 <CODE>shp_rewind</CODE> </H4>
+<!--docid::SEC79::-->
+<HR SIZE="6">
+<A NAME="SEC80"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC79"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC81"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC72"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.10 <CODE>shp_dump</CODE> </H4>
+<!--docid::SEC80::-->
+<HR SIZE="6">
+<A NAME="SEC81"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC80"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC82"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC72"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.11 <CODE>shp_close</CODE> </H4>
+<!--docid::SEC81::-->
+<HR SIZE="6">
+<A NAME="SEC82"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC81"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC72"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC70"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.1.12 <CODE>shp_free</CODE> </H4>
+<!--docid::SEC82::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC83"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC82"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC84"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.2 The <CODE>.shx</CODE> (shape index) format </H3>
+<!--docid::SEC83::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC84"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC85"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.1 The <CODE>SHX</CODE> container </H4>
+<!--docid::SEC84::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC85"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC84"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC86"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC86"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.2 <CODE>shx_init</CODE> </H4>
+<!--docid::SEC85::-->
+<HR SIZE="6">
+<A NAME="SEC86"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC85"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC87"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC87"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.3 <CODE>shx_open</CODE> </H4>
+<!--docid::SEC86::-->
+<HR SIZE="6">
+<A NAME="SEC87"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC86"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC88"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC88"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.4 <CODE>shx_read_next</CODE> </H4>
+<!--docid::SEC87::-->
+<HR SIZE="6">
+<A NAME="SEC88"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC87"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC89"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC89"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.5 <CODE>shx_seek</CODE> </H4>
+<!--docid::SEC88::-->
+<HR SIZE="6">
+<A NAME="SEC89"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC88"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC90"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC90"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.6 <CODE>shx_seek_record</CODE> </H4>
+<!--docid::SEC89::-->
+<HR SIZE="6">
+<A NAME="SEC90"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC89"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC91"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC91"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.7 <CODE>shx_rewind</CODE> </H4>
+<!--docid::SEC90::-->
+<HR SIZE="6">
+<A NAME="SEC91"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC90"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC92"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC92"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.8 <CODE>shx_dump</CODE> </H4>
+<!--docid::SEC91::-->
+<HR SIZE="6">
+<A NAME="SEC92"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC91"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC93"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.9 <CODE>shx_record_dump</CODE> </H4>
+<!--docid::SEC92::-->
+<HR SIZE="6">
+<A NAME="SEC93"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC92"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC94"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC85"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.10 <CODE>shx_record_free</CODE> </H4>
+<!--docid::SEC93::-->
+<HR SIZE="6">
+<A NAME="SEC94"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC93"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC95"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC85"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.11 <CODE>shx_close</CODE> </H4>
+<!--docid::SEC94::-->
+<HR SIZE="6">
+<A NAME="SEC95"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC94"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC85"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC83"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.2.12 <CODE>shx_free</CODE> </H4>
+<!--docid::SEC95::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC96"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC95"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC97"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.3 The <CODE>.prj</CODE> (projection) format </H3>
+<!--docid::SEC96::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC97"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC98"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.3.1 The <CODE>PRJ</CODE> container </H4>
+<!--docid::SEC97::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC98"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC97"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC99"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC99"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.3.2 <CODE>prj_init</CODE> </H4>
+<!--docid::SEC98::-->
+<HR SIZE="6">
+<A NAME="SEC99"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC98"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC100"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC100"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.3.3 <CODE>prj_parse</CODE> </H4>
+<!--docid::SEC99::-->
+<HR SIZE="6">
+<A NAME="SEC100"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC99"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC101"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC101"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.3.4 <CODE>prj_dump</CODE> </H4>
+<!--docid::SEC100::-->
+<HR SIZE="6">
+<A NAME="SEC101"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC100"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC96"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.3.5 <CODE>prj_free</CODE> </H4>
+<!--docid::SEC101::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC102"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC101"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC103"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.4 The <CODE>.dbf</CODE> (attribute database) format </H3>
+<!--docid::SEC102::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC103"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.1 The <CODE>DBF</CODE> container </H4>
+<!--docid::SEC103::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC104"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC103"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC105"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC105"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.2 The <CODE>DBF_SCAN</CODE> container </H4>
+<!--docid::SEC104::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC105"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC106"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC106"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.3 The <CODE>DBF_FIELD</CODE> container </H4>
+<!--docid::SEC105::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC106"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC105"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC107"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC107"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.4 <CODE>dbf_init</CODE> </H4>
+<!--docid::SEC106::-->
+<HR SIZE="6">
+<A NAME="SEC107"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC106"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC108"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC108"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.5 <CODE>dbf_open</CODE> </H4>
+<!--docid::SEC107::-->
+<HR SIZE="6">
+<A NAME="SEC108"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC107"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC109"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC109"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.6 <CODE>dbf_seek</CODE> </H4>
+<!--docid::SEC108::-->
+<HR SIZE="6">
+<A NAME="SEC109"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC108"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC110"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC110"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.7 <CODE>dbf_seek_record</CODE> </H4>
+<!--docid::SEC109::-->
+<HR SIZE="6">
+<A NAME="SEC110"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC109"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC111"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC111"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.8 <CODE>dbf_read_next</CODE> </H4>
+<!--docid::SEC110::-->
+<HR SIZE="6">
+<A NAME="SEC111"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC110"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC112"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.9 <CODE>dbf_rewind</CODE> </H4>
+<!--docid::SEC111::-->
+<HR SIZE="6">
+<A NAME="SEC112"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC111"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC113"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.10 <CODE>dbf_dump</CODE> </H4>
+<!--docid::SEC112::-->
+<HR SIZE="6">
+<A NAME="SEC113"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC112"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC114"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.11 <CODE>dbf_close</CODE> </H4>
+<!--docid::SEC113::-->
+<HR SIZE="6">
+<A NAME="SEC114"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC113"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC115"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.12 <CODE>dbf_free</CODE> </H4>
+<!--docid::SEC114::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC115"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC114"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC116"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.13 <CODE>dbf_scan_init</CODE> </H4>
+<!--docid::SEC115::-->
+<HR SIZE="6">
+<A NAME="SEC116"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC115"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC117"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.14 <CODE>dbf_scan_next</CODE> </H4>
+<!--docid::SEC116::-->
+<HR SIZE="6">
+<A NAME="SEC117"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC116"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC118"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.15 <CODE>dbf_scan_read_next</CODE> </H4>
+<!--docid::SEC117::-->
+<HR SIZE="6">
+<A NAME="SEC118"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC117"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC119"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.16 <CODE>dbf_scan_free</CODE> </H4>
+<!--docid::SEC118::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC119"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC118"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC104"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC102"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H4> 5.5.4.17 <CODE>dbf_record_field</CODE> </H4>
+<!--docid::SEC119::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC120"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC119"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC121"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC121"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.5 The <CODE>.sbn</CODE>/<CODE>.sbx</CODE> (spatial index) format (unsupported) </H3>
+<!--docid::SEC120::-->
+<HR SIZE="6">
+<A NAME="SEC121"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC120"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC51"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC69"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 5.5.6 The <CODE>.shp.xml</CODE> (shapefile metadata) format (unsupported) </H3>
+<!--docid::SEC121::-->
+<P>
+
+<A NAME="WKB"></A>
+<HR SIZE="6">
+<A NAME="SEC122"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC121"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC123"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 6. WKB </H1>
+<!--docid::SEC122::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC123"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 6.1 The <CODE>WKB</CODE> container </H2>
+<!--docid::SEC123::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC124"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC123"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC125"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 6.2 The <CODE>wkb/wkb.h</CODE> API </H2>
+<!--docid::SEC124::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC125"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC126"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.1 <CODE>wkb_init</CODE> </H3>
+<!--docid::SEC125::-->
+<HR SIZE="6">
+<A NAME="SEC126"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC125"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC127"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC127"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.2 <CODE>wkb_load</CODE> </H3>
+<!--docid::SEC126::-->
+<HR SIZE="6">
+<A NAME="SEC127"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC126"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC128"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC128"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.3 <CODE>wkb_read_next</CODE> </H3>
+<!--docid::SEC127::-->
+<HR SIZE="6">
+<A NAME="SEC128"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC127"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC129"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC129"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.4 <CODE>wkb_rewind</CODE> </H3>
+<!--docid::SEC128::-->
+<HR SIZE="6">
+<A NAME="SEC129"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC128"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC130"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC130"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.5 <CODE>wkb_size</CODE> </H3>
+<!--docid::SEC129::-->
+<HR SIZE="6">
+<A NAME="SEC130"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC129"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC131"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC131"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.6 <CODE>wkb_write</CODE> </H3>
+<!--docid::SEC130::-->
+<HR SIZE="6">
+<A NAME="SEC131"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC130"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC122"> &lt;&lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC124"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &gt;&gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 6.2.7 <CODE>wkb_free</CODE> </H3>
+<!--docid::SEC131::-->
+<P>
+
+<A NAME="WKT"></A>
+<HR SIZE="6">
+<A NAME="SEC132"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC131"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC133"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[ &gt;&gt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> 7. WKT </H1>
+<!--docid::SEC132::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC133"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC134"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC132"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[ &gt;&gt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H2> 7.1 The <CODE>wkt/wkt.h</CODE> API </H2>
+<!--docid::SEC133::-->
+<P>
+
+<HR SIZE="6">
+<A NAME="SEC134"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC133"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135"> &gt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC133"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[ &gt;&gt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H3> 7.1.1 <CODE>wkt_write</CODE> </H3>
+<!--docid::SEC134::-->
+<P>
+
+<A NAME="Index"></A>
+<HR SIZE="6">
+<A NAME="SEC135"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC134"> &lt; </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[ &gt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[ &lt;&lt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top"> Up </A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[ &gt;&gt; ]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT"> &nbsp; <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1> Index </H1>
+<!--docid::SEC135::-->
+<P>
+
+</P><P>
+
+<HR SIZE="6">
+<A NAME="SEC_Contents"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1>Table of Contents</H1>
+<UL>
+<A NAME="TOC1" HREF="libmygis.html#SEC1">1. Basic Types</A>
+<BR>
+<UL>
+<A NAME="TOC2" HREF="libmygis.html#SEC2">1.1 <CODE>POINT</CODE></A>
+<BR>
+<A NAME="TOC3" HREF="libmygis.html#SEC3">1.2 <CODE>LINEARRING</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC4" HREF="libmygis.html#SEC4">2. Geometries</A>
+<BR>
+<UL>
+<A NAME="TOC5" HREF="libmygis.html#SEC5">2.1 Single Geometry Subtypes</A>
+<BR>
+<UL>
+<A NAME="TOC6" HREF="libmygis.html#SEC6">2.1.1 <CODE>GEOMETRY_POINT</CODE></A>
+<BR>
+<A NAME="TOC7" HREF="libmygis.html#SEC7">2.1.2 <CODE>GEOMETRY_LINESTRING</CODE></A>
+<BR>
+<A NAME="TOC8" HREF="libmygis.html#SEC8">2.1.3 <CODE>GEOMETRY_POLYGON</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC9" HREF="libmygis.html#SEC9">2.2 Multiple Geometry Subtypes</A>
+<BR>
+<UL>
+<A NAME="TOC10" HREF="libmygis.html#SEC10">2.2.1 <CODE>GEOMETRY_MULTIPOINT</CODE></A>
+<BR>
+<A NAME="TOC11" HREF="libmygis.html#SEC11">2.2.2 <CODE>GEOMETRY_MULTILINESTRING</CODE></A>
+<BR>
+<A NAME="TOC12" HREF="libmygis.html#SEC12">2.2.3 <CODE>GEOMETRY_MULTIPOLYGON</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC13" HREF="libmygis.html#SEC13">2.3 Geometry Collections</A>
+<BR>
+<A NAME="TOC14" HREF="libmygis.html#SEC14">2.4 The <CODE>GEOMETRY</CODE> container</A>
+<BR>
+<UL>
+<A NAME="TOC15" HREF="libmygis.html#SEC15">2.4.1 <CODE>GEOMETRY_TYPE</CODE></A>
+<BR>
+<A NAME="TOC16" HREF="libmygis.html#SEC16">2.4.2 <CODE>GEOMETRY_ANY</CODE></A>
+<BR>
+<A NAME="TOC17" HREF="libmygis.html#SEC17">2.4.3 <CODE>GEOMETRY_MBR</CODE></A>
+<BR>
+<A NAME="TOC18" HREF="libmygis.html#SEC18">2.4.4 <CODE>GEOMETRY_INFO</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC19" HREF="libmygis.html#SEC19">2.5 The <CODE>geometry.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC20" HREF="libmygis.html#SEC20">2.5.1 <CODE>geometry_init</CODE></A>
+<BR>
+<A NAME="TOC21" HREF="libmygis.html#SEC21">2.5.2 <CODE>geometry_set_projection</CODE></A>
+<BR>
+<A NAME="TOC22" HREF="libmygis.html#SEC22">2.5.3 <CODE>geometry_dump</CODE></A>
+<BR>
+<A NAME="TOC23" HREF="libmygis.html#SEC23">2.5.4 <CODE>geometry_free</CODE></A>
+<BR>
+<A NAME="TOC24" HREF="libmygis.html#SEC24">2.5.5 Miscellaneous Functions</A>
+<BR>
+<UL>
+<A NAME="TOC25" HREF="libmygis.html#SEC25">2.5.5.1 <CODE>geometry_point_reproject</CODE></A>
+<BR>
+<A NAME="TOC26" HREF="libmygis.html#SEC26">2.5.5.2 <CODE>geometry_linearring_area</CODE></A>
+<BR>
+</UL>
+</UL>
+</UL>
+<A NAME="TOC27" HREF="libmygis.html#SEC27">3. Records</A>
+<BR>
+<UL>
+<A NAME="TOC28" HREF="libmygis.html#SEC28">3.1 The <CODE>RECORD</CODE> container</A>
+<BR>
+<A NAME="TOC29" HREF="libmygis.html#SEC29">3.2 The <CODE>CELL</CODE> container</A>
+<BR>
+<UL>
+<A NAME="TOC30" HREF="libmygis.html#SEC30">3.2.1 <CODE>CELL_DATA</CODE></A>
+<BR>
+<A NAME="TOC31" HREF="libmygis.html#SEC31">3.2.2 <CODE>METADATA</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC32" HREF="libmygis.html#SEC32">3.3 The <CODE>record.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC33" HREF="libmygis.html#SEC33">3.3.1 <CODE>RECORD</CODE> API functions</A>
+<BR>
+<UL>
+<A NAME="TOC34" HREF="libmygis.html#SEC34">3.3.1.1 <CODE>record_init</CODE></A>
+<BR>
+<A NAME="TOC35" HREF="libmygis.html#SEC35">3.3.1.2 <CODE>record_append</CODE></A>
+<BR>
+<A NAME="TOC36" HREF="libmygis.html#SEC36">3.3.1.3 <CODE>record_remove</CODE></A>
+<BR>
+<A NAME="TOC37" HREF="libmygis.html#SEC37">3.3.1.4 <CODE>record_dump</CODE></A>
+<BR>
+<A NAME="TOC38" HREF="libmygis.html#SEC38">3.3.1.5 <CODE>record_free</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC39" HREF="libmygis.html#SEC39">3.3.2 <CODE>CELL</CODE> API functions</A>
+<BR>
+<UL>
+<A NAME="TOC40" HREF="libmygis.html#SEC40">3.3.2.1 <CODE>cell_init</CODE></A>
+<BR>
+<A NAME="TOC41" HREF="libmygis.html#SEC41">3.3.2.2 <CODE>cell_free</CODE></A>
+<BR>
+</UL>
+</UL>
+</UL>
+<A NAME="TOC42" HREF="libmygis.html#SEC42">4. Projections</A>
+<BR>
+<UL>
+<A NAME="TOC43" HREF="libmygis.html#SEC43">4.1 The <CODE>PROJECTION</CODE> container</A>
+<BR>
+<A NAME="TOC44" HREF="libmygis.html#SEC44">4.2 The <CODE>projection.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC45" HREF="libmygis.html#SEC45">4.2.1 <CODE>projection_init</CODE></A>
+<BR>
+<A NAME="TOC46" HREF="libmygis.html#SEC46">4.2.2 <CODE>projection_set</CODE></A>
+<BR>
+<A NAME="TOC47" HREF="libmygis.html#SEC47">4.2.3 <CODE>projection_unset</CODE></A>
+<BR>
+<A NAME="TOC48" HREF="libmygis.html#SEC48">4.2.4 <CODE>projection_transform</CODE></A>
+<BR>
+<A NAME="TOC49" HREF="libmygis.html#SEC49">4.2.5 <CODE>projection_dump</CODE></A>
+<BR>
+<A NAME="TOC50" HREF="libmygis.html#SEC50">4.2.6 <CODE>projection_free</CODE></A>
+<BR>
+</UL>
+</UL>
+<A NAME="TOC51" HREF="libmygis.html#SEC51">5. Shapefiles</A>
+<BR>
+<UL>
+<A NAME="TOC52" HREF="libmygis.html#SEC52">5.1 The <CODE>SHAPEFILE</CODE> container</A>
+<BR>
+<A NAME="TOC53" HREF="libmygis.html#SEC53">5.2 The <CODE>SHAPEFILE_RECORD</CODE> container</A>
+<BR>
+<A NAME="TOC54" HREF="libmygis.html#SEC54">5.3 The <CODE>SHAPEFILE_SCAN</CODE> container</A>
+<BR>
+<A NAME="TOC55" HREF="libmygis.html#SEC55">5.4 The <CODE>shapefile.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC56" HREF="libmygis.html#SEC56">5.4.1 <CODE>shapefile_init</CODE></A>
+<BR>
+<A NAME="TOC57" HREF="libmygis.html#SEC57">5.4.2 <CODE>shapefile_open</CODE></A>
+<BR>
+<A NAME="TOC58" HREF="libmygis.html#SEC58">5.4.3 <CODE>shapefile_set_projection</CODE></A>
+<BR>
+<A NAME="TOC59" HREF="libmygis.html#SEC59">5.4.4 <CODE>shapefile_seek_record</CODE></A>
+<BR>
+<A NAME="TOC60" HREF="libmygis.html#SEC60">5.4.5 <CODE>shapefile_read_next</CODE></A>
+<BR>
+<A NAME="TOC61" HREF="libmygis.html#SEC61">5.4.6 <CODE>shapefile_dump</CODE></A>
+<BR>
+<A NAME="TOC62" HREF="libmygis.html#SEC62">5.4.7 <CODE>shapefile_close</CODE></A>
+<BR>
+<A NAME="TOC63" HREF="libmygis.html#SEC63">5.4.8 <CODE>shapefile_free</CODE></A>
+<BR>
+<A NAME="TOC64" HREF="libmygis.html#SEC64">5.4.9 <CODE>shapefile_record_dump</CODE></A>
+<BR>
+<A NAME="TOC65" HREF="libmygis.html#SEC65">5.4.10 <CODE>shapefile_record_free</CODE></A>
+<BR>
+<A NAME="TOC66" HREF="libmygis.html#SEC66">5.4.11 <CODE>shapefile_scan_init</CODE></A>
+<BR>
+<A NAME="TOC67" HREF="libmygis.html#SEC67">5.4.12 <CODE>shapefile_scan_read_next</CODE></A>
+<BR>
+<A NAME="TOC68" HREF="libmygis.html#SEC68">5.4.13 <CODE>shapefile_scan_free</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC69" HREF="libmygis.html#SEC69">5.5 Shapefile Subformats</A>
+<BR>
+<UL>
+<A NAME="TOC70" HREF="libmygis.html#SEC70">5.5.1 The <CODE>.shp</CODE> (shape) format</A>
+<BR>
+<UL>
+<A NAME="TOC71" HREF="libmygis.html#SEC71">5.5.1.1 The <CODE>SHP</CODE> container</A>
+<BR>
+<A NAME="TOC72" HREF="libmygis.html#SEC72">5.5.1.2 <CODE>shp_init</CODE></A>
+<BR>
+<A NAME="TOC73" HREF="libmygis.html#SEC73">5.5.1.3 <CODE>shp_open</CODE></A>
+<BR>
+<A NAME="TOC74" HREF="libmygis.html#SEC74">5.5.1.4 <CODE>shp_set_projection</CODE></A>
+<BR>
+<A NAME="TOC75" HREF="libmygis.html#SEC75">5.5.1.5 <CODE>shp_index</CODE></A>
+<BR>
+<A NAME="TOC76" HREF="libmygis.html#SEC76">5.5.1.6 <CODE>shp_read_next</CODE></A>
+<BR>
+<A NAME="TOC77" HREF="libmygis.html#SEC77">5.5.1.7 <CODE>shp_seek</CODE></A>
+<BR>
+<A NAME="TOC78" HREF="libmygis.html#SEC78">5.5.1.8 <CODE>shp_seek_record</CODE></A>
+<BR>
+<A NAME="TOC79" HREF="libmygis.html#SEC79">5.5.1.9 <CODE>shp_rewind</CODE></A>
+<BR>
+<A NAME="TOC80" HREF="libmygis.html#SEC80">5.5.1.10 <CODE>shp_dump</CODE></A>
+<BR>
+<A NAME="TOC81" HREF="libmygis.html#SEC81">5.5.1.11 <CODE>shp_close</CODE></A>
+<BR>
+<A NAME="TOC82" HREF="libmygis.html#SEC82">5.5.1.12 <CODE>shp_free</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC83" HREF="libmygis.html#SEC83">5.5.2 The <CODE>.shx</CODE> (shape index) format</A>
+<BR>
+<UL>
+<A NAME="TOC84" HREF="libmygis.html#SEC84">5.5.2.1 The <CODE>SHX</CODE> container</A>
+<BR>
+<A NAME="TOC85" HREF="libmygis.html#SEC85">5.5.2.2 <CODE>shx_init</CODE></A>
+<BR>
+<A NAME="TOC86" HREF="libmygis.html#SEC86">5.5.2.3 <CODE>shx_open</CODE></A>
+<BR>
+<A NAME="TOC87" HREF="libmygis.html#SEC87">5.5.2.4 <CODE>shx_read_next</CODE></A>
+<BR>
+<A NAME="TOC88" HREF="libmygis.html#SEC88">5.5.2.5 <CODE>shx_seek</CODE></A>
+<BR>
+<A NAME="TOC89" HREF="libmygis.html#SEC89">5.5.2.6 <CODE>shx_seek_record</CODE></A>
+<BR>
+<A NAME="TOC90" HREF="libmygis.html#SEC90">5.5.2.7 <CODE>shx_rewind</CODE></A>
+<BR>
+<A NAME="TOC91" HREF="libmygis.html#SEC91">5.5.2.8 <CODE>shx_dump</CODE></A>
+<BR>
+<A NAME="TOC92" HREF="libmygis.html#SEC92">5.5.2.9 <CODE>shx_record_dump</CODE></A>
+<BR>
+<A NAME="TOC93" HREF="libmygis.html#SEC93">5.5.2.10 <CODE>shx_record_free</CODE></A>
+<BR>
+<A NAME="TOC94" HREF="libmygis.html#SEC94">5.5.2.11 <CODE>shx_close</CODE></A>
+<BR>
+<A NAME="TOC95" HREF="libmygis.html#SEC95">5.5.2.12 <CODE>shx_free</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC96" HREF="libmygis.html#SEC96">5.5.3 The <CODE>.prj</CODE> (projection) format</A>
+<BR>
+<UL>
+<A NAME="TOC97" HREF="libmygis.html#SEC97">5.5.3.1 The <CODE>PRJ</CODE> container</A>
+<BR>
+<A NAME="TOC98" HREF="libmygis.html#SEC98">5.5.3.2 <CODE>prj_init</CODE></A>
+<BR>
+<A NAME="TOC99" HREF="libmygis.html#SEC99">5.5.3.3 <CODE>prj_parse</CODE></A>
+<BR>
+<A NAME="TOC100" HREF="libmygis.html#SEC100">5.5.3.4 <CODE>prj_dump</CODE></A>
+<BR>
+<A NAME="TOC101" HREF="libmygis.html#SEC101">5.5.3.5 <CODE>prj_free</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC102" HREF="libmygis.html#SEC102">5.5.4 The <CODE>.dbf</CODE> (attribute database) format</A>
+<BR>
+<UL>
+<A NAME="TOC103" HREF="libmygis.html#SEC103">5.5.4.1 The <CODE>DBF</CODE> container</A>
+<BR>
+<A NAME="TOC104" HREF="libmygis.html#SEC104">5.5.4.2 The <CODE>DBF_SCAN</CODE> container</A>
+<BR>
+<A NAME="TOC105" HREF="libmygis.html#SEC105">5.5.4.3 The <CODE>DBF_FIELD</CODE> container</A>
+<BR>
+<A NAME="TOC106" HREF="libmygis.html#SEC106">5.5.4.4 <CODE>dbf_init</CODE></A>
+<BR>
+<A NAME="TOC107" HREF="libmygis.html#SEC107">5.5.4.5 <CODE>dbf_open</CODE></A>
+<BR>
+<A NAME="TOC108" HREF="libmygis.html#SEC108">5.5.4.6 <CODE>dbf_seek</CODE></A>
+<BR>
+<A NAME="TOC109" HREF="libmygis.html#SEC109">5.5.4.7 <CODE>dbf_seek_record</CODE></A>
+<BR>
+<A NAME="TOC110" HREF="libmygis.html#SEC110">5.5.4.8 <CODE>dbf_read_next</CODE></A>
+<BR>
+<A NAME="TOC111" HREF="libmygis.html#SEC111">5.5.4.9 <CODE>dbf_rewind</CODE></A>
+<BR>
+<A NAME="TOC112" HREF="libmygis.html#SEC112">5.5.4.10 <CODE>dbf_dump</CODE></A>
+<BR>
+<A NAME="TOC113" HREF="libmygis.html#SEC113">5.5.4.11 <CODE>dbf_close</CODE></A>
+<BR>
+<A NAME="TOC114" HREF="libmygis.html#SEC114">5.5.4.12 <CODE>dbf_free</CODE></A>
+<BR>
+<A NAME="TOC115" HREF="libmygis.html#SEC115">5.5.4.13 <CODE>dbf_scan_init</CODE></A>
+<BR>
+<A NAME="TOC116" HREF="libmygis.html#SEC116">5.5.4.14 <CODE>dbf_scan_next</CODE></A>
+<BR>
+<A NAME="TOC117" HREF="libmygis.html#SEC117">5.5.4.15 <CODE>dbf_scan_read_next</CODE></A>
+<BR>
+<A NAME="TOC118" HREF="libmygis.html#SEC118">5.5.4.16 <CODE>dbf_scan_free</CODE></A>
+<BR>
+<A NAME="TOC119" HREF="libmygis.html#SEC119">5.5.4.17 <CODE>dbf_record_field</CODE></A>
+<BR>
+</UL>
+<A NAME="TOC120" HREF="libmygis.html#SEC120">5.5.5 The <CODE>.sbn</CODE>/<CODE>.sbx</CODE> (spatial index) format (unsupported)</A>
+<BR>
+<A NAME="TOC121" HREF="libmygis.html#SEC121">5.5.6 The <CODE>.shp.xml</CODE> (shapefile metadata) format (unsupported)</A>
+<BR>
+</UL>
+</UL>
+<A NAME="TOC122" HREF="libmygis.html#SEC122">6. WKB</A>
+<BR>
+<UL>
+<A NAME="TOC123" HREF="libmygis.html#SEC123">6.1 The <CODE>WKB</CODE> container</A>
+<BR>
+<A NAME="TOC124" HREF="libmygis.html#SEC124">6.2 The <CODE>wkb/wkb.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC125" HREF="libmygis.html#SEC125">6.2.1 <CODE>wkb_init</CODE></A>
+<BR>
+<A NAME="TOC126" HREF="libmygis.html#SEC126">6.2.2 <CODE>wkb_load</CODE></A>
+<BR>
+<A NAME="TOC127" HREF="libmygis.html#SEC127">6.2.3 <CODE>wkb_read_next</CODE></A>
+<BR>
+<A NAME="TOC128" HREF="libmygis.html#SEC128">6.2.4 <CODE>wkb_rewind</CODE></A>
+<BR>
+<A NAME="TOC129" HREF="libmygis.html#SEC129">6.2.5 <CODE>wkb_size</CODE></A>
+<BR>
+<A NAME="TOC130" HREF="libmygis.html#SEC130">6.2.6 <CODE>wkb_write</CODE></A>
+<BR>
+<A NAME="TOC131" HREF="libmygis.html#SEC131">6.2.7 <CODE>wkb_free</CODE></A>
+<BR>
+</UL>
+</UL>
+<A NAME="TOC132" HREF="libmygis.html#SEC132">7. WKT</A>
+<BR>
+<UL>
+<A NAME="TOC133" HREF="libmygis.html#SEC133">7.1 The <CODE>wkt/wkt.h</CODE> API</A>
+<BR>
+<UL>
+<A NAME="TOC134" HREF="libmygis.html#SEC134">7.1.1 <CODE>wkt_write</CODE></A>
+<BR>
+</UL>
+</UL>
+<A NAME="TOC135" HREF="libmygis.html#SEC135">Index</A>
+<BR>
+</UL>
+<HR SIZE=1>
+<A NAME="SEC_OVERVIEW"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1>Short Table of Contents</H1>
+<BLOCKQUOTE>
+<A NAME="TOC1" HREF="libmygis.html#SEC1">1. Basic Types</A>
+<BR>
+<A NAME="TOC4" HREF="libmygis.html#SEC4">2. Geometries</A>
+<BR>
+<A NAME="TOC27" HREF="libmygis.html#SEC27">3. Records</A>
+<BR>
+<A NAME="TOC42" HREF="libmygis.html#SEC42">4. Projections</A>
+<BR>
+<A NAME="TOC51" HREF="libmygis.html#SEC51">5. Shapefiles</A>
+<BR>
+<A NAME="TOC122" HREF="libmygis.html#SEC122">6. WKB</A>
+<BR>
+<A NAME="TOC132" HREF="libmygis.html#SEC132">7. WKT</A>
+<BR>
+<A NAME="TOC135" HREF="libmygis.html#SEC135">Index</A>
+<BR>
+
+</BLOCKQUOTE>
+<HR SIZE=1>
+<A NAME="SEC_About"></A>
+<TABLE CELLPADDING=1 CELLSPACING=1 BORDER=0>
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Top">Top</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_Contents">Contents</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC135">Index</A>]</TD>
+<TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="libmygis.html#SEC_About"> ? </A>]</TD>
+</TR></TABLE>
+<H1>About this document</H1>
+This document was generated by <I>Jeremy Cole</I> on <I>July, 8  2008</I>
+using <A HREF="http://www.mathematik.uni-kl.de/~obachman/Texi2html
+"><I>texi2html</I></A>
+<P></P>  
+The buttons in the navigation panels have the following meaning:
+<P></P>
+<table border = "1">
+<TR>
+<TH> Button </TH>
+<TH> Name </TH>
+<TH> Go to </TH>
+<TH> From 1.2.3 go to</TH>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ &lt; ] </TD>
+<TD ALIGN="CENTER">
+Back
+</TD>
+<TD>
+previous section in reading order
+</TD>
+<TD>
+1.2.2
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ &gt; ] </TD>
+<TD ALIGN="CENTER">
+Forward
+</TD>
+<TD>
+next section in reading order
+</TD>
+<TD>
+1.2.4
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ &lt;&lt; ] </TD>
+<TD ALIGN="CENTER">
+FastBack
+</TD>
+<TD>
+previous or up-and-previous section 
+</TD>
+<TD>
+1.1
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ Up ] </TD>
+<TD ALIGN="CENTER">
+Up
+</TD>
+<TD>
+up section
+</TD>
+<TD>
+1.2
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ &gt;&gt; ] </TD>
+<TD ALIGN="CENTER">
+FastForward
+</TD>
+<TD>
+next or up-and-next section
+</TD>
+<TD>
+1.3
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [Top] </TD>
+<TD ALIGN="CENTER">
+Top
+</TD>
+<TD>
+cover (top) of document
+</TD>
+<TD>
+ &nbsp; 
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [Contents] </TD>
+<TD ALIGN="CENTER">
+Contents
+</TD>
+<TD>
+table of contents
+</TD>
+<TD>
+ &nbsp; 
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [Index] </TD>
+<TD ALIGN="CENTER">
+Index
+</TD>
+<TD>
+concept index
+</TD>
+<TD>
+ &nbsp; 
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER">
+ [ ? ] </TD>
+<TD ALIGN="CENTER">
+About
+</TD>
+<TD>
+this page
+</TD>
+<TD>
+ &nbsp; 
+</TD>
+</TR>
+</TABLE>
+<P></P>
+where the <STRONG> Example </STRONG> assumes that the current position 
+is at <STRONG> Subsubsection One-Two-Three </STRONG> of a document of 
+the following structure:
+<UL>
+<LI> 1. Section One  </LI>
+<UL>
+<LI>1.1 Subsection One-One</LI>
+<UL>
+<LI> ... </LI>
+</UL>
+<LI>1.2 Subsection One-Two</LI>
+<UL>
+<LI>1.2.1 Subsubsection One-Two-One
+</LI><LI>1.2.2 Subsubsection One-Two-Two
+</LI><LI>1.2.3 Subsubsection One-Two-Three &nbsp; &nbsp; <STRONG>
+&lt;== Current Position </STRONG>
+</LI><LI>1.2.4 Subsubsection One-Two-Four
+</LI></UL>
+<LI>1.3 Subsection One-Three</LI>
+<UL>
+<LI> ... </LI>
+</UL>
+<LI>1.4 Subsection One-Four</LI>
+</UL>
+</UL>
+
+<HR SIZE=1>
+<BR>  
+<FONT SIZE="-1">
+This document was generated
+by <I>Jeremy Cole</I> on <I>July, 8  2008</I>
+using <A HREF="http://www.mathematik.uni-kl.de/~obachman/Texi2html
+"><I>texi2html</I></A>
+
+</BODY>
+</HTML>

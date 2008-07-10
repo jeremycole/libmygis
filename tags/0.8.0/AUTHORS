@@ -1,0 +1,12 @@
+libmygis Authors
+================
+
+Jeremy Cole <jeremy@jcole.us>
+
+  * Wrote all of the core of libmygis.
+  
+Wavemarket, Inc. <http://www.wavemarket.com/>
+
+  * Contributed a patch primarily changing the way that NUMERIC fields work
+    (they should be treated as double instead of int in most cases).
+
