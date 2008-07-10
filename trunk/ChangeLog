@@ -4,6 +4,10 @@ libmygis ChangeLog
 VERSION 0.8
 ***********
 
+0.8.1	  2008-07-xx
+
+  * Lots of code style changes for consistency and readability.
+
 0.8.0     2008-07-09
 
   * Overhauled the entire build system, now uses libtool to build the
