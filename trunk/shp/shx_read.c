@@ -24,7 +24,8 @@ int _shx_read_header(SHX *shx)
 
   shx_seek(shx, SHX_POS_HEADER);
 
-  if(!(shx->header = _sh_header_read(shx->fd))) {
+  if(!(shx->header = _sh_header_read(shx->fd)))
+  {
     close(shx->fd);
     DBUG_RETURN(-2);
   }
@@ -43,14 +44,17 @@ SHX_RECORD *shx_read_next(SHX *shx)
   if(!shx)
     DBUG_RETURN(NULL);
 
-  if((count=read(shx->fd, buf, SHX_LEN_RECORD)) != SHX_LEN_RECORD) {
-    if(count > 0) {
+  if((count=read(shx->fd, buf, SHX_LEN_RECORD)) != SHX_LEN_RECORD)
+  {
+    if(count > 0)
+    {
       fprintf(stderr, "Oops!\n");
     }
     DBUG_RETURN(NULL);
   }
 
-  if(!(record = SHX_RECORD_INIT)) {
+  if(!(record = SHX_RECORD_INIT))
+  {
     DBUG_RETURN(NULL);
   }
 

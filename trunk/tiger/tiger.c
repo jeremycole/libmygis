@@ -31,13 +31,15 @@ TIGER *tiger_init(int flags)
   if(!(tiger = TIGER_INIT))
     goto err1;
 
-  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++)
+  {
     file        = &tiger->files[type];
     file_type   = &tiger_file_types[type];
 
     file->type  = file_type->type;
     file->flags = flags;
-    if(!(file->fixed = fixed_init(0))) {
+    if(!(file->fixed = fixed_init(0)))
+    {
       printf("Couldn't allocate fixed for file %i\n", type);
       goto err2;
     }
@@ -64,21 +66,23 @@ int tiger_open(TIGER *tiger, char *basename, char mode)
   if(!(filename = (char *) malloc(strlen(basename)+10)))
     DBUG_RETURN(1);
 
-  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++)
+  {
     file      = &tiger->files[type];
     file_type = &tiger_file_types[type];
     strcpy(filename, basename);
     strcat(filename, file_type->file_ext[0]);
 
     DBUG_PRINT("info", ("Attempting to open file %s", filename));
-    if(fixed_open(file->fixed, filename, mode) != -1) {
+    if(fixed_open(file->fixed, filename, mode) != -1)
+    {
       file->is_available= 1;
     } else {
       file->is_available= 0;
     }
   }
 
-  free(filename); 
+  free(filename);
   DBUG_RETURN(0);
 }
 
@@ -86,24 +90,26 @@ void tiger_dump(TIGER *tiger)
 {
   TIGER_FILE *file = NULL;
   uint type;
-      
+
   DBUG_ENTER("tiger_dump");
 
   printf("TIGER Record Types Available: ");
-  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++)
+  {
     file = &tiger->files[type];
     if(file->is_available)
       printf("%s", tiger_file_types[type].record_type);
   }
   printf("\n\n");
 
-  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++)
+  {
     file = &tiger->files[type];
     printf("Record Type %s, %s\n", tiger_file_types[type].record_type,
            tiger_file_types[type].name);
     fixed_dump(file->fixed);
   }
-  	        
+
   DBUG_VOID_RETURN;
 }
 
@@ -118,7 +124,8 @@ void tiger_free(TIGER *tiger)
 
   DBUG_ENTER("tiger_free");
 
-  for(type=0; type<TIGER_MAX_FILE_TYPE; type++) {
+  for(type=0; type<TIGER_MAX_FILE_TYPE; type++)
+  {
     file = &tiger->files[type];
     fixed_free(file->fixed);
   }
@@ -147,15 +154,21 @@ TIGER_RECORD *tiger_record_init(TIGER *tiger, TIGER_FILE_TYPE type)
 void tiger_record_dump(TIGER_RECORD *record)
 {
   DBUG_ENTER("tiger_record_dump");
+
   record_dump(record->record);
+
   DBUG_VOID_RETURN;
 }
 
 void tiger_record_free(TIGER_RECORD *record)
 {
   DBUG_ENTER("tiger_record_free");
-  if(!record) DBUG_VOID_RETURN;
+
+  if(!record)
+    DBUG_VOID_RETURN;
+
   record_free(record->record);
   free(record);
+
   DBUG_VOID_RETURN;
 }

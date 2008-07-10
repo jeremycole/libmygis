@@ -35,17 +35,20 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(argc != 2) {
+  if(argc != 2)
+  {
     printf("usage %s <shapefile>\n", argv[0]);
     DBUG_RETURN(-1);
   }
 
-  if(!(sha = shapefile_init(0))) {
+  if(!(sha = shapefile_init(0)))
+  {
     printf("Couldn't init\n");
     DBUG_RETURN(-2);
   }
 
-  if((rc= shapefile_open(sha, argv[1], 'r')) < 0) {
+  if((rc= shapefile_open(sha, argv[1], 'r')) < 0)
+  {
     printf("Couldn't open\n");
     DBUG_RETURN(-3);
   }
@@ -62,9 +65,11 @@ int main(int argc, char **argv)
 
   max = sha->dbf->numrecords < 100 ? sha->dbf->numrecords : 100;
 
-  for(i=1; i<max; i+=10) {
+  for(i=1; i<max; i+=10)
+  {
     shapefile_seek_record(sha, i);
-    if((rec = shapefile_read_next(sha))) {
+    if((rec = shapefile_read_next(sha)))
+    {
       shapefile_record_dump(rec);
       shapefile_record_free(rec);
     } else {

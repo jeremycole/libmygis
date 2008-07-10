@@ -44,7 +44,8 @@ E00 *e00_init(int flags)
 
   DBUG_ENTER("e00_init");
 
-  if(!(e00 = E00_INIT)) {
+  if(!(e00 = E00_INIT))
+  {
     DBUG_RETURN(NULL);
   }
 
@@ -65,9 +66,11 @@ int e00_open(E00 *e00, char *e00file, char mode)
   e00->mode     = mode;
   e00->filename = strdup(e00file);
 
-  switch(mode) {
+  switch(mode)
+  {
   case 'r':
-    if((e00->fd = open(e00file, O_RDONLY)) < 0) {
+    if((e00->fd = open(e00file, O_RDONLY)) < 0)
+    {
       fprintf(stderr, "E00: Error opening `%s' for read: Error %i: %s\n",
 	      e00file, errno, strerror(errno));
       DBUG_RETURN(-1);
@@ -94,7 +97,8 @@ int e00_open(E00 *e00, char *e00file, char mode)
 E00_SECTION_ID e00_section_id(char *section_tag)
 {
   E00_SECTION_TAG *t = E00_SECTION_TAGS;
-  for(; t->tag; t++) {
+  for(; t->tag; t++)
+  {
     if((strcmp(section_tag, t->tag)) == 0)
       return t->id;
   }
@@ -124,13 +128,15 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
   DBUG_ENTER("e00_open_section");
   DBUG_PRINT("info", ("Opening `%s' section", section_tag));
 
-  if(!(section = E00_SECTION_INIT)) {
+  if(!(section = E00_SECTION_INIT))
+  {
     goto err1;
   }
 
-  section->id = e00_section_id(section_tag);  
+  section->id = e00_section_id(section_tag);
 
-  if((section->fd = open(e00->filename, O_RDONLY)) < 0) {
+  if((section->fd = open(e00->filename, O_RDONLY)) < 0)
+  {
     fprintf(stderr, "E00: Error opening `%s' for read of section `%s': Error %i: %s\n",
 	    e00->filename, section_tag, errno, strerror(errno));
     goto err2;
@@ -139,13 +145,16 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
   section->file = fdopen(section->fd, "r");
   read = getline(&line, &len, section->file);
 
-  while(!feof(section->file)) {
+  while(!feof(section->file))
+  {
     read = getline(&line, &len, section->file);
     sscanf(line, "%3s %i", current_tag, &current_prec);
 
-    if((strcmp(current_tag, "EOS") == 0)) goto no_section;
+    if((strcmp(current_tag, "EOS") == 0))
+      goto no_section;
 
-    if((current_id = e00_section_id(current_tag)) == section->id) {
+    if((current_id = e00_section_id(current_tag)) == section->id)
+    {
       DBUG_PRINT("info", ("Found `%s' section with precision %i",
 			  current_tag, current_prec));
       fgetpos(section->file, &section->start_pos);
@@ -155,15 +164,16 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     /* Skip over rest of section... */
     DBUG_PRINT("info", ("Skipping over `%s' section", current_tag));
-    switch(current_id) {
-
+    switch(current_id)
+    {
     case ARC:
     case CNT:
     case PAL:
     case TOL:
     case TXT:
       int_tmp = 0;
-      while((!feof(section->file)) && (int_tmp != -1)) {
+      while((!feof(section->file)) && (int_tmp != -1))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, " %i %*s\n", &int_tmp);
       }
@@ -174,7 +184,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
     case RXP:
     case RPL:
       strcpy(str_tmp, "");
-      while((!feof(section->file)) && (strcmp(str_tmp, "JABBERWOCKY") != 0)) {
+      while((!feof(section->file)) && (strcmp(str_tmp, "JABBERWOCKY") != 0))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, "%11s %*s", str_tmp);
       }
@@ -182,7 +193,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     case LAB:
       int_tmp = 0;
-      while((!feof(section->file)) && (int_tmp != -1)) {
+      while((!feof(section->file)) && (int_tmp != -1))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, " %i %*s\n", &int_tmp);
 	if(int_tmp != -1) read2 = getline(&line2, &len2, section->file);
@@ -191,7 +203,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     case IFO:
       strcpy(str_tmp, "");
-      while((!feof(section->file)) && (strcmp(str_tmp, "EOI") != 0)) {
+      while((!feof(section->file)) && (strcmp(str_tmp, "EOI") != 0))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, "%3s %*s", str_tmp);
       }
@@ -199,7 +212,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     case LOG:
       strcpy(str_tmp, "");
-      while((!feof(section->file)) && (strcmp(str_tmp, "EOL") != 0)) {
+      while((!feof(section->file)) && (strcmp(str_tmp, "EOL") != 0))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, "%3s %*s", str_tmp);
       }
@@ -207,7 +221,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     case PRJ:
       strcpy(str_tmp, "");
-      while((!feof(section->file)) && (strcmp(str_tmp, "EOP") != 0)) {
+      while((!feof(section->file)) && (strcmp(str_tmp, "EOP") != 0))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, "%3s %*s", str_tmp);
       }
@@ -215,7 +230,8 @@ E00_SECTION *e00_open_section(E00 *e00, char *section_tag)
 
     case SIN:
       strcpy(str_tmp, "");
-      while((!feof(section->file)) && (strcmp(str_tmp, "EOX") != 0)) {
+      while((!feof(section->file)) && (strcmp(str_tmp, "EOX") != 0))
+      {
 	read = getline(&line, &len, section->file);
 	sscanf(line, "%3s %*s", str_tmp);
       }
@@ -244,7 +260,9 @@ void e00_seek(E00 *e00, int pos)
 {
   DBUG_ENTER("e00_seek");
   DBUG_PRINT("info", ("E00: Seeking to offset %i", pos));
+
   lseek(e00->fd, pos, SEEK_SET);
+
   DBUG_VOID_RETURN;
 }
 
@@ -259,13 +277,16 @@ void e00_seek_record(E00 *e00, uint32 record)
 void e00_rewind(E00 *e00)
 {
   DBUG_ENTER("e00_rewind");
+
   e00_seek_record(e00, 0);
+
   DBUG_VOID_RETURN;
 }
 
 void e00_dump(E00 *e00)
 {
   DBUG_ENTER("e00_dump");
+
   printf("\n");
   printf("E00: Dump: 0x%08x\n", (int)e00);
   printf("  Structure:\n");
@@ -276,25 +297,33 @@ void e00_dump(E00 *e00)
   printf("    position:   %i\n", e00->position);
   printf("    records:    %i\n", e00->records);
   printf("\n\n");
+
   DBUG_VOID_RETURN;
 }
 
 void e00_close(E00 *e00)
 {
   DBUG_ENTER("e00_close");
+
   if(e00->fd) {
     close(e00->fd);
   }
+
   DBUG_VOID_RETURN;
 }
 
 void e00_free(E00 *e00)
 {
   DBUG_ENTER("e00_free");
-  if(e00) {
-    if(e00->filename) free(e00->filename);
+
+  if(e00)
+  {
+    if(e00->filename)
+      free(e00->filename);
+
     free(e00);
   }
+
   DBUG_VOID_RETURN;
 }
 

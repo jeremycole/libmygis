@@ -30,14 +30,16 @@ int main(int argc, char **argv)
 
 #else /* HAVE_PROJECTION */
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   PAIRLIST *args;
   PROJECTION *proj;
   POINT a, b;
 
   DBUG_PUSH("d:t");
 
-  if(!(args = pairlist_init(&compare_string_ci_eq, &compare_string_ci_eq))) {
+  if(!(args = pairlist_init(&compare_string_ci_eq, &compare_string_ci_eq)))
+  {
     fprintf(stderr, "Couldn't init pairlist for args\n");
     return 1;
   }
@@ -52,7 +54,7 @@ int main(int argc, char **argv) {
   pairlist_add(args, "from_name",
                      "NAD_1983_StatePlane_Nevada_West_FIPS_2703_Feet");
   pairlist_add(args, "from", "+proj=tmerc +ellps=GRS80 +datum=NAD83 +k=0.9999 +units=us-ft +x_0=2624666.666666 +y_0=13123333.333333 +lon_0=-118.583333 +lat_0=+34.75");
-  
+
   // washoe/wcroads.* loc: 39.430183,-119.742816
   // seems broken
   a.x = 2297190.783459;
@@ -69,15 +71,15 @@ int main(int argc, char **argv) {
   a.x = 219639.029997;
   a.y = 897894.252106;
   */
-  
+
   //pairlist_add(args, "from", "+proj=utm +zone=11 +datum=NAD83 +units=m");
   pairlist_add(args, "from", "+proj=tmerc +datum=NAD83 +units=m +lat_0=0.0000000000 +k=0.9996000000 +lon_0=-117.0000000000 +y_0=0.0000000000 +x_0=500000.0000000000");
-  
+
   // nvblm/nv_fires_20061010.*
   // looks good
   a.x = 243219.221279;
   a.y = 4380953.713629;
-  
+
   pairlist_add(args, "to", "+proj=latlong +towgs84");
 
   pairlist_dump(args);
@@ -85,11 +87,11 @@ int main(int argc, char **argv) {
   projection_set(proj,
                  pairlist_get_value(args, "from"),
                  pairlist_get_value(args, "to"));
-  
+
   printf("x= %0.6f, y=%0.6f\n", a.x, a.y);
 
   b = *(projection_transform(proj, &a));
-  
+
   printf("loc:%0.6f,%0.6f\n", a.y*RAD_TO_DEG, a.x*RAD_TO_DEG);
 
   pairlist_free(args);

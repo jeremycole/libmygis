@@ -38,38 +38,47 @@ const char *mygis_license   = { "LGPL - Lesser (Library) General Public License"
 const char *mygis_revision = { "$Revision$" };
 const char *mygis_date     = { "$Date$" };
 
-inline uint16 mygis_swap_uint16(uint16 in) {
+inline uint16 mygis_swap_uint16(uint16 in)
+{
   MYGIS_SWAP_UINT16(&in);
   return(in);
 }
 
-inline uint32 mygis_swap_uint32(uint32 in) {
+inline uint32 mygis_swap_uint32(uint32 in)
+{
   MYGIS_SWAP_UINT32(&in);
   return(in);
 }
 
-inline uint64 mygis_swap_uint64(uint64 in) {
+inline uint64 mygis_swap_uint64(uint64 in)
+{
   MYGIS_SWAP_UINT64(&in);
   return(in);
 }
 
-inline float mygis_swap_float(float in) {
+inline float mygis_swap_float(float in)
+{
   MYGIS_SWAP_FLOAT(&in);
   return(in);
 }
 
-inline double mygis_swap_double(double in) {
+inline double mygis_swap_double(double in)
+{
   MYGIS_SWAP_DOUBLE(&in);
   return(in);
 }
 
-char *mygis_trim(char *str, uint32 len) {
+char *mygis_trim(char *str, uint32 len)
+{
   char *p = str+len-1;
 
-  for(;p > str;p--) {
-    if(*p == ' ') {
+  for(;p > str;p--)
+  {
+    if(*p == ' ')
+    {
       *p = '\0';
-    } else return str;
+    } else
+       return str;
   }
 
   return str;

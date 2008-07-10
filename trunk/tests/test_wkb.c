@@ -33,7 +33,7 @@ static char point_1[21] = {
 };
 
 /* POINT(50.235 -42.456) */
-static char point_2[21] = { 
+static char point_2[21] = {
   0x01, /* byte order */
   0x01, 0x00, 0x00, 0x00, /* type: 1, point */
   0xAE, 0x47, 0xE1, 0x7A, 0x14, 0x1E, 0x49, 0x40,
@@ -104,9 +104,9 @@ static char multipolygon_1[279] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x40,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x28, 0x40,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x28, 0x40,
-  
+
   /* polygon 1 */
-  0x01, 
+  0x01,
   0x03, 0x00, 0x00, 0x00,
   0x01, 0x00, 0x00, 0x00,
   /* linearring 0 */
@@ -123,7 +123,8 @@ static char multipolygon_1[279] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34, 0x40
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   WKB *wkb;
   GEOMETRY *geo;
   char *test[7] = {
@@ -134,7 +135,7 @@ int main(int argc, char **argv) {
     multipolygon_1,
     NULL
   };
-  int size[7] = { 21, 21, 41, 93, 279, 0 };  
+  int size[7] = { 21, 21, 41, 93, 279, 0 };
   char **p;
   int *s;
   char *w;
@@ -147,30 +148,35 @@ int main(int argc, char **argv) {
   DBUG_PUSH("d:t");
 
   wkb = wkb_init(0);
-  for(p=test, s=size; *p; p++, s++) {
-    if(wkb_load(wkb, *p, *s, WKB_F_DUPE) != 0) {
+  for(p=test, s=size; *p; p++, s++)
+  {
+    if(wkb_load(wkb, *p, *s, WKB_F_DUPE) != 0)
+    {
       fprintf(stderr, "Couldn't load WKB.\n");
       exit(1);
     }
-    while( (geo = wkb_read_next(wkb)) ) {
+    while( (geo = wkb_read_next(wkb)) )
+    {
       est_size= wkb_size(geo);
       if(est_size != *s)
         printf("size estimation is wrong!  should be %i, is %i\n", *s, est_size);
       printf("wkb size = %i\n", wkb_size(geo));
       w = wkb_write(geo, NULL);
-      if(!memcmp(*p, w, *s)) {
+      if(!memcmp(*p, w, *s))
+      {
         printf("match!\n");
       } else {
         printf("no match!\n");
-        for(i = *p, j = w, x=0; x < *s; i++, j++, x++) {
+        for(i = *p, j = w, x=0; x < *s; i++, j++, x++)
+        {
           printf("  %02i: p = %02x, w = %02x\n", x, *((char *)i), *((char *)j));
         }
       }
       free(w);
       geometry_dump(geo, 5);
       geometry_free(geo);
-    };
-  };
+    }
+  }
   wkb_free(wkb);
 
   DBUG_RETURN(0);

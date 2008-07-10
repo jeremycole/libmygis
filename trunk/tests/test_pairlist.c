@@ -21,12 +21,14 @@
 #include "mygis.h"
 #include "pairlist.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   PAIRLIST *list;
 
   DBUG_PUSH("d:t");
 
-  if(!(list = pairlist_init(&compare_string_ci_eq, &compare_string_ci_eq))) {
+  if(!(list = pairlist_init(&compare_string_ci_eq, &compare_string_ci_eq)))
+  {
     fprintf(stderr, "Couldn't init pairlist\n");
     return 1;
   }
@@ -35,7 +37,7 @@ int main(int argc, char **argv) {
   pairlist_add(list, "age", "23");
   pairlist_add(list, "height", "6'1\"");
 
-  printf("name=%s age=%s height=%s\n", 
+  printf("name=%s age=%s height=%s\n",
 	 pairlist_get_value(list, "name"),
 	 pairlist_get_value(list, "age"),
 	 pairlist_get_value(list, "height"));
