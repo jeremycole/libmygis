@@ -21,21 +21,21 @@
 PRJ *prj_init(int flags)
 {
   PRJ *prj;
-
+  
   DBUG_ENTER("prj_init");
-
+  
   if(!(prj = PRJ_INIT))
   {
     DBUG_RETURN(NULL);
   }
-
+  
   if(!(prj->projcs.parameters = pairlist_init(&compare_string_ci_eq,
                                               &compare_string_ci_eq)))
   {
     free(prj);
     DBUG_RETURN(NULL);
   }
-
+    
   prj->filename = NULL;
   prj->proj4_def[0] = 0;
 
@@ -53,17 +53,17 @@ int prj_parse(PRJ *prj, char *prjfile)
   DBUG_ENTER("prj_parse");
 
   prj->filename = strdup(prjfile);
-
+  
   if((fd = open(prjfile, O_RDONLY)) < 0)
   {
-    fprintf(stderr, "Error opening PRJ file: %i: %s\n",
+    fprintf(stderr, "Error opening PRJ file: %i: %s\n", 
       errno, strerror(errno));
     DBUG_RETURN(-1);
   }
 
   size = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-
+  
   if(!(prj->definition = malloc(size)))
   {
     fprintf(stderr, "Couldn't allocate %i bytes\n", size);
@@ -83,7 +83,7 @@ int prj_parse(PRJ *prj, char *prjfile)
     DBUG_RETURN(-4);
   }
   */
-
+  
   prj_parse_yacc(prj, prjfile);
 
   name= prj_proj4_names_find(prj_proj4_projection_names,
@@ -110,8 +110,7 @@ int prj_parse(PRJ *prj, char *prjfile)
     strcat(prj->proj4_def, name);
   }
 
-  for(param = prj->projcs.parameters->root; param; param=param->next)
-  {
+  for(param = prj->projcs.parameters->root; param; param=param->next) {
     name= prj_proj4_names_find(prj_proj4_parameter_names,
                                param->pair.key);
     strcat(prj->proj4_def, " +");
@@ -120,7 +119,7 @@ int prj_parse(PRJ *prj, char *prjfile)
     if((prj->projcs.unit.name)
        && ((strcmp(name, "x_0")==0) || (strcmp(name, "y_0")==0)))
     {
-      sprintf(str_value, "%0.10f",
+      sprintf(str_value, "%0.10f", 
               prj->projcs.unit.value * atof(param->pair.value));
       strcat(prj->proj4_def, str_value);
     } else {
@@ -129,7 +128,7 @@ int prj_parse(PRJ *prj, char *prjfile)
   }
 
   close(fd);
-
+  
   DBUG_RETURN(0);
 }
 
@@ -168,14 +167,13 @@ void prj_dump(PRJ *prj)
     printf("      unit: %s (%0.6f)\n",
       prj->projcs.unit.name, prj->projcs.unit.value);
     printf("      parameters:\n");
-
+  
     if(!param)
     {
       printf("        (none)\n");
     }
-
-    for(; param; param=param->next)
-    {
+  
+    for(; param; param=param->next) {
       printf("        %-20s = %20s\n",
         param->pair.key, param->pair.value);
     }
@@ -184,7 +182,7 @@ void prj_dump(PRJ *prj)
   }
 
   printf("\n\n");
-
+  
   DBUG_VOID_RETURN;
 }
 

@@ -32,20 +32,17 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(argc != 2)
-  {
+  if(argc != 2) {
     printf("usage %s <arcfile.e00>\n", argv[0]);
     DBUG_RETURN(-1);
   }
 
-  if(!(e00 = e00_init(0)))
-  {
+  if(!(e00 = e00_init(0))) {
     printf("Couldn't init\n");
     DBUG_RETURN(-2);
   }
 
-  if(e00_open(e00, argv[1], 'r') < 0)
-  {
+  if(e00_open(e00, argv[1], 'r') < 0) {
     printf("Couldn't open\n");
     DBUG_RETURN(-3);
   }
@@ -53,8 +50,7 @@ int main(int argc, char **argv)
   e00_dump(e00);
 
   /*
-  while((geo = e00_read_next(e00)))
-  {
+  while((geo = e00_read_next(e00))) {
     geometry_dump(geo, 1);
     geometry_free(geo);
   }

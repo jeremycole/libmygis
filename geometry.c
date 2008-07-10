@@ -18,7 +18,7 @@
 
 #include "geometry_priv.h"
 
-/*
+/* 
 
 Point in Polygon test
 
@@ -28,12 +28,12 @@ http://geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
 
 const char GEOMETRY_TYPES[GEOMETRY_TYPE_MAX][20] = {
   {"NULL"},
-  {"POINT"},
+  {"POINT"},  
   {"LINESTRING"},
-  {"POLYGON"},
+  {"POLYGON"},   
   {"MULTIPOINT"},
   {"MULTILINESTRING"},
-  {"MULTIPOLYGON"},
+  {"MULTIPOLYGON"},   
   {"GEOMETRYCOLLECTION"}
 };
 
@@ -43,8 +43,7 @@ GEOMETRY *geometry_init(GEOMETRY_TYPE type)
 
   DBUG_ENTER("geometry_init");
 
-  if( (geometry = GEOMETRY_INIT) )
-  {
+  if( (geometry = GEOMETRY_INIT) ) {
     geometry->type = type;
     DBUG_RETURN(geometry);
   }
@@ -56,8 +55,7 @@ void geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection)
   geometry->projection = projection;
 }
 
-void geometry_dump(GEOMETRY *geometry, int level)
-{
+void geometry_dump(GEOMETRY *geometry, int level) {
   POINT *point;
   POINT tpoint;
   LINEARRING  *linearring;
@@ -66,14 +64,12 @@ void geometry_dump(GEOMETRY *geometry, int level)
 
   DBUG_ENTER("geometry_dump");
 
-  if(!geometry)
-  {
+  if(!geometry) {
     fprintf(stderr, "No geometry specified!\n");
     DBUG_VOID_RETURN;
   }
 
-  switch(geometry->type)
-  {
+  switch(geometry->type) {
   case T_POINT:
     point = geometry->value.point->point;
     tpoint = geometry_point_reproject(point, geometry->projection);
@@ -85,10 +81,8 @@ void geometry_dump(GEOMETRY *geometry, int level)
       geometry->value.linestring->items,
       geometry->value.linestring->items>1?"s":""
     );
-    if(level > 1)
-    {
-      for(point=geometry->value.linestring->points,i=0; i<geometry->value.linestring->items; point++,i++)
-      {
+    if(level > 1) {
+      for(point=geometry->value.linestring->points,i=0; i<geometry->value.linestring->items; point++,i++) {
         tpoint = geometry_point_reproject(point, geometry->projection);
         printf("  POINT %5i: %12.6f, %12.6f\n", i, tpoint.x, tpoint.y);
       }
@@ -100,25 +94,22 @@ void geometry_dump(GEOMETRY *geometry, int level)
       geometry->value.polygon->items,
       geometry->value.polygon->items>1?"s":""
     );
-    if(level > 0)
-    {
+    if(level > 0) {
       linearring = geometry->value.polygon->linearrings;
-      for(j=0;j<(geometry->value.polygon->items);j++,linearring++)
-      {
+      for(j=0;j<(geometry->value.polygon->items);j++,linearring++) {
         printf("  %sLINEARRING %5i: %5i point%s, %12.6f area\n",
           (linearring->type==LR_EXTERIOR)?"+":((linearring->type==LR_INTERIOR)?"-":((linearring->type==LR_UNKNOWN)?"=":"*")),
           j,
           linearring->items,
           linearring->items>1?"s":"",
           linearring->area);
-        if(level > 2)
-        {
-          for(point=linearring->points,i=0; i<linearring->items; point++,i++)
-          {
+        if(level > 2) {
+          for(point=linearring->points,i=0; i<linearring->items; point++,i++) {
             tpoint = geometry_point_reproject(point, geometry->projection);
             printf("    POINT %5i: %12.6f, %12.6f\n", i, tpoint.x, tpoint.y);
           }
         }
+		   
       }
     }
     break;
@@ -189,9 +180,8 @@ void geometry_free(GEOMETRY *geometry)
     free(geometry->info.values[i]);
   }
   */
-
-  switch(geometry->type)
-  {
+               
+  switch(geometry->type) {
   case T_POINT:
     free(geometry->value.point->point);
     free(geometry->value.point);
@@ -204,8 +194,7 @@ void geometry_free(GEOMETRY *geometry)
 
   case T_POLYGON:
     linearring = geometry->value.polygon->linearrings;
-    for(j=0;j<(geometry->value.polygon->items);j++,linearring++)
-    {
+    for(j=0;j<(geometry->value.polygon->items);j++,linearring++) {
       free(linearring->points);
     }
     free(geometry->value.polygon->linearrings);
@@ -217,8 +206,7 @@ void geometry_free(GEOMETRY *geometry)
     for(k=0; k<geometry->value.multipolygon->items; k++, polygon++)
     {
       linearring = polygon->linearrings;
-      for(j=0; j<polygon->items; j++, linearring++)
-      {
+      for(j=0; j<polygon->items; j++, linearring++) {
         free(linearring->points);
       }
       free(polygon->linearrings);
@@ -255,8 +243,7 @@ POINT geometry_point_reproject(POINT *point, PROJECTION *projection)
   return tpoint;
 }
 
-double geometry_linearring_area(LINEARRING *linearring)
-{
+double geometry_linearring_area(LINEARRING *linearring) {
   POINT *s, *p, *r;
   double area;
   uint32 i;
@@ -268,8 +255,7 @@ double geometry_linearring_area(LINEARRING *linearring)
   /* counterclockwise = subtract */
 
   s=p=r=linearring->points;
-  for(area=0.0, p++, i=0; i < linearring->items-1; p++, r++, i++)
-  {
+  for(area=0.0,p++,i=0; i < linearring->items-1; p++,r++,i++) {
     area += r->x*p->y - p->x*r->y;
   }
   area /= 2;

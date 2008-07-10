@@ -20,8 +20,7 @@
 
 #include "mygis_priv.h"
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   uint16 s, ss;
   uint32 u, uu;
   double d, dd;
@@ -53,8 +52,7 @@ int main(int argc, char **argv)
   printf("  u = %12i\n", u);
   printf("  d = %12f\n", d);
 
-  if(ss == s && uu == u && dd == d)
-  {
+  if(ss == s && uu == u && dd == d) {
     printf("\n\nAll values matched!  Everything seems to have worked OK!\n\n");
   } else {
     printf("\n\nSomething went wrong!!!\n\n");

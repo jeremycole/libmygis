@@ -21,7 +21,6 @@
 void _sh_header_swap(SH_HEADER *header)
 {
   DBUG_ENTER("_sh_header_swap");
-
   MYGIS_BE_UINT32(&header->filecode);
   MYGIS_BE_UINT32(&header->unused1);
   MYGIS_BE_UINT32(&header->unused2);
@@ -39,7 +38,6 @@ void _sh_header_swap(SH_HEADER *header)
   MYGIS_LE_DOUBLE(&header->mbr_maxz);
   MYGIS_LE_DOUBLE(&header->mbr_minm);
   MYGIS_LE_DOUBLE(&header->mbr_maxm);
-
   DBUG_VOID_RETURN;
 }
 
@@ -50,13 +48,11 @@ SH_HEADER *_sh_header_read(int fd)
 
   DBUG_ENTER("_sh_header_read");
 
-  if(!(header = SH_HEADER_INIT))
-  {
+  if(!(header = SH_HEADER_INIT)) {
     DBUG_RETURN(NULL);
   }
 
-  if((count=read(fd, header, sizeof(SH_HEADER))) < sizeof(SH_HEADER))
-  {
+  if((count=read(fd, header, sizeof(SH_HEADER))) < sizeof(SH_HEADER)) {
     fprintf(stderr, "SH: Error reading header: read only %i bytes, expected %i bytes\n", count, sizeof(SH_HEADER));
     close(fd);
     DBUG_RETURN(NULL);
@@ -74,20 +70,17 @@ int _sh_header_write(int fd, SH_HEADER *header)
 
   DBUG_ENTER("_sh_header_write");
 
-  if(!(tmp = (SH_HEADER *)malloc(sizeof(SH_HEADER))))
-  {
+  if(!(tmp = (SH_HEADER *)malloc(sizeof(SH_HEADER)))) {
     DBUG_RETURN(-1);
   }
 
   memcpy(tmp, header, sizeof(SH_HEADER));
   _sh_header_swap(tmp);  /* reverse the byte swapping */
 
-  if((count=write(fd, &tmp, sizeof(SH_HEADER))) < sizeof(SH_HEADER))
-  {
+  if((count=write(fd, &tmp, sizeof(SH_HEADER))) < sizeof(SH_HEADER)) {
     fprintf(stderr, "SH: Error writing header: wrote only %i bytes, expected %i bytes\n", count, sizeof(SH_HEADER));
     close(fd);
     DBUG_RETURN(-2);
   }
-
   DBUG_RETURN(0);
 }

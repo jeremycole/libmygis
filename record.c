@@ -74,13 +74,11 @@ void record_dump(RECORD *record)
   DBUG_ENTER("record_dump");
 
   printf("RECORD: Dump: 0x%08x\n", record);
-  for(; cell_node; cell_node = cell_node->next)
-  {
+  for(; cell_node; cell_node = cell_node->next) {
     cell = cell_node->cell;
-
+    
     printf("  %16s: ", cell->metadata->name);
-    switch(cell->metadata->data_type)
-    {
+    switch(cell->metadata->data_type) {
     case CHARACTER:
       if(cell->is_null)
         printf("(null)");
@@ -117,7 +115,7 @@ void record_free(RECORD *record)
 CELL *cell_init(void *field, METADATA *metadata)
 {
   CELL *cell;
-
+  
   DBUG_ENTER("cell_init");
 
   if(!(cell = CELL_INIT))
@@ -126,14 +124,13 @@ CELL *cell_init(void *field, METADATA *metadata)
   cell->field = field;
   cell->metadata = metadata;
   cell->is_null = 0;
-
+  
   DBUG_RETURN(cell);
 }
 
 void cell_free(CELL *cell)
 {
-  switch(cell->metadata->data_type)
-  {
+  switch(cell->metadata->data_type) {
   case CHARACTER:
     free(cell->data.character);
     break;

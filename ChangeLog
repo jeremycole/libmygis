@@ -4,7 +4,7 @@ libmygis ChangeLog
 VERSION 0.8
 ***********
 
-0.8.0     2008-07-09
+0.8.0     2008-07-xx
 
   * Overhauled the entire build system, now uses libtool to build the
     libraries and does recursive build correctly.

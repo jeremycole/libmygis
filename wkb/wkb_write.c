@@ -29,25 +29,23 @@ char *wkb_write(GEOMETRY *geometry, char *wkb)
 
   DBUG_ENTER("wkb_write");
 
-  if(!geometry)
-    DBUG_RETURN(NULL);
-
-  if(!wkb)
-  {
-    if(!(wkb = cur = (char *)malloc(wkb_size(geometry))))
+  if(!geometry) DBUG_RETURN(NULL);
+  
+  if(!wkb) {
+    if(!(wkb = cur = (char *)malloc(wkb_size(geometry)))) {
       DBUG_RETURN(NULL);
+    }
   }
 
   /* minimalistic WKB header */
   MYGIS_WRITE_BYTE(cur, 1); cur += WKB_SZ_BYTEORDER; /* byte order */
   MYGIS_WRITE_UINT32_LE(cur, geometry->type); cur += WKB_SZ_TYPE; /* object type */
-
-  switch(geometry->type)
-  {
+  
+  switch(geometry->type) {
   case T_POINT:
     MYGIS_WRITE_DOUBLE_LE(cur, geometry->value.point->point->x);
     cur += SZ_DOUBLE;
-
+    
     MYGIS_WRITE_DOUBLE_LE(cur, geometry->value.point->point->y);
     cur += SZ_DOUBLE;
     break;
@@ -55,10 +53,9 @@ char *wkb_write(GEOMETRY *geometry, char *wkb)
   case T_LINESTRING:
     MYGIS_WRITE_UINT32_LE(cur, geometry->value.linestring->items);
     cur += WKB_SZ_NUMITEMS; /* number of points */
-
+    
     point = geometry->value.linestring->points;
-    for(i=0;i<(points=geometry->value.linestring->items);i++,point++)
-    {
+    for(i=0;i<(points=geometry->value.linestring->items);i++,point++) {
       MYGIS_WRITE_DOUBLE_LE(cur, point->x);
       cur += SZ_DOUBLE;
       MYGIS_WRITE_DOUBLE_LE(cur, point->y);
@@ -71,14 +68,12 @@ char *wkb_write(GEOMETRY *geometry, char *wkb)
     cur += WKB_SZ_NUMITEMS; /* number of linearrings */
     linearring  = geometry->value.polygon->linearrings;
     linearrings = geometry->value.polygon->items;
-    for(j=0; j<linearrings; j++, linearring++)
-    {
+    for(j=0; j<linearrings; j++, linearring++) {
       MYGIS_WRITE_UINT32_LE(cur, linearring->items);
       cur += WKB_SZ_NUMITEMS; /* number of points */
       point  = linearring->points;
       points = linearring->items;
-      for(i=0; i<points; i++, point++)
-      {
+      for(i=0; i<points; i++, point++) {
         MYGIS_WRITE_DOUBLE_LE(cur, point->x);
         cur += SZ_DOUBLE;
         MYGIS_WRITE_DOUBLE_LE(cur, point->y);
@@ -100,14 +95,12 @@ char *wkb_write(GEOMETRY *geometry, char *wkb)
       cur += WKB_SZ_NUMITEMS; /* number of linearrings */
       linearring  = polygon->linearrings;
       linearrings = polygon->items;
-      for(j=0; j<linearrings; j++, linearring++)
-      {
+      for(j=0; j<linearrings; j++, linearring++) {
         MYGIS_WRITE_UINT32_LE(cur, linearring->items);
         cur += WKB_SZ_NUMITEMS; /* number of points */
         point  = linearring->points;
         points = linearring->items;
-        for(i=0; i<points; i++, point++)
-        {
+        for(i=0; i<points; i++, point++) {
           MYGIS_WRITE_DOUBLE_LE(cur, point->x);
           cur += SZ_DOUBLE;
           MYGIS_WRITE_DOUBLE_LE(cur, point->y);

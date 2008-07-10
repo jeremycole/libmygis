@@ -24,10 +24,9 @@ char *dbf_record_field(RECORD *record, char *key)
   CELL *cell = NULL;
   CELL_NODE *cell_node = record->head;
 
-  for(; cell_node; cell_node = cell_node->next)
-  {
+  for(; cell_node; cell_node = cell_node->next) {
     cell = cell_node->cell;
-    field = (DBF_FIELD *) cell->field;
+    field = (DBF_FIELD *)cell->field;
 
     if(strcasecmp(field->name, key) == 0)
       return cell->data.character;

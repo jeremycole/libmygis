@@ -33,28 +33,24 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(argc != 2)
-  {
+  if(argc != 2) {
     printf("usage %s <shapefile.shx>\n", argv[0]);
     DBUG_RETURN(-1);
   }
 
-  if(!(shx = shx_init(0)))
-  {
+  if(!(shx = shx_init(0))) {
     printf("Couldn't init\n");
     DBUG_RETURN(-2);
   }
 
-  if(shx_open(shx, argv[1], 'r') < 0)
-  {
+  if(shx_open(shx, argv[1], 'r') < 0) {
     printf("Couldn't open\n");
     DBUG_RETURN(-3);
   }
 
   shx_dump(shx);
 
-  for(i=0; i<100; i+=10)
-  {
+  for(i=0; i<100; i+=10) {
     shx_seek_record(shx, i);
     rec = shx_read_next(shx);
     shx_record_dump(rec, 1);
@@ -62,8 +58,7 @@ int main(int argc, char **argv)
   }
 
   /*
-  while(rec = shx_read_next(shx))
-  {
+  while(rec = shx_read_next(shx)) {
     shx_record_dump(rec, 1);
     shx_record_free(rec);
   }

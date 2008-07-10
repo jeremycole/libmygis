@@ -65,8 +65,7 @@ FIXED_FILE_DEF usps_state[] = {
 
 
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   FIXED *fixed;
   RECORD *record;
 
@@ -74,27 +73,25 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(!(fixed = fixed_init(0)))
-  {
+  if(!(fixed = fixed_init(0))) {
     fprintf(stderr, "Couldn't allocate FIXED\n");
     exit(1);
   }
-
+  
   fixed_options(fixed)->gap = 1;
-
+  
   fixed_file_def(fixed, usps_state, 36);
 
   fixed_dump(fixed);
 
   fixed_open(fixed, argv[1], 'r');
-  while(record = fixed_read_next(fixed))
-  {
+  while(record = fixed_read_next(fixed)) {
     record_dump(record);
     record_free(record);
   }
 
   fixed_close(fixed);
-
+  
   fixed_free(fixed);
 
   DBUG_RETURN(0);

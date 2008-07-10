@@ -32,28 +32,24 @@ int main(int argc, char **argv)
   DBUG_PROCESS(argv[0]);
   DBUG_PUSH("d:t");
 
-  if(argc != 2)
-  {
+  if(argc != 2) {
     printf("usage %s <shapefile.shp>\n", argv[0]);
     DBUG_RETURN(-1);
   }
 
-  if(!(shp = shp_init(0)))
-  {
+  if(!(shp = shp_init(0))) {
     printf("Couldn't init\n");
     DBUG_RETURN(-2);
   }
 
-  if(shp_open(shp, argv[1], 'r') < 0)
-  {
+  if(shp_open(shp, argv[1], 'r') < 0) {
     printf("Couldn't open\n");
     DBUG_RETURN(-3);
   }
 
   shp_dump(shp);
 
-  while((geo = shp_read_next(shp)))
-  {
+  while((geo = shp_read_next(shp))) {
     geometry_dump(geo, 1);
     geometry_free(geo);
   }

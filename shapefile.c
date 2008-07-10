@@ -58,30 +58,26 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
   shapefile->mode     = mode;
   shapefile->basename = strdup(basename);
 
-  if(!(shpname = (char *)malloc(strlen(basename)+5)))
-  {
+  if(!(shpname = (char *)malloc(strlen(basename)+5))) {
     fprintf(stderr, "Couldn't allocate memory for shpname\n");
     goto err1;
   }
 
-  if(!(shxname = (char *)malloc(strlen(basename)+5)))
-  {
+  if(!(shxname = (char *)malloc(strlen(basename)+5))) {
     fprintf(stderr, "Couldn't allocate memory for shxname\n");
     goto err2;
   }
 
-  if(!(dbfname = (char *)malloc(strlen(basename)+5)))
-  {
+  if(!(dbfname = (char *)malloc(strlen(basename)+5))) {
     fprintf(stderr, "Couldn't allocate memory for dbfname\n");
     goto err3;
   }
-
-  if(!(prjname = (char *)malloc(strlen(basename)+5)))
-  {
+  
+  if(!(prjname = (char *)malloc(strlen(basename)+5))) {
     fprintf(stderr, "Couldn't allocate memory for prjname\n");
     goto err3;
   }
-
+  
   strcpy(shpname, basename);
   strcat(shpname, ".shp");
 
@@ -94,31 +90,27 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
   strcpy(prjname, basename);
   strcat(prjname, ".prj");
 
-  if(!(shapefile->flags & SHAPEFILE_NO_SHP))
-  {
+  if(!(shapefile->flags & SHAPEFILE_NO_SHP)) {
     if(shp_open(shapefile->shp, shpname, mode) < 0)
       goto err4;
     shapefile->flags |= SHAPEFILE_HAS_SHP;
     shp_set_projection(shapefile->shp, shapefile->projection);
   }
 
-  if(!(shapefile->flags & SHAPEFILE_NO_SHX))
-  {
+  if(!(shapefile->flags & SHAPEFILE_NO_SHX)) {
     if(shx_open(shapefile->shx, shxname, mode) < 0)
       goto err5;
     shp_index(shapefile->shp, shapefile->shx);
     shapefile->flags |= SHAPEFILE_HAS_SHX;
   }
 
-  if(!(shapefile->flags & SHAPEFILE_NO_DBF))
-  {
+  if(!(shapefile->flags & SHAPEFILE_NO_DBF)) {
     if(dbf_open(shapefile->dbf, dbfname, mode) < 0)
       goto err6;
     shapefile->flags |= SHAPEFILE_HAS_DBF;
   }
 
-  if(!(shapefile->flags & SHAPEFILE_NO_PRJ))
-  {
+  if(!(shapefile->flags & SHAPEFILE_NO_PRJ)) {
     if(prj_parse(shapefile->prj, prjname) < 0)
       goto err7;
     shapefile->flags |= SHAPEFILE_HAS_PRJ;
@@ -132,14 +124,11 @@ int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)
   DBUG_RETURN(0);
 
  err7:
-  if(!(shapefile->flags & SHAPEFILE_NO_DBF))
-    dbf_close(shapefile->dbf);
+  if(!(shapefile->flags & SHAPEFILE_NO_DBF)) dbf_close(shapefile->dbf);
  err6:
-  if(!(shapefile->flags & SHAPEFILE_NO_SHX))
-    shx_close(shapefile->shx);
+  if(!(shapefile->flags & SHAPEFILE_NO_SHX)) shx_close(shapefile->shx);
  err5:
-  if(!(shapefile->flags & SHAPEFILE_NO_SHP))
-    shp_close(shapefile->shp);
+  if(!(shapefile->flags & SHAPEFILE_NO_SHP)) shp_close(shapefile->shp);
  err4:
   free(dbfname);
  err3:
@@ -164,13 +153,11 @@ void shapefile_seek_record(SHAPEFILE *shapefile, uint32 record)
   DBUG_ENTER("shapefile_seek_record");
   DBUG_PRINT("info", ("SHAPEFILE: Record seeking to record %i", record));
 
-  if(shapefile->flags & SHAPEFILE_HAS_SHP)
-  {
+  if(shapefile->flags & SHAPEFILE_HAS_SHP) {
     shp_seek_record(shapefile->shp, record);
   }
 
-  if(shapefile->flags & SHAPEFILE_HAS_DBF)
-  {
+  if(shapefile->flags & SHAPEFILE_HAS_DBF) {
     dbf_seek_record(shapefile->dbf, record);
   }
   DBUG_VOID_RETURN;
@@ -182,8 +169,7 @@ SHAPEFILE_RECORD *shapefile_read_next(SHAPEFILE *shapefile)
 
   DBUG_ENTER("shapefile_read_next");
 
-  if(!(record = SHAPEFILE_RECORD_INIT))
-  {
+  if(!(record = SHAPEFILE_RECORD_INIT)) {
     printf("error allocating memory\n");
     DBUG_RETURN(NULL);
   }
@@ -192,37 +178,31 @@ SHAPEFILE_RECORD *shapefile_read_next(SHAPEFILE *shapefile)
   record->geometry = NULL;
   record->dbf_record = NULL;
 
-  if(shapefile->flags & SHAPEFILE_HAS_SHP)
-  {
+  if(shapefile->flags & SHAPEFILE_HAS_SHP) {
     record->geometry = shp_read_next(shapefile->shp);
   }
 
-  if(shapefile->flags & SHAPEFILE_HAS_DBF)
-  {
+  if(shapefile->flags & SHAPEFILE_HAS_DBF) {
     record->dbf_record = dbf_read_next(shapefile->dbf);
   }
 
   if(shapefile->flags & SHAPEFILE_HAS_SHP
-     && shapefile->flags & SHAPEFILE_HAS_DBF)
-  {
-    if(record->geometry == NULL && record->dbf_record != NULL)
-    {
+     && shapefile->flags & SHAPEFILE_HAS_DBF) {
+    if(record->geometry == NULL && record->dbf_record != NULL) {
       fprintf(stderr, "DBF file contains more records than SHP\n");
       free(record->dbf_record);
       free(record);
       DBUG_RETURN(NULL);
     }
 
-    if(record->geometry != NULL && record->dbf_record == NULL)
-    {
+    if(record->geometry != NULL && record->dbf_record == NULL) {
       fprintf(stderr, "SHP file contains more records than DBF\n");
       free(record->geometry);
       free(record);
       DBUG_RETURN(NULL);
     }
 
-    if(record->geometry == NULL && record->dbf_record == NULL)
-    {
+    if(record->geometry == NULL && record->dbf_record == NULL) {
       /* OK, End of File */
       free(record);
       DBUG_RETURN(NULL);
@@ -230,8 +210,7 @@ SHAPEFILE_RECORD *shapefile_read_next(SHAPEFILE *shapefile)
   }
 
   if((shapefile->flags & SHAPEFILE_HAS_SHP && record->geometry == NULL)
-     || (shapefile->flags & SHAPEFILE_HAS_DBF && record->dbf_record == NULL))
-  {
+     || (shapefile->flags & SHAPEFILE_HAS_DBF && record->dbf_record == NULL)) {
     /* OK, End of File */
     free(record);
     DBUG_RETURN(NULL);
@@ -244,7 +223,7 @@ void shapefile_record_dump(SHAPEFILE_RECORD *record)
 {
   DBUG_ENTER("shapefile_record_dump");
   if(record->dbf_record)
-    record_dump(record->dbf_record);
+    record_dump(record->dbf_record);  
 
   if(record->geometry)
     geometry_dump(record->geometry, 3);
@@ -290,7 +269,7 @@ void shapefile_dump(SHAPEFILE *shapefile)
 
   if(shapefile->flags & SHAPEFILE_HAS_DBF)
     dbf_dump(shapefile->dbf);
-
+    
   if(shapefile->flags & SHAPEFILE_HAS_PRJ)
     prj_dump(shapefile->prj);
 
@@ -326,19 +305,18 @@ void shapefile_free(SHAPEFILE *shapefile)
 }
 
 
-SHAPEFILE_SCAN *shapefile_scan_init(SHAPEFILE *shapefile,
+SHAPEFILE_SCAN *shapefile_scan_init(SHAPEFILE *shapefile, 
 				    COMPARE *compare,
 				    char *key, char *value)
 {
   SHAPEFILE_SCAN *scan;
 
   DBUG_ENTER("shapefile_scan_init");
-  DBUG_PRINT("info", ("Shapefile Scan: %s: '%s' %s '%s'",
+  DBUG_PRINT("info", ("Shapefile Scan: %s: '%s' %s '%s'", 
 		      compare?compare->name:NULL, key,
                       compare?compare->oper:NULL, value));
 
-  if(!(scan = SHAPEFILE_SCAN_INIT))
-  {
+  if(!(scan = SHAPEFILE_SCAN_INIT)) {
     fprintf(stderr, "SHAPEFILE: Couldn't allocate memory for scan\n");
     DBUG_RETURN(NULL);
   }
@@ -364,10 +342,8 @@ SHAPEFILE_RECORD *shapefile_scan_read_next(SHAPEFILE_SCAN *scan)
 
   DBUG_ENTER("shapefile_scan_read_next");
 
-  if(shapefile->flags & SHAPEFILE_HAS_DBF)
-  {
-    if((match = dbf_scan_next(scan->dbf_scan)) != -1)
-    {
+  if(shapefile->flags & SHAPEFILE_HAS_DBF) {
+    if((match = dbf_scan_next(scan->dbf_scan)) != -1) {
       if(shapefile->flags & SHAPEFILE_HAS_SHP)
         shp_seek_record(shapefile->shp, match);
       dbf_seek_record(shapefile->dbf, match);

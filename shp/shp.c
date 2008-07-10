@@ -59,8 +59,9 @@ SHP *shp_init(int flags)
 
   DBUG_ENTER("shp_init");
 
-  if(!(shp = SHP_INIT))
+  if(!(shp = SHP_INIT)) {
     DBUG_RETURN(NULL);
+  }
 
   shp->flags    = flags;
   shp->fd       = 0;
@@ -82,25 +83,21 @@ int shp_open(SHP *shp, char *shpfile, char mode)
   shp->mode     = mode;
   shp->filename = strdup(shpfile);
 
-  switch(mode)
-  {
+  switch(mode) {
   case 'r':
-    if((shp->fd = open(shpfile, O_RDONLY)) < 0)
-    {
+    if((shp->fd = open(shpfile, O_RDONLY)) < 0) {
       fprintf(stderr, "SHP: Error opening `%s' for read: Error %i: %s\n",
 	      shpfile, errno, strerror(errno));
       DBUG_RETURN(-1);
     }
-    if(_shp_read_header(shp))
-    {
+    if(_shp_read_header(shp)) {
       DBUG_RETURN(-2);
     }
     shp_rewind(shp);
     break;
 
   case 'w':
-    if((shp->fd = open(shpfile, O_RDWR|O_CREAT, S_IRWXU|S_IRWXG)) < 0)
-    {
+    if((shp->fd = open(shpfile, O_RDWR|O_CREAT, S_IRWXU|S_IRWXG)) < 0) {
       fprintf(stderr, "SHP: Error opening `%s' for write: Error %i: %s\n",
 	      shpfile, errno, strerror(errno));
       DBUG_RETURN(-1);
@@ -145,8 +142,7 @@ void shp_seek_record(SHP *shp, uint32 record)
   DBUG_ENTER("shp_seek_record");
   DBUG_PRINT("info", ("SHP: Record seeking to record %i", record));
 
-  if(shp->index)
-  {
+  if(shp->index) {
     DBUG_PRINT("info", ("SHP: Have index, fast record seek"));
     shx_seek_record(shp->index, record);
     rec = shx_read_next(shp->index);
@@ -175,7 +171,6 @@ void shp_dump(SHP *shp)
   POINT rpoint, tpoint;
 
   DBUG_ENTER("shp_dump");
-
   printf("\n");
   printf("SHP: Dump: " PTR_FORMAT "\n", PTR_CAST(shp));
   printf("  Structure:\n");
@@ -197,10 +192,9 @@ void shp_dump(SHP *shp)
   printf("    unused5:    %i\n", shp->header->unused5);
   printf("    filelength: %i\n", shp->header->filelength);
   printf("    version:    %i\n", shp->header->version);
-  printf("    shapetype:  %s (%i)\n",
+  printf("    shapetype:  %s (%i)\n", 
 	 SHP_TYPES[shp->header->shapetype],
 	 shp->header->shapetype);
-
   if(shp->projection && shp->projection->is_set)
   {
     rpoint.x = shp->header->mbr_minx; rpoint.y = shp->header->mbr_miny;
@@ -217,39 +211,31 @@ void shp_dump(SHP *shp)
     printf("    mbr_maxx:   %+20.6f\n", shp->header->mbr_maxx);
     printf("    mbr_maxy:   %+20.6f\n", shp->header->mbr_maxy);
   }
-
   printf("    mbr_minz:   %+20.6f\n", shp->header->mbr_minz);
   printf("    mbr_maxz:   %+20.6f\n", shp->header->mbr_maxz);
   printf("    mbr_minm:   %+20.6f\n", shp->header->mbr_minm);
   printf("    mbr_maxm:   %+20.6f\n", shp->header->mbr_maxm);
   printf("\n\n");
-
   DBUG_VOID_RETURN;
 }
 
 void shp_close(SHP *shp)
 {
   DBUG_ENTER("shp_close");
-
-  if(shp->fd)
-  {
+  if(shp->fd) {
     close(shp->fd);
   }
-
   DBUG_VOID_RETURN;
 }
 
 void shp_free(SHP *shp)
 {
   DBUG_ENTER("shp_free");
-
-  if(shp)
-  {
+  if(shp) {
     if(shp->header)   free(shp->header);
     if(shp->filename) free(shp->filename);
     free(shp);
   }
-
   DBUG_VOID_RETURN;
 }
 

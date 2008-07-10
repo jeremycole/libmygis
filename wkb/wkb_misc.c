@@ -34,9 +34,8 @@ uint32 wkb_size(GEOMETRY *geometry)
   /* minimalistic WKB header */
   size += WKB_SZ_BYTEORDER; /* byte order */
   size += WKB_SZ_TYPE; /* object type */
-
-  switch(geometry->type)
-  {
+  
+  switch(geometry->type) {
   case T_POINT:
     size += WKB_SZ_POINT;
     break;
@@ -50,8 +49,7 @@ uint32 wkb_size(GEOMETRY *geometry)
     size += WKB_SZ_NUMITEMS; /* number of linearrings */
     linearring  = geometry->value.polygon->linearrings;
     linearrings = geometry->value.polygon->items;
-    for(j=0;j<linearrings;j++,linearring++)
-    {
+    for(j=0;j<linearrings;j++,linearring++) {
       size += WKB_SZ_NUMITEMS; /* number of points */
       size += WKB_SZ_POINT * linearring->items;
     }

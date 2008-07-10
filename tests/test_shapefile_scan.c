@@ -30,28 +30,24 @@ int main(int argc, char **argv)
 
   DBUG_PUSH("d:t");
 
-  if(argc != 4)
-  {
+  if(argc != 4) {
     printf("usage %s <shapefile> <key> <value>\n", argv[0]);
     return 0;
   }
 
-  if(!(sha = shapefile_init(0)))
-  {
+  if(!(sha = shapefile_init(0))) {
     printf("Couldn't init\n");
     return 0;
   }
 
-  if(shapefile_open(sha, argv[1], 'r') < 0)
-  {
+  if(shapefile_open(sha, argv[1], 'r') < 0) {
     printf("Couldn't open\n");
     return 0;
   }
 
   scan = shapefile_scan_init(sha, &compare_string_ci_eq, argv[2], argv[3]);
 
-  while((rec = shapefile_scan_read_next(scan)))
-  {
+  while((rec = shapefile_scan_read_next(scan))) {
     shapefile_record_dump(rec);
     shapefile_record_free(rec);
     printf("\n\n\n");

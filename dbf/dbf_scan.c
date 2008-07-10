@@ -18,8 +18,7 @@
 
 #include "dbf_priv.h"
 
-DBF_SCAN *dbf_scan_init(DBF *dbf, COMPARE *compare, char *key, char *value)
-{
+DBF_SCAN *dbf_scan_init(DBF *dbf, COMPARE *compare, char *key, char *value) {
   DBF_SCAN *scan;
 
   DBUG_ENTER("dbf_scan_init");
@@ -27,12 +26,10 @@ DBF_SCAN *dbf_scan_init(DBF *dbf, COMPARE *compare, char *key, char *value)
 		      compare?compare->name:NULL, key,
                       compare?compare->oper:NULL, value));
 
-  if(!(scan = DBF_SCAN_INIT))
-  {
+  if(!(scan = DBF_SCAN_INIT)) {
     fprintf(stderr, "DBF: Can't allocate memory for scan\n");
     return NULL;
   }
-
   scan->dbf     = dbf;
   scan->compare = compare;
   scan->key     = key?strdup(key):NULL;
@@ -51,16 +48,13 @@ int dbf_scan_next(DBF_SCAN *scan)
 
   DBUG_ENTER("dbf_scan_next");
 
-  while(1)
-  {
-    if(!(rec = dbf_read_next(dbf)))
-    {
+  while(1) {
+    if(!(rec = dbf_read_next(dbf))) {
       DBUG_PRINT("info", ("DBF Scan: End of file reached."));
       goto no_match;
     }
     if(!compare) goto match;
-    if(compare->func(dbf_record_field(rec, scan->key), scan->value))
-    {
+    if(compare->func(dbf_record_field(rec, scan->key), scan->value)) {
       DBUG_PRINT("info", ("DBF Scan: Found match at record %i, %s %s %s.",
 			  dbf->position-1,
 			  scan->key, compare->oper, scan->value));
@@ -68,7 +62,7 @@ int dbf_scan_next(DBF_SCAN *scan)
     }
     DBUG_PRINT("info", ("DBF Scan: No match at record %i.",
 			dbf->position-1));
-  }
+  }      
 
  match:
   next_match = dbf->position-1;
@@ -78,19 +72,16 @@ int dbf_scan_next(DBF_SCAN *scan)
   DBUG_RETURN(scan->last = next_match);
 }
 
-RECORD *dbf_scan_read_next(DBF_SCAN *scan)
-{
+RECORD *dbf_scan_read_next(DBF_SCAN *scan) {
   DBF *dbf = scan->dbf;
   int match;
 
   DBUG_ENTER("dbf_scan_read_next");
 
-  if((match = dbf_scan_next(scan)) != -1)
-  {
+  if((match = dbf_scan_next(scan)) != -1) {
     dbf_seek_record(dbf, match);
     DBUG_RETURN(dbf_read_next(dbf));
   }
-
   DBUG_RETURN(NULL);
 }
 
