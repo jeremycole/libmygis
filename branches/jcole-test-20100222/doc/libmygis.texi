@@ -1,0 +1,383 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename libmygis.texi
+@settitle libmygis @value{libmygis-version}
+@c %**end of header
+
+@include variables.texi
+
+@copying
+This manual is for libmygis, version @value{libmygis-version}
+
+Copyright @copyright{} 2004-2007 Jeremy Cole and others
+
+@quotation
+Not sure yet.
+@end quotation
+@end copying
+
+@titlepage
+@title libmygis
+@subtitle A library for accessing GIS data files.
+@author Jeremy Cole and others
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top libmygis
+
+This manual is for libmygis, version @value{libmygis-version}.  
+
+@value{libmygis-svn-revision}
+
+@value{libmygis-date}
+
+@end ifnottex
+
+@menu
+* Basic Types::
+* Geometries::
+* Records::
+* Projections::
+* Shapefiles::
+* WKB::
+* WKT::
+* Index::
+@end menu
+
+
+
+@node Basic Types
+@chapter Basic Types
+
+@code{libmygis} provides two basic types which are used by @code{GEOMETRY} internally.
+
+@section @code{POINT}
+
+The @code{POINT} type has two fields of type @code{double}: @code{x} and @code{y}.  These are most commonly used to represent longitude and latitude, respectively.
+
+@section @code{LINEARRING}
+
+The @code{LINEARRING} type has four fields: @code{items}, @code{points}, @code{type}, and @code{area}.
+
+
+@node Geometries
+@chapter Geometries
+
+@section Single Geometry Subtypes
+
+A single geometry subtype is a type that contains only a single geometry; that is, a single point, linestring, or polygon.  These are containers for the underlying basic types @code{POINT} and @code{LINEARRING} provided by @code{mygis.h}.
+
+@subsection @code{GEOMETRY_POINT}
+
+The @code{GEOMETRY_POINT} type contains a single @code{POINT} as a pointer named @code{point}.
+
+@subsection @code{GEOMETRY_LINESTRING}
+
+The @code{GEOMETRY_LINESTRING} type contains an array of @code{POINT} as a pointer named @code{points}, and a count of the items allocated at @code{points} in @code{items}.
+
+@subsection @code{GEOMETRY_POLYGON}
+
+The @code{GEOMETRY_POLYGON} type contains an array of @code{LINEARRING} as a pointer named @code{linearrings}, and a count of the items allocated at @code{linearrings} in @code{items}.  Although this type is considered a single polygon, it actually contains multiple polygons.  The first polygon in @code{linearrings} contains the exterior rings (that is, the outer polygon).  The following polygons in @code{linearrings} are any interior rings (that is, holes in the outer polygon).  All interior rings must be within the boundaries of the exterior ring.
+
+@section Multiple Geometry Subtypes
+
+@subsection @code{GEOMETRY_MULTIPOINT}
+
+The @code{GEOMETRY_MULTIPOINT} type contains an array of @code{GEOMETRY_POINT} as a pointer named @code{points}, and a count of the items allocated at @code{points} in @code{items}.
+
+@subsection @code{GEOMETRY_MULTILINESTRING}
+
+The @code{GEOMETRY_MULTILINESTRING} type contains an array of @code{GEOMETRY_LINESTRING} as a pointer named @code{linestrings}, and a count of the items allocated at @code{linestrings} in @code{items}.
+
+@subsection @code{GEOMETRY_MULTIPOLYGON}
+
+The @code{GEOMETRY_MULTIPOLYGON} type contains an array of @code{GEOMETRY_POLYGON} as a pointer named @code{polygons}, and a count of the items allocated at @code{polygons} in @code{items}.
+
+@section Geometry Collections
+
+The @code{GEOMETRYCOLLECTION} type is represented in the code but is not currently supported.
+
+@section The @code{GEOMETRY} container
+
+The @code{GEOMETRY} type is normally used by any function that needs to return an arbitrary geometry.  The @code{type} field determines its type, and the @code{value} field contains the actual geometry.  The @code{mbr} field contains the minimum bounding rectangle for the geometry.  The @code{info} field contains any number of key/value pairs.
+
+@subsection @code{GEOMETRY_TYPE}
+
+The @code{GEOMETRY_TYPE} type is an enumeration of the possible geometry types which could be stored in a @code{GEOMETRY_ANY}.  Its possible values are: @code{T_NULL}, @code{T_POINT}, @code{T_LINESTRING}, @code{T_POLYGON}, @code{T_MULTIPOINT}, @code{T_MULTILINESTRING}, @code{T_MULTIPOLYGON}, and @code{T_GEOMETRYCOLLECTION}.
+
+@subsection @code{GEOMETRY_ANY}
+
+The @code{GEOMETRY_ANY} type is a union of all possible geometry types, which can be used combined with a @code{GEOMETRY_TYPE} field which stores the actual type stored in the @code{GEOMETRY_ANY}.  The union presents the following pointer fields with their appropriate types: @code{point}, @code{linestring}, @code{polygon}, @code{multipoint}, @code{multilinestring}, @code{multipolygon}.
+
+@subsection @code{GEOMETRY_MBR}
+
+The @code{GEOMETRY_MBR} type is used to store minimum bounding rectangles for geometries.  It contains two @code{POINT} fields, @code{min} and @code{max}.
+
+@subsection @code{GEOMETRY_INFO}
+
+This is currently unused?
+
+@section The @code{geometry.h} API
+
+@subsection @code{geometry_init}
+
+@code{GEOMETRY *geometry_init(GEOMETRY_TYPE type)}
+
+Initialize a @code{GEOMETRY} object of @code{type} type and return it.
+
+@subsection @code{geometry_set_projection}
+
+@code{void geometry_set_projection(GEOMETRY *geometry, PROJECTION *projection)}
+
+Set the @code{projection} field in the @code{GEOMETRY} structure, which is currently only used within the geometry code by @code{geometry_dump} to re-project the contents of the geometry for display.  @code{geometry_set_projection} should be called after initializing geometries with @code{geometry_init} by any code which is creating geometries.
+
+@subsection @code{geometry_dump}
+
+@code{void geometry_dump(GEOMETRY *geometry)}
+
+Dump the contents of @code{geometry} to @code{stdout} in a pretty-printed form for debugging and test purposes.  Optionally re-project any @code{POINT} that is dumped from the geometry by calling @code{geometry_point_reproject} if the user as set the projection with @code{geometry_set_projection}.
+
+@subsection @code{geometry_free}
+
+@code{void geometry_free(GEOMETRY *geometry)}
+
+Free all memory associated with @code{geometry}.
+
+@subsection Miscellaneous Functions
+@subsubsection @code{geometry_point_reproject}
+
+@code{POINT geometry_point_reproject(POINT *point, PROJECTION *projection)}
+
+Re-project @code{point} using @code{projection} and return a new @code{POINT} with the new projection.
+
+@subsubsection @code{geometry_linearring_area}
+
+@code{double geometry_linearring_area(LINEARRING *linearring)}
+
+Calculate the area represented by the @code{linearring} and return it as a double.  This will return a number which may be positive or negative.  The absolute value represents the area of the linear ring.  If the value is positive, the ring is composed of clockwise points, while if it is negative, the ring is composed of counter-clockwise points.  This can be used to determine if this is an interior or exterior ring in many GIS formats, such as WKB, where the exterior ring is represented by counter-clockwise points and the interior rings are represented by clockwise points.
+
+@node Records
+@chapter Records
+
+@section The @code{RECORD} container
+
+@section The @code{CELL} container
+@subsection @code{CELL_DATA}
+@subsection @code{METADATA}
+
+@section The @code{record.h} API
+
+@subsection @code{RECORD} API functions
+@subsubsection @code{record_init}
+@subsubsection @code{record_append}
+@subsubsection @code{record_remove}
+@subsubsection @code{record_dump}
+@subsubsection @code{record_free}
+
+@subsection @code{CELL} API functions
+@subsubsection @code{cell_init}
+@subsubsection @code{cell_free}
+
+@node Projections
+@chapter Projections
+
+@section The @code{PROJECTION} container
+
+@section The @code{projection.h} API
+
+@subsection @code{projection_init}
+@subsection @code{projection_set}
+@subsection @code{projection_unset}
+@subsection @code{projection_transform}
+@subsection @code{projection_dump}
+@subsection @code{projection_free}
+
+@node Shapefiles
+@chapter Shapefiles
+
+@section The @code{SHAPEFILE} container
+
+@section The @code{SHAPEFILE_RECORD} container
+
+@section The @code{SHAPEFILE_SCAN} container
+
+
+@section The @code{shapefile.h} API
+
+@subsection @code{shapefile_init}
+
+@code{SHAPEFILE *shapefile_init(int flags)}
+
+Initialize a @code{SHAPEFILE} and return it.  The @code{flags} argument should be a bitwise-or of zero or more of the following values:
+
+@itemize @bullet
+
+@item
+@code{SHAPEFILE_NO_SHP} Don't attempt to open an @code{.shp} (shape) file; no @code{GEOMETRY} will be available for each @code{SHAPEFILE_RECORD}.  Implies @code{SHAPEFILE_NO_SHX}.
+
+@item
+@code{SHAPEFILE_NO_SHX} Don't attempt to open a @code{.shx} (shape index) file; seeking within the shapefile using @code{shapefile_seek_record} will be much slower.
+
+@item
+@code{SHAPEFILE_NO_DBF} Don't attempt to open a @code{.dbf} (database) file; no additional field information will be available for each @code{SHAPEFILE_RECORD}.
+
+@item 
+@code{SHAPEFILE_NO_PRJ} Don't attempt to open a @code{.prj} (projection) file; no automatic re-projection of geometries will be possible.
+
+@end itemize
+
+@subsection @code{shapefile_open}
+
+@code{int shapefile_open(SHAPEFILE *shapefile, char *basename, char mode)}
+
+@subsection @code{shapefile_set_projection}
+
+@code{void shapefile_set_projection(SHAPEFILE *shapefile, PROJECTION *projection)}
+
+@subsection @code{shapefile_seek_record}
+
+@code{void shapefile_seek_record(SHAPEFILE *shapefile, uint32 record)}
+
+@subsection @code{shapefile_read_next}
+
+@code{SHAPEFILE_RECORD *shapefile_read_next(SHAPEFILE *shapefile)}
+
+@subsection @code{shapefile_dump}
+
+@code{void shapefile_dump(SHAPEFILE *shapefile)}
+
+@subsection @code{shapefile_close}
+
+@code{void shapefile_close(SHAPEFILE *shapefile)}
+
+@subsection @code{shapefile_free}
+
+@code{void shapefile_free(SHAPEFILE *shapefile)}
+
+@subsection @code{shapefile_record_dump}
+
+@code{void shapefile_record_dump(SHAPEFILE_RECORD *record)}
+
+@subsection @code{shapefile_record_free}
+
+@code{void shapefile_record_free(SHAPEFILE_RECORD *record)}
+
+@subsection @code{shapefile_scan_init}
+
+@code{SHAPEFILE_SCAN *shapefile_scan_init(SHAPEFILE *shapefile, COMPARE *compare, char *key, char *value)}
+
+@subsection @code{shapefile_scan_read_next}
+
+@code{SHAPEFILE_RECORD *shapefile_scan_read_next(SHAPEFILE_SCAN *scan)}
+
+@subsection @code{shapefile_scan_free}
+
+@code{void shapefile_scan_free(SHAPEFILE_SCAN *scan)}
+
+@section Shapefile Subformats
+
+@subsection The @code{.shp} (shape) format
+
+@subsubsection The @code{SHP} container
+
+@subsubsection @code{shp_init}
+@subsubsection @code{shp_open}
+@subsubsection @code{shp_set_projection}
+@subsubsection @code{shp_index}
+@subsubsection @code{shp_read_next}
+@subsubsection @code{shp_seek}
+@subsubsection @code{shp_seek_record}
+@subsubsection @code{shp_rewind}
+@subsubsection @code{shp_dump}
+@subsubsection @code{shp_close}
+@subsubsection @code{shp_free}
+
+@subsection The @code{.shx} (shape index) format
+
+@subsubsection The @code{SHX} container
+
+@subsubsection @code{shx_init}
+@subsubsection @code{shx_open}
+@subsubsection @code{shx_read_next}
+@subsubsection @code{shx_seek}
+@subsubsection @code{shx_seek_record}
+@subsubsection @code{shx_rewind}
+@subsubsection @code{shx_dump}
+@subsubsection @code{shx_record_dump}
+@subsubsection @code{shx_record_free}
+@subsubsection @code{shx_close}
+@subsubsection @code{shx_free}
+
+@subsection The @code{.prj} (projection) format
+
+@subsubsection The @code{PRJ} container
+
+@subsubsection @code{prj_init}
+@subsubsection @code{prj_parse}
+@subsubsection @code{prj_dump}
+@subsubsection @code{prj_free}
+
+@subsection The @code{.dbf} (attribute database) format
+
+@subsubsection The @code{DBF} container
+
+@subsubsection The @code{DBF_SCAN} container
+
+@subsubsection The @code{DBF_FIELD} container
+
+@subsubsection @code{dbf_init}
+@subsubsection @code{dbf_open}
+@subsubsection @code{dbf_seek}
+@subsubsection @code{dbf_seek_record}
+@subsubsection @code{dbf_read_next}
+@subsubsection @code{dbf_rewind}
+@subsubsection @code{dbf_dump}
+@subsubsection @code{dbf_close}
+@subsubsection @code{dbf_free}
+
+@subsubsection @code{dbf_scan_init}
+@subsubsection @code{dbf_scan_next}
+@subsubsection @code{dbf_scan_read_next}
+@subsubsection @code{dbf_scan_free}
+
+@subsubsection @code{dbf_record_field}
+
+@subsection The @code{.sbn}/@code{.sbx} (spatial index) format (unsupported)
+@subsection The @code{.shp.xml} (shapefile metadata) format (unsupported)
+
+@node WKB
+@chapter WKB
+
+@section The @code{WKB} container
+
+@section The @code{wkb/wkb.h} API
+
+@subsection @code{wkb_init}
+@subsection @code{wkb_load}
+@subsection @code{wkb_read_next}
+@subsection @code{wkb_rewind}
+@subsection @code{wkb_size}
+@subsection @code{wkb_write}
+@subsection @code{wkb_free}
+
+@node WKT
+@chapter WKT
+
+@section The @code{wkt/wkt.h} API
+
+@subsection @code{wkt_write}
+
+@node Index
+@unnumbered Index
+
+@printindex cp
+
+@bye

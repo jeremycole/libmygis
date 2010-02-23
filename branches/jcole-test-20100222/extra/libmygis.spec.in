@@ -1,0 +1,40 @@
+Name: libmygis
+Version: @VERSION@
+Release: 0
+License: LGPL
+URL: http://jcole.us/software/libmygis/
+Packager: Jeremy Cole <jeremy@jcole.us>
+
+Source: libmygis-@VERSION@.tar.gz
+
+%prep
+%setup
+
+%build
+./configure --prefix=/usr
+make
+
+%install
+make install
+
+Summary: Library for libmygis: For reading and writing GIS formats
+Group: Development/Libraries/C and C++
+
+%description 
+Library for libmygis: For reading and writing GIS formats
+
+%files 
+/usr/lib/libmygis.*
+
+%package devel
+
+Requires: libmygis
+
+Summary: Headers for libmygis: For reading and writing GIS formats
+Group: Development/Libraries/C and C++
+
+%description devel
+Headers for libmygis: For reading and writing GIS formats
+
+%files devel
+/usr/include/mygis
