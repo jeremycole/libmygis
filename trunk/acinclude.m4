@@ -1,5 +1,3 @@
-m4_include([libtool.m4])
-
 # System libraries
 
 AC_DEFUN([AC_FUNC_CRYPT], [
