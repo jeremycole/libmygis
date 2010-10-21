@@ -12,5 +12,6 @@ variables.texi: variables.texi.in ../configure.in
 	@MV@ $@-t $@
 
 .texi.html: $< variables.texi.in variables.texi
+	@MKDIR@ -p static
 	texi2html $< && cp $@ static/$@
 
