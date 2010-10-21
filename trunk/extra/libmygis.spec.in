@@ -5,26 +5,31 @@ License: LGPL
 URL: http://jcole.us/software/libmygis/
 Packager: Jeremy Cole <jeremy@jcole.us>
 
+Summary: Library for libmygis: For reading and writing GIS formats
+Group: Development/Libraries/C and C++
+
 Source: libmygis-@VERSION@.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %prep
 %setup
 
 %build
-./configure --prefix=/usr
-make
+%configure
+make %{?_smp_mflags}
 
 %install
-make install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
 
-Summary: Library for libmygis: For reading and writing GIS formats
-Group: Development/Libraries/C and C++
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %description 
 Library for libmygis: For reading and writing GIS formats
 
 %files 
-/usr/lib/libmygis.*
+%{_libdir}/libmygis.*
 
 %package devel
 
@@ -37,4 +42,4 @@ Group: Development/Libraries/C and C++
 Headers for libmygis: For reading and writing GIS formats
 
 %files devel
-/usr/include/mygis
+%{_includedir}/mygis

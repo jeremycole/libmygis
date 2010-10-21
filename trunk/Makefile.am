@@ -1,7 +1,7 @@
 # The order for SUBDIRS is important, as we need to make sure
 # that libmygis.* gets built in . before tests are built
 
-SUBDIRS = extra wkb wkt e00 dbf prj shp tiger . tests
+SUBDIRS = extra wkb wkt e00 dbf prj shp tiger . tests doc
 
 MAINTAINERCLEANFILES = \
   aclocal.m4 configure config.status config.log config.h \
@@ -50,6 +50,8 @@ mygis_tiger_include_HEADERS = \
   tiger/tiger.h
 
 noinst_HEADERS = \
+  dbug.h \
+  dbug_long.h \
   mygis_priv.h \
   fixed_priv.h \
   geometry_priv.h \
@@ -64,21 +66,18 @@ lib_LTLIBRARIES = libmygis.la
 libmygis_la_LDFLAGS = -version-info 0:0:0
 
 libmygis_la_SOURCES = \
-  mygis.c 
-
-ROOT_OBJECTS = \
-  portability.lo \
-  dbug.lo \
-  compare.lo \
-  pairlist.lo \
-  record.lo \
-  fixed.lo \
-  projection.lo \
-  geometry.lo \
-  shapefile.lo
+  dbug.c \
+  mygis.c \
+  portability.c \
+  compare.c \
+  pairlist.c \
+  record.c \
+  fixed.c \
+  projection.c \
+  geometry.c \
+  shapefile.c
 
 libmygis_la_LIBADD = \
-  $(ROOT_OBJECTS) \
   wkb/libwkb.la \
   wkt/libwkt.la \
   e00/libe00.la \
