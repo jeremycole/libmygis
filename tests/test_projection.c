@@ -18,8 +18,9 @@
 
 #include <stdio.h>
 
-#include "mygis.h"
-#include "projection.h"
+#include "mygis_priv.h"
+#include "projection_priv.h"
+#include "pairlist_priv.h"
 
 #ifndef HAVE_PROJECTION
 
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  /*
+  ///*
   pairlist_add(args, "from_name",
                      "NAD_1983_StatePlane_Nevada_West_FIPS_2703_Feet");
   pairlist_add(args, "from", "+proj=tmerc +ellps=GRS80 +datum=NAD83 +k=0.9999 +units=us-ft +x_0=2624666.666666 +y_0=13123333.333333 +lon_0=-118.583333 +lat_0=+34.75");
@@ -59,7 +60,7 @@ int main(int argc, char **argv)
   // seems broken
   a.x = 2297190.783459;
   a.y = 14829485.209469;
-  */
+  //*/
 
   /*
   pairlist_add(args, "from_name",
@@ -72,13 +73,15 @@ int main(int argc, char **argv)
   a.y = 897894.252106;
   */
 
-  //pairlist_add(args, "from", "+proj=utm +zone=11 +datum=NAD83 +units=m");
+  /*
+  pairlist_add(args, "from", "+proj=utm +zone=11 +datum=NAD83 +units=m");
   pairlist_add(args, "from", "+proj=tmerc +datum=NAD83 +units=m +lat_0=0.0000000000 +k=0.9996000000 +lon_0=-117.0000000000 +y_0=0.0000000000 +x_0=500000.0000000000");
 
   // nvblm/nv_fires_20061010.*
   // looks good
   a.x = 243219.221279;
   a.y = 4380953.713629;
+  */
 
   pairlist_add(args, "to", "+proj=latlong +towgs84");
 

@@ -21,6 +21,12 @@
 
 #define _GNU_SOURCE
 
+#ifndef DEBUG
+#define DBUG_OFF
+#endif
+
+#include "dbug.h"
+
 #include "config.h"
 #include "mygis.h"
 #include "portability.h"

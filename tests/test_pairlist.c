@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 
-#include "mygis.h"
-#include "pairlist.h"
+#include "mygis_priv.h"
+#include "pairlist_priv.h"
 
 int main(int argc, char **argv)
 {

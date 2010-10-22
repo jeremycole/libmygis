@@ -32,7 +32,7 @@ FIXED_FIELD *fixed_field_init()
 
 FIXED_FIELD *fixed_field_new(char *name, FIXED_PADDING padding,
                              FIXED_TYPE type, FIXED_NULLS nulls,
-			     uint32 length)
+			     unsigned int length)
 {
   FIXED_FIELD *field;
 
@@ -151,9 +151,9 @@ int fixed_open(FIXED *fixed, char *fixedfile, char mode)
   DBUG_RETURN(fixed->fd);
 }
 
-int fixed_file_def(FIXED *fixed, FIXED_FILE_DEF *file_def, uint length)
+int fixed_file_def(FIXED *fixed, FIXED_FILE_DEF *file_def, unsigned int length)
 {
-  uint field;
+  unsigned int field;
   FIXED_FILE_DEF *field_def;
 
   DBUG_ENTER("fixed_file_def");
@@ -173,7 +173,7 @@ void fixed_dump(FIXED *fixed)
 {
   FIXED_FIELD_NODE *node = fixed->head;
   FIXED_FIELD *field = NULL;
-  uint i;
+  unsigned int i;
 
   DBUG_ENTER("fixed_dump");
 
@@ -204,7 +204,7 @@ void fixed_recalculate(FIXED *fixed)
 {
   FIXED_FIELD_NODE *node = NULL;
   FIXED_OPTIONS *options = &fixed->options;
-  uint cur=0, gap=0;
+  unsigned int cur=0, gap=0;
 
   DBUG_ENTER("fixed_recalculate");
 

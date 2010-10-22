@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-#include "mygis.h"
+#include "mygis_priv.h"
 #include "geometry.h"
 #include "shp/shp.h"
 #include "wkt/wkt.h"
