@@ -17,7 +17,7 @@
 */
 
 
-#include "mygis.h"
+#include "mygis_priv.h"
 #include "tiger/tiger.h"
 
 #include <stdio.h>

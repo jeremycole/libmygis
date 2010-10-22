@@ -23,8 +23,10 @@
 #include <proj_api.h>
 #endif /* HAVE_PROJECTION */
 
-#include "mygis.h"
-#include "pairlist.h"
+#include "mygis_priv.h"
+#include "pairlist_priv.h"
+
+#include "projection.h"
 
 #define PROJECTION_INIT                      MYGIS_MALLOC(PROJECTION)
 

@@ -36,7 +36,7 @@ typedef struct tiger_file_types_st {
   char            *record_type;
   char            *name;
   char            *file_ext[5];
-  uint            num_fields;
+  unsigned int    num_fields;
   FIXED_FILE_DEF  *file_def;
 } TIGER_FILE_TYPES;
 

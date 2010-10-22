@@ -16,7 +16,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "mygis.h"
+#include "mygis_priv.h"
 #include "geometry.h"
 #include "wkb/wkb_priv.h"
 #include "wkt/wkt.h"

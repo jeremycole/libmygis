@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-#include "mygis.h"
+#include "mygis_priv.h"
 #include "dbf/dbf.h"
 
 int main(int argc, char **argv)

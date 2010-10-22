@@ -15,7 +15,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %setup
 
 %build
-%configure
+%configure --with-projection
 make %{?_smp_mflags}
 
 %install

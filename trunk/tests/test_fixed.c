@@ -17,7 +17,7 @@
 */
 
 
-#include "mygis.h"
+#include "mygis_priv.h"
 #include "fixed.h"
 
 #include <stdio.h>

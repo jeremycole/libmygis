@@ -24,7 +24,7 @@ TIGER *tiger_init(int flags)
   TIGER_FILE       *file      = NULL;
   TIGER_FILE_TYPES *file_type = NULL;
   FIXED_FILE_DEF   *file_def  = NULL;
-  uint type, field;
+  unsigned int type, field;
 
   DBUG_ENTER("tiger_init");
 
@@ -58,7 +58,7 @@ int tiger_open(TIGER *tiger, char *basename, char mode)
 {
   TIGER_FILE       *file      = NULL;
   TIGER_FILE_TYPES *file_type = NULL;
-  uint type;
+  unsigned int type;
   char *filename;
 
   DBUG_ENTER("tiger_open");
@@ -89,7 +89,7 @@ int tiger_open(TIGER *tiger, char *basename, char mode)
 void tiger_dump(TIGER *tiger)
 {
   TIGER_FILE *file = NULL;
-  uint type;
+  unsigned int type;
 
   DBUG_ENTER("tiger_dump");
 
@@ -120,7 +120,7 @@ void tiger_close(TIGER *tiger)
 void tiger_free(TIGER *tiger)
 {
   TIGER_FILE *file = NULL;
-  uint type;
+  unsigned int type;
 
   DBUG_ENTER("tiger_free");
 

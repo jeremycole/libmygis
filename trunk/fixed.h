@@ -50,9 +50,9 @@ typedef struct fixed_field_st {
   FIXED_PADDING padding;
   FIXED_TYPE    type;
   FIXED_NULLS   nulls;
-  uint          start;
-  uint          end;
-  uint          length;
+  unsigned int  start;
+  unsigned int  end;
+  unsigned int  length;
   METADATA      metadata;
 } FIXED_FIELD;
 
@@ -62,20 +62,20 @@ typedef struct fixed_field_node_st {
 } FIXED_FIELD_NODE;
 
 typedef struct fixed_options_st {
-  uint          gap;
+  unsigned int  gap;
 } FIXED_OPTIONS;
 
 typedef struct fixed_st {
   FIXED_FIELD_NODE *head, *tail;
   FIXED_OPTIONS    options;
-  uint fields;
-  uint record_length;
-  char *record_buffer;
-  int flags;
-  int fd;
-  char *filename;
-  char mode;
-  int position;
+  unsigned int     fields;
+  unsigned int     record_length;
+  char             *record_buffer;
+  int              flags;
+  int              fd;
+  char             *filename;
+  char             mode;
+  int              position;
 } FIXED;
 
 typedef struct fixed_scan_st {
@@ -91,20 +91,20 @@ typedef struct fixed_file_def_st {
   FIXED_PADDING   padding;
   FIXED_TYPE      type;
   FIXED_NULLS     nulls;
-  uint            length;
+  unsigned int    length;
 } FIXED_FILE_DEF;
 
 FIXED_FIELD       *fixed_field_init();
 FIXED_FIELD       *fixed_field_new(char *name, FIXED_PADDING padding,
                                    FIXED_TYPE type, FIXED_NULLS nulls,
-				                           uint32 length);
+				   unsigned int length);
 void              fixed_field_free(FIXED_FIELD *field);
 
 
 FIXED             *fixed_init(int flags);
 FIXED_OPTIONS     *fixed_options(FIXED *fixed);
 int               fixed_file_def(FIXED *fixed, FIXED_FILE_DEF *file_def,
-                                 uint length);
+                                 unsigned int length);
 int               fixed_open(FIXED *fixed, char *fixedfile, char mode);
 void              fixed_dump(FIXED *fixed);
 void              fixed_close(FIXED *fixed);
